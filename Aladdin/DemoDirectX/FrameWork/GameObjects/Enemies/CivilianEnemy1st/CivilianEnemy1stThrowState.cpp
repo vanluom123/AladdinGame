@@ -1,4 +1,5 @@
 #include "CivilianEnemy1stThrowState.h"
+#include "../../../GameComponents/GameMap.h"
 
 CivilianEnemy1stThrowState::CivilianEnemy1stThrowState(CivilianEnemy1stData * civilianEnemy1stData)
 {
@@ -26,7 +27,7 @@ void CivilianEnemy1stThrowState::Update(float dt)
 		}
 		tmp->SetVx(0.0f);
 
-		mCivilianEnemy1stData->civilianEnemy1st->getGameMap()->InsertWeapon(tmp);
+		GameMap::GetInstance()->InsertWeapon(tmp);
 		isThrow = false;
 	}
 	else if (this->mCivilianEnemy1stData->civilianEnemy1st->GetCurrentAnimation()->mCurrentIndex == 1)

@@ -1,13 +1,7 @@
 ﻿#ifndef __GAME_MAP__
 #define __GAME_MAP__
 
-#include <d3dx9.h>
-#include <d3d9.h>
-#include <vector>
 #include <fstream>
-#include <unordered_set>
-#include <unordered_map>
-
 
 #include "../GameComponents/Sprite.h"
 #include "../MapReader/Tmx.h.in"
@@ -84,30 +78,30 @@ private:
 	char* mListItemsFile;
 	char* mListObjectsFile;
 
-	std::unordered_map<int, Sprite*> mTilesets;
+	unordered_map<int, Sprite*> mTilesets;
 
-	std::unordered_set<Entity*> mWeapons;
-	std::unordered_set<Entity*> mEnemies;
-	std::unordered_set<Apple*> mApples;
-	std::unordered_set<Items*> mItems;
+	unordered_set<Entity*> mWeapons;
+	unordered_set<Entity*> mEnemies;
+	unordered_set<Apple*> mApples;
+	unordered_set<Items*> mItems;
 
 public:
-	std::unordered_set<Items*>* GetItems()
+	unordered_set<Items*>* GetItems()
 	{
 		return &mItems;
 	}
 
-	std::unordered_set<Entity*>* GetEnemies()
+	unordered_set<Entity*>* GetEnemies()
 	{
 		return &mEnemies;
 	}
 
-	std::unordered_set<Apple*>* GetApples()
+	unordered_set<Apple*>* GetApples()
 	{
 		return &mApples;
 	}
 
-	std::unordered_set<Entity*>* GetWeapons()
+	unordered_set<Entity*>* GetWeapons()
 	{
 		return &mWeapons;
 	}

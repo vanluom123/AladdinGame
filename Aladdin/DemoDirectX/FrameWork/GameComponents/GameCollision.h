@@ -1,16 +1,13 @@
-#pragma once
+#ifndef __GAMECOLLISION_H__
+#define __GAMECOLLISION_H__
 
-#include <d3dx9.h>
-#include <d3d9.h>
 #include <cstdlib>
 #include "../GameObjects/Entity.h"
 #include <limits>
-using namespace std;
+
 class GameCollision
 {
 public:
-
-	GameCollision();
 	//kiem tra va cham giua 2 hinh chu nhat
 	static Entity::CollisionReturn RectBox(RECT rect, RECT rect2);
 
@@ -27,5 +24,5 @@ public:
 
 	//hinh chu nhat va hinh tron
 	static bool RectangleAndCircle(RECT rect, int circlex, int circley, int circleRadius);
-	~GameCollision();
 };
+#endif // __GAMECOLLISION_H__

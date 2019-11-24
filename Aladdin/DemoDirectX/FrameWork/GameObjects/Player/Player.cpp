@@ -21,10 +21,10 @@
 #include "PlayerHitState.h"
 #include "PlayerDyingState.h"
 #include "../Weapon/Fire.h"
+#include "../../GameComponents/GameMap.h"
 
 Player::Player()
 {
-
 	this->Tag = Entity::Aladdin;
 	numApples = 10;
 	this->HP = 11;
@@ -47,11 +47,10 @@ Player::~Player()
 
 void Player::Update(float dt)
 {
-	if (mPlayerData->player->getState() != PlayerState::Climb&&mPlayerData->player->getState() != PlayerState::Hang)
+	if (mPlayerData->player->getState() != PlayerState::Climb && mPlayerData->player->getState() != PlayerState::Hang)
 		mCurrentAnimation->Update(dt);
 	if (this->mPlayerData->state)
 	{
-
 		this->mPlayerData->state->Update(dt);
 	}
 
@@ -98,7 +97,6 @@ void Player::OnKeyPressed(int key)
 		{
 			if (allowCut)
 			{
-
 				if (mCurrentState == PlayerState::Stand || mCurrentState == PlayerState::Throw || mCurrentState == PlayerState::Hit)
 				{
 					this->SetState(new PlayerCuttingState(this->mPlayerData));
@@ -107,7 +105,6 @@ void Player::OnKeyPressed(int key)
 					if (mCurrentState == PlayerState::Jump || mCurrentState == PlayerState::MoveJump || mCurrentState == PlayerState::ClimbJump || mCurrentState == PlayerState::Fall || mCurrentState == PlayerState::Flippe || mCurrentState == PlayerState::JumpThrow)
 					{
 						this->SetState(new PlayerJumpCuttingState(this->mPlayerData));
-
 					}
 					else
 						if (mCurrentState == PlayerState::Up)
@@ -116,22 +113,16 @@ void Player::OnKeyPressed(int key)
 						}
 						else if (mCurrentState == PlayerState::Down)
 						{
-
 							this->SetState(new PlayerDownCuttingState(this->mPlayerData));
-
 						}
-				if (this->mCurrentState != PlayerState::Hang&&this->mCurrentState != PlayerState::Climb) allowCut = false;
-
-				//Entity* tmp = new class JafarWeapon(D3DXVECTOR2(posX + 200, posY -100), this);
-				//this->mGameMap->GetListWeapons()->push_back(tmp);
-
+				if (this->mCurrentState != PlayerState::Hang && this->mCurrentState != PlayerState::Climb)
+					allowCut = false;
 			}
-
 		}
 		else
 			if (key == 0x5A)
 			{
-				if (allowThrow&&numApples>0)
+				if (allowThrow && numApples > 0)
 				{
 
 					if (mCurrentState == PlayerState::Jump || mCurrentState == PlayerState::MoveJump || mCurrentState == PlayerState::Fall || mCurrentState == PlayerState::Flippe || mCurrentState == PlayerState::ClimbJump || mCurrentState == PlayerState::JumpCut)
@@ -183,25 +174,25 @@ void Player::SetReverse(bool flag)
 	mCurrentReverse = flag;
 }
 
-void Player::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVECTOR2 transform, float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
+void Player::Draw(GVector3 position, RECT sourceRect, GVector2 scale, GVector2 transform, float angle, GVector2 rotationCenter, D3DXCOLOR colorKey)
 {
 	mCurrentAnimation->SetFlipHorizontal(mCurrentReverse);
 	mCurrentAnimation->SetPosition(this->GetPosition());
 
 	if (mCamera)
 	{
-		D3DXVECTOR2 trans = D3DXVECTOR2(GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x,
+		GVector2 trans = GVector2(GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x,
 			GameGlobal::GetHeight() / 2 - mCamera->GetPosition().y);
-		if (!(mCurrentAnimation->mCurrentIndex%2==0&&timeImmortal>0))
-			mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0), sourceRect, scale, trans, angle, rotationCenter, colorKey);
+		if (!(mCurrentAnimation->mCurrentIndex % 2 == 0 && timeImmortal > 0))
+			mCurrentAnimation->Draw(GVector3(posX, posY, 0), sourceRect, scale, trans, angle, rotationCenter, colorKey);
 	}
 	else
 	{
-		mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0));
+		mCurrentAnimation->Draw(GVector3(posX, posY, 0));
 	}
 }
 
-void Player::SetState(PlayerState *newState)
+void Player::SetState(PlayerState* newState)
 {
 	delete this->mPlayerData->state;
 	timeNoCollisionBottom = 0;
@@ -211,7 +202,7 @@ void Player::SetState(PlayerState *newState)
 
 }
 
-void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
+void Player::OnCollision(Entity* impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
 	//khi đang chết thì không xét va chạm
 	if (mPlayerData->player->getState() == PlayerState::Die || mPlayerData->player->getState() == PlayerState::Revive)
@@ -225,7 +216,7 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 		if (tmp.IsCollided)
 		{
 
-			if (mPlayerData->player->getState() != PlayerState::Climb&&mPlayerData->player->GetVy() > 0)
+			if (mPlayerData->player->getState() != PlayerState::Climb && mPlayerData->player->GetVy() > 0)
 			{
 				mPlayerData->player->SetPosition(impactor->GetPosition().x, this->posY);
 				if (mPlayerData->player->GetBound().top < impactor->GetBound().top)
@@ -244,7 +235,7 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 		if (tmp.IsCollided)
 		{
 
-			if (mPlayerData->player->getState() != PlayerState::Hang&&mPlayerData->player->GetVy() > 0)
+			if (mPlayerData->player->getState() != PlayerState::Hang && mPlayerData->player->GetVy() > 0)
 			{
 				mPlayerData->player->SetVy(0);
 				mPlayerData->player->AddPosition(0, mAnimationHanging->GetSprite()->GetHeight() - mPlayerData->player->GetCurrentAnimation()->GetSprite()->GetHeight() - 1);
@@ -257,7 +248,7 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 		if (impactor->ItemTag == Entity::ItemTypes::Apple)
 			this->numApples++;
 		else if (impactor->ItemTag == Entity::ItemTypes::RestartPoint)
-			this->RevivePoint = D3DXVECTOR2(impactor->GetPosition().x, impactor->GetBound().bottom);
+			this->RevivePoint = GVector2(impactor->GetPosition().x, impactor->GetBound().bottom);
 		else if (impactor->ItemTag == Entity::ItemTypes::ExtraHealth)
 		{
 			HP = min(11, HP + 2);
@@ -283,11 +274,8 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 		break;
 	case (Entity::SpringBoard):
 	{
-		//	Entity::CollisionReturn tmp = GameCollision::RecteAndRect(GetBoundVerticalRope(), impactor->GetBound());
-		//if (tmp.IsCollided)
-		{
-			if (mPlayerData->player->GetVy() >= 0 && this->GetPosition().y >= impactor->GetBound().top) mPlayerData->player->SetState(new PlayerFlippingState(mPlayerData));
-		}
+		if (mPlayerData->player->GetVy() >= 0 && this->GetPosition().y >= impactor->GetBound().top)
+			mPlayerData->player->SetState(new PlayerFlippingState(mPlayerData));
 	}
 	break;
 	case (Entity::ChangeEnableStair):
@@ -312,7 +300,7 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 	}
 
 	case (Entity::Fire):
-		if (this->timeCreateFire <= 0&&this->vy>=0)
+		if (this->timeCreateFire <= 0 && this->vy >= 0)
 		{
 			RECT AladdinWithFire;
 			AladdinWithFire.bottom = posY;
@@ -325,8 +313,8 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 			{
 				Sound::getInstance()->play("FireFromCoal", false, 1);
 				this->timeCreateFire = 0.6;
-				Entity * tmp;
-				tmp = new class Fire(D3DXVECTOR2(posX, posY));
+				Entity* tmp;
+				tmp = new class Fire(GVector2(posX, posY));
 				GameMap::GetInstance()->InsertWeapon(tmp);
 			}
 		}
@@ -336,7 +324,7 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 	case Entity::Flame:
 	case Entity::JafarWeapon1:
 	case Entity::JafarWeapon2:
-		if (GameCollision::isCollide(this->GetBoundBody(),impactor->GetBound()) == false && impactor->Tag != JafarWeapon2) return;
+		if (GameCollision::isCollide(this->GetBoundBody(), impactor->GetBound()) == false && impactor->Tag != JafarWeapon2) return;
 		if (this->timeImmortal <= 0 && impactor->Tag != JafarWeapon1)
 		{
 			if (impactor->Tag != Flame)
@@ -346,7 +334,7 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 				SetTimeImmortal(1.8);
 			}
 			else
-				if (timeCreateFire<0.4)
+				if (timeCreateFire < 0.4)
 				{
 					Entity::TakeDamage(1);
 					Sound::getInstance()->play("AladdinHurt", false, 1);
@@ -385,7 +373,7 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 	}
 }
 
-void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data)
+void Player::OnCollision(Entity* impactor, Entity::CollisionReturn data)
 {
 
 	this->mPlayerData->state->OnCollision(impactor, data);
@@ -448,7 +436,7 @@ RECT Player::GetBoundBody()
 	RECT rect;
 	rect.left = this->posX - 18;
 	rect.right = this->posX + 18;
-	rect.top = this->posY - min(48,mCurrentAnimation->GetSprite()->GetHeight());
+	rect.top = this->posY - min(48, mCurrentAnimation->GetSprite()->GetHeight());
 	rect.bottom = this->posY;
 
 	return rect;
@@ -641,8 +629,8 @@ void Player::OnNoCollisionWithBottom(float dt)
 
 	//Nếu thời gian rơi >2 giây thì chuyển Player sang trạng thái Falling.
 	if (mPlayerData->player->timeNoCollisionBottom > 2 && mPlayerData->player->GetVx() != 0) mPlayerData->player->SetState(new PlayerFallingState(mPlayerData));
-	if (mCurrentState != PlayerState::Climb&&mCurrentState != PlayerState::Fall&&mCurrentState != PlayerState::Jump&&mCurrentState != PlayerState::MoveJump&&mCurrentState != PlayerState::JumpCut&&mCurrentState != PlayerState::JumpThrow&&mCurrentState != PlayerState::Flippe
-		&&mCurrentState != PlayerState::Cut&&mCurrentState != PlayerState::DownCut&&mCurrentState != PlayerState::UpCut
+	if (mCurrentState != PlayerState::Climb && mCurrentState != PlayerState::Fall && mCurrentState != PlayerState::Jump && mCurrentState != PlayerState::MoveJump && mCurrentState != PlayerState::JumpCut && mCurrentState != PlayerState::JumpThrow && mCurrentState != PlayerState::Flippe
+		&& mCurrentState != PlayerState::Cut && mCurrentState != PlayerState::DownCut && mCurrentState != PlayerState::UpCut
 		)
 	{
 		if (mPlayerData->player->timeNoCollisionBottom > 1 && mPlayerData->player->GetVx() != 0) mPlayerData->player->SetState(new PlayerFallingState(mPlayerData));
@@ -662,7 +650,7 @@ Animation* Player::GetCurrentAnimation()
 	return mCurrentAnimation;
 }
 
-void Player::SetCamera(Camera *camera)
+void Player::SetCamera(Camera* camera)
 {
 	this->mCamera = camera;
 }
@@ -670,36 +658,36 @@ void Player::SetCamera(Camera *camera)
 void Player::ThrowApple()
 {
 	if (numApples < 0) return;
-	class Apple *tmp;
+	class Apple* tmp;
 	numApples--;
 	switch (mCurrentState)
 	{
 	case PlayerState::HangThrow:
 		if (this->getFaceDirection() == Entity::FaceDirection::LEFT)
-			tmp = new class Apple(D3DXVECTOR2(mPlayerData->player->GetBound().left + 9, mPlayerData->player->GetBound().top + 46));
+			tmp = new class Apple(GVector2(mPlayerData->player->GetBound().left + 9, mPlayerData->player->GetBound().top + 46));
 		else
-			tmp = new class Apple(D3DXVECTOR2(mPlayerData->player->GetBound().right - 9, mPlayerData->player->GetBound().top + 46));
+			tmp = new class Apple(GVector2(mPlayerData->player->GetBound().right - 9, mPlayerData->player->GetBound().top + 46));
 		break;
 	case PlayerState::DownThrow:
 		if (this->getFaceDirection() == Entity::FaceDirection::LEFT)
-			tmp = new class Apple(D3DXVECTOR2(mPlayerData->player->GetBound().left - 9, mPlayerData->player->GetBound().top + 16));
+			tmp = new class Apple(GVector2(mPlayerData->player->GetBound().left - 9, mPlayerData->player->GetBound().top + 16));
 		else
-			tmp = new class Apple(D3DXVECTOR2(mPlayerData->player->GetBound().right - 9, mPlayerData->player->GetBound().top + 16));
+			tmp = new class Apple(GVector2(mPlayerData->player->GetBound().right - 9, mPlayerData->player->GetBound().top + 16));
 		break;
 	case PlayerState::JumpThrow:
 		if (this->getFaceDirection() == Entity::FaceDirection::LEFT)
-			tmp = new class Apple(D3DXVECTOR2(mPlayerData->player->GetBound().left + 6, mPlayerData->player->GetBound().top + 14));
+			tmp = new class Apple(GVector2(mPlayerData->player->GetBound().left + 6, mPlayerData->player->GetBound().top + 14));
 		else
-			tmp = new class Apple(D3DXVECTOR2(mPlayerData->player->GetBound().right - 6, mPlayerData->player->GetBound().top + 14));
+			tmp = new class Apple(GVector2(mPlayerData->player->GetBound().right - 6, mPlayerData->player->GetBound().top + 14));
 		break;
 	case PlayerState::Throw:
 		if (this->getFaceDirection() == Entity::FaceDirection::LEFT)
-			tmp = new class Apple(D3DXVECTOR2(mPlayerData->player->GetBound().left + 11, mPlayerData->player->GetBound().top + 11));
+			tmp = new class Apple(GVector2(mPlayerData->player->GetBound().left + 11, mPlayerData->player->GetBound().top + 11));
 		else
-			tmp = new class Apple(D3DXVECTOR2(mPlayerData->player->GetBound().right - 11, mPlayerData->player->GetBound().top + 11));
+			tmp = new class Apple(GVector2(mPlayerData->player->GetBound().right - 11, mPlayerData->player->GetBound().top + 11));
 		break;
 	default:
-		tmp = new class Apple(D3DXVECTOR2(mPlayerData->player->GetBound().right, mPlayerData->player->GetBound().top + 40));
+		tmp = new class Apple(GVector2(mPlayerData->player->GetBound().right, mPlayerData->player->GetBound().top + 40));
 	}
 	if (mPlayerData->player->getFaceDirection() == Entity::FaceDirection::LEFT)
 		tmp->SetVx(-190.0f);
@@ -726,7 +714,7 @@ void Player::TakeDamage(int Damage)
 	if (timeImmortal > 0) return;
 	Entity::TakeDamage(Damage);
 	Sound::getInstance()->play("AladdinHurt", false, 1);
-	SetTimeImmortal(1.8);
+	SetTimeImmortal(1.8f);
 	if (this->HP <= 0)
 	{
 		SceneManager::GetInstance()->GetCurrentScene()->StopMusic();
@@ -741,23 +729,23 @@ void Player::TakeDamage(int Damage)
 
 }
 
-void Player::SetRevivePoint(D3DXVECTOR2 revivePoint)
+void Player::SetRevivePoint(GVector2 revivePoint)
 {
 	this->RevivePoint = revivePoint;
 }
 
-void Player::SetStartPoint(D3DXVECTOR2 startPoint)
+void Player::SetStartPoint(GVector2 startPoint)
 {
 	this->StartPoint = startPoint;
 }
 
 
-D3DXVECTOR2 Player::GetRevivePoint()
+GVector2 Player::GetRevivePoint()
 {
 	return this->RevivePoint;
 }
 
-D3DXVECTOR2 Player::GetStartPoint()
+GVector2 Player::GetStartPoint()
 {
 	return this->StartPoint;
 }

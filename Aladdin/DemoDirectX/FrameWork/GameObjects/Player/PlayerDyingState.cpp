@@ -7,6 +7,7 @@
 #include "PlayerReviveState.h"
 #include "../../GameDefines/define.h"
 #include "PlayerCuttingState.h"
+#include "../../GameComponents/GameMap.h"
 
 PlayerDyingState::PlayerDyingState(PlayerData* playerData)
 {
@@ -50,11 +51,10 @@ void PlayerDyingState::HandleKeyboard(std::map<int, bool> keys)
 
 }
 
-
 void PlayerDyingState::OnCollision(Entity* impactor, Entity::SideCollisions side, Entity::CollisionReturn data)
 {
-
 }
+
 PlayerState::StateName PlayerDyingState::GetState()
 {
 	return PlayerState::Die;

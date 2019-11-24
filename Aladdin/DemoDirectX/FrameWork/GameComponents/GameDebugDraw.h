@@ -1,25 +1,27 @@
-#pragma once
-#include <d3dx9.h>
-#include <d3d9.h>
+#ifndef __GAME_DEBUG_H__
+#define __GAME_DEBUG_H__
+
 #include "Camera.h"
 
 class GameDebugDraw 
 {
 public:
     GameDebugDraw();
+	~GameDebugDraw();
+
     void Draw();
-    void DrawLine(D3DXVECTOR2 lines[], int count);
+    void DrawLine(GVector2 lines[], int count);
     void DrawRect(RECT rect, Camera *camera = nullptr);
-    LPD3DXLINE LineDraw;
+    LP_LINE LineDraw;
     //set do rong cua duong ve, mac dinh = 10
     void setLineSize(float width);
     void setColor(D3DCOLOR color);
-    ~GameDebugDraw();
 
 private:
-    LPD3DXSPRITE mSpriteHandler;
-    LPDIRECT3DDEVICE9 mddv;
+    LP_SPRITE mSpriteHandler;
+    LP_3DDEVICE mddv;
     D3DCOLOR mColor;
 };
 
 
+#endif // __GAME_DEBUG_H__

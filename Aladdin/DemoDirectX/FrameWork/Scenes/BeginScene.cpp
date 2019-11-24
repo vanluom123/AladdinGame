@@ -45,9 +45,9 @@ void BeginScene::Update(float dt)
 void BeginScene::Draw()
 {
 	GameGlobal::GetCurrentDevice()->Clear(0, NULL, D3DCLEAR_TARGET, 0x000000, 0.0f, 0);
-	D3DXVECTOR2 trans = D3DXVECTOR2(GameGlobal::GetWidth() / 2,
+	GVector2 trans = GVector2(GameGlobal::GetWidth() / 2,
 		GameGlobal::GetHeight() / 2 + animation_1->GetSprite()->GetHeight() / 2);
-	animation_1->Draw(animation_1->GetSprite()->GetPosition(), RECT(), D3DXVECTOR2(), trans);
+	animation_1->Draw(animation_1->GetSprite()->GetPosition(), RECT(), GVector2(), trans);
 }
 
 

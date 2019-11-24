@@ -8,19 +8,18 @@ Pendulum::Pendulum()
 {
 }
 
-Pendulum::Pendulum(D3DXVECTOR3 position, GameMap * gameMap)
+Pendulum::Pendulum(GVector3 position)
 {
-	init(position, gameMap);
+	init(position);
 }
 
-Pendulum::Pendulum(D3DXVECTOR2 position, GameMap * gameMap)
+Pendulum::Pendulum(GVector2 position)
 {
-	init(D3DXVECTOR3(position.x, position.y, 0), gameMap);
+	init(GVector3(position.x, position.y, 0));
 }
 
 void Pendulum::Update(float dt)
 {
-
 }
 
 RECT Pendulum::GetBound()
@@ -33,24 +32,24 @@ RECT Pendulum::GetBound()
 	return bound;
 }
 
-void Pendulum::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVECTOR2 transform, float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
+void Pendulum::Draw(GVector3 position, RECT sourceRect, GVector2 scale, GVector2 transform, float angle, GVector2 rotationCenter, D3DXCOLOR colorKey)
 {
 	mAnimation->Draw(position, sourceRect, scale, transform, angle, rotationCenter, colorKey);
 }
 
-void Pendulum::Draw(D3DXVECTOR3 transform)
+void Pendulum::Draw(GVector3 transform)
 {
 }
 
-void Pendulum::Draw(D3DXVECTOR2 transform)
+void Pendulum::Draw(GVector2 transform)
 {
 }
 
-void Pendulum::OnCollision(Entity * impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
+void Pendulum::OnCollision(Entity* impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
 }
 
-bool Pendulum::init(D3DXVECTOR3 position, GameMap *gameMap)
+bool Pendulum::init(GVector3 position)
 {
 	this->Tag = Entity::EntityTypes::Pendulum;
 	mAnimation = new Animation(eID::Pendulum, "Pendulum", 15, 0.2, NULL);
@@ -58,11 +57,10 @@ bool Pendulum::init(D3DXVECTOR3 position, GameMap *gameMap)
 	SetPosition(position);
 	Entity::SetWidth(mAnimation->GetSprite()->GetWidth());
 	Entity::SetHeight(mAnimation->GetSprite()->GetHeight());
-	this->gameMap = gameMap;
 	return false;
 }
 
-void Pendulum::OnSetPosition(D3DXVECTOR3 poks)
+void Pendulum::OnSetPosition(GVector3 poks)
 {
 	mAnimation->SetPosition(poks);
 }

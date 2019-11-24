@@ -2,7 +2,6 @@
 
 Jafar::Jafar()
 {
-
 	this->Tag = Entity::Jafar;
 	this->mJafarData = new JafarData();
 	this->mJafarData->jafar = this;
@@ -11,10 +10,10 @@ Jafar::Jafar()
 	mCurrentAnimation = new Animation();
 	this->SetState(new JafarOriginalState(this->mJafarData));
 	faceDirection = Entity::FaceDirection::RIGHT;
-	
+
 }
 
-Jafar::Jafar(D3DXVECTOR2 position, Player *player)
+Jafar::Jafar(GVector2 position, Player* player)
 {
 	this->Tag = Entity::Jafar;
 	this->HP = 10;
@@ -27,25 +26,21 @@ Jafar::Jafar(D3DXVECTOR2 position, Player *player)
 	this->SetPosition(position);
 	faceDirection = Entity::FaceDirection::LEFT;
 	this->SetState(new JafarOriginalState(this->mJafarData));
-
-
-
 }
 
 Jafar::~Jafar()
 {
-
 }
 
 void Jafar::Update(float dt)
-{ 
+{
 	if (IsInActiveRegion() == false) return;
-	if (this->mCurrentAnimation->mCurrentIndex == this->mCurrentAnimation->mTotalFrame&&isDestroy == true)
+	if (this->mCurrentAnimation->mCurrentIndex == this->mCurrentAnimation->mTotalFrame && isDestroy == true)
 	{
 		isDeleted = true;
 		return;
 	}
-	if (this->mJafarData->jafar->mPlayer->GetPosition().x > this->mJafarData->jafar->GetPosition().x )
+	if (this->mJafarData->jafar->mPlayer->GetPosition().x > this->mJafarData->jafar->GetPosition().x)
 	{
 		this->faceDirection = Entity::FaceDirection::RIGHT;
 		this->SetReverse(false);
@@ -74,7 +69,7 @@ bool Jafar::IsInActiveRegion()
 	return false;
 }
 
-void Jafar::SetState(JafarState * newState)
+void Jafar::SetState(JafarState* newState)
 {
 	delete this->mJafarData->state;
 	this->mJafarData->state = newState;
@@ -87,17 +82,17 @@ JafarState::StateName Jafar::GetState()
 	return mCurrentState;
 }
 
-void Jafar::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVECTOR2 transform, float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
+void Jafar::Draw(GVector3 position, RECT sourceRect, GVector2 scale, GVector2 transform, float angle, GVector2 rotationCenter, D3DXCOLOR colorKey)
 {
 	mCurrentAnimation->SetFlipHorizontal(mCurrentReverse);
 	mCurrentAnimation->SetPosition(this->GetPosition());
 	mCurrentAnimation->Draw(position, sourceRect, scale, transform, angle, rotationCenter, colorKey);
 }
-void Jafar::Draw(D3DXVECTOR2 transform)
+void Jafar::Draw(GVector2 transform)
 {
 	mCurrentAnimation->SetFlipHorizontal(mCurrentReverse);
 	mCurrentAnimation->SetPosition(this->GetPosition());
-	mCurrentAnimation->Draw(this->GetPosition(), RECT(), D3DXVECTOR2(), transform);
+	mCurrentAnimation->Draw(this->GetPosition(), RECT(), GVector2(), transform);
 }
 
 RECT Jafar::GetBound()
@@ -129,13 +124,13 @@ RECT Jafar::GetBound()
 	return rect;
 }
 
-void Jafar::OnCollision(Entity * impactor,   Entity::CollisionReturn data,Entity::SideCollisions side)
+void Jafar::OnCollision(Entity* impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
 	if (this->mJafarData->jafar->GetTimeImmortal() > 0)
 		return;
 	if (this->mJafarData->state)
 		this->mJafarData->state->OnCollision(impactor, side, data);
-	if (this->HP <= 0&&this->GetState()==JafarState::Snake)
+	if (this->HP <= 0 && this->GetState() == JafarState::Snake)
 	{
 		if (isDestroy == false)
 		{
@@ -143,9 +138,9 @@ void Jafar::OnCollision(Entity * impactor,   Entity::CollisionReturn data,Entity
 			delete mCurrentAnimation;
 			mCurrentAnimation = new Animation(eID::EXPLOSION, "Explosion3rd", 5, 0.25f, NULL);
 		}
-		
+
 	}
-	else 
+	else
 		if (this->HP <= 0 && this->GetState() == JafarState::Original)
 		{
 			this->HP = 10;
@@ -155,12 +150,12 @@ void Jafar::OnCollision(Entity * impactor,   Entity::CollisionReturn data,Entity
 
 }
 
-Animation *Jafar::GetCurrentAnimation()
+Animation* Jafar::GetCurrentAnimation()
 {
 	return mCurrentAnimation;
 }
 
-Animation * Jafar::GetAnimation(JafarState::StateName state)
+Animation* Jafar::GetAnimation(JafarState::StateName state)
 {
 	switch (state)
 	{

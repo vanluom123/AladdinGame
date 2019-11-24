@@ -1,15 +1,5 @@
 ﻿#include "GameCollision.h"
 
-GameCollision::GameCollision()
-{
-
-}
-
-
-GameCollision::~GameCollision()
-{
-}
-
 Entity::CollisionReturn GameCollision::RectBox(RECT rect1, RECT rect2)
 {
 	Entity::CollisionReturn result;

@@ -1,8 +1,5 @@
 #include "../GameObjects/Entity.h"
 #include "Camera.h"
-#include <vector> 
-#include <unordered_set>
-using namespace std;
 
 #define GRID_ROW 52
 #define GRID_COLUMN 38

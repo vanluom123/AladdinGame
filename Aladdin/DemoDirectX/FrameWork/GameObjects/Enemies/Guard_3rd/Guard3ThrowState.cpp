@@ -1,4 +1,5 @@
 #include "Guard3ThrowState.h"
+#include "../../../GameComponents/GameMap.h"
 
 Guard3ThrowState::Guard3ThrowState(Guard3Data * guard3Data)
 {
@@ -29,7 +30,7 @@ void Guard3ThrowState::Update(float dt)
 		{
 			tmp = new Guard3Weapon(this->mGuard3Data->guard3->GetBound().right, this->mGuard3Data->guard3->GetBound().top+20, D3DXVECTOR2(100.0f, 5.0f), D3DXVECTOR2(1.0f, 0.4f));
 		}
-		mGuard3Data->guard3->getGameMap()->InsertWeapon(tmp);
+		GameMap::GetInstance()->InsertWeapon(tmp);
 		isThrow = false;
 	}
 	if (this->mGuard3Data->guard3->GetCurrentAnimation()->mCurrentIndex == 1&&isThrow==false)

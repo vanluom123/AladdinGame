@@ -1,8 +1,7 @@
 #include "Text.h"
 
 Text::Text()
-{
-}
+{}
 
 Text::Text(std::wstring Str, int Width, int Height, int Weight, bool IsItalic, DWORD Alignment, D3DCOLOR Color, LPCWSTR FontName)
 {
@@ -14,33 +13,33 @@ Text::Text(std::wstring Str, int Width, int Height, int Weight, bool IsItalic, D
 	isItalic = IsItalic;
 	alignment = Alignment;
 	color = Color;
-	fontName = FontName;	
+	fontName = FontName;
 	font = NULL;
 	D3DXCreateFont(
 		GameGlobal::GetCurrentDevice(),
 		0,
 		0,
 		weight,
-		1, 
+		1,
 		isItalic,
-		DEFAULT_CHARSET, 
-		OUT_DEFAULT_PRECIS, 
-		ANTIALIASED_QUALITY, 
-		FF_DONTCARE, 
-		fontName,    
+		DEFAULT_CHARSET,
+		OUT_DEFAULT_PRECIS,
+		ANTIALIASED_QUALITY,
+		FF_DONTCARE,
+		fontName,
 		&font);
 }
 
 Text::~Text()
 {
-	/*if (font) 
+	/*if (font)
 	{
 		font->Release();
 		font = NULL;
 	}*/
 }
 
-void Text::Draw(D3DXVECTOR3 position)
+void Text::Draw(GVector3 position)
 {
 	RECT rect;
 	rect.left = position.x - width / 2.0f;

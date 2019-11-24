@@ -1,6 +1,5 @@
 #ifndef __SPRITE__
 #define __SPRITE__
-#include <d3d9.h>
 
 #include "GameGlobal.h"
 
@@ -8,38 +7,34 @@ class Sprite
 {
 public:
 	Sprite(const char* filePath, RECT sourceRect = RECT(), int width = NULL, int height = NULL, D3DCOLOR colorKey = NULL);
-
 	Sprite();
-
 	~Sprite();
 
-	LPDIRECT3DTEXTURE9 GetTexture();
+	LP_3DTEXTURE GetTexture();
 
-
-public:
-	void Draw(D3DXVECTOR3 position = D3DXVECTOR3(), RECT sourceRect = RECT(), D3DXVECTOR2 scale = D3DXVECTOR2(), D3DXVECTOR2 transform = D3DXVECTOR2(), float angle = 0, D3DXVECTOR2 rotationCenter = D3DXVECTOR2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 255, 255));
-public:
+	void Draw(GVector3 position = GVector3(), RECT sourceRect = RECT(), GVector2 scale = GVector2(), GVector2 transform = GVector2(), float angle = 0, GVector2 rotationCenter = GVector2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 255, 255));
+	
 	void SetWidth(int width);
 	int GetWidth();
 
 	void SetHeight(int height);
 	int GetHeight();
 
-	D3DXIMAGE_INFO GetImageInfo();
+	IMAGE_INFO GetImageInfo();
 
-	D3DXVECTOR3 GetPosition();
-	void SetPosition(D3DXVECTOR3 pos);
+	GVector3 GetPosition();
+	void SetPosition(GVector3 pos);
 	void SetPosition(float x, float y);
-	void SetPosition(D3DXVECTOR2 pos);
+	void SetPosition(GVector2 pos);
 
-	D3DXVECTOR2 GetScale();
-	void SetScale(D3DXVECTOR2 scale);
+	GVector2 GetScale();
+	void SetScale(GVector2 scale);
 
-	D3DXVECTOR2 GetTranslation();
-	void SetTranslation(D3DXVECTOR2 translation);
+	GVector2 GetTranslation();
+	void SetTranslation(GVector2 translation);
 
-	D3DXVECTOR2 GetRotationCenter();
-	void SetRotationCenter(D3DXVECTOR2 rotationCenter);
+	GVector2 GetRotationCenter();
+	void SetRotationCenter(GVector2 rotationCenter);
 
 	float GetRotation();
 	void SetRotation(float rotation);
@@ -64,10 +59,10 @@ protected:
 
 	POINT anchorPoint;
 	bool isAnchorPoint = false;
-	D3DXVECTOR3 mPosition;
-	LPDIRECT3DTEXTURE9 mTexture;
-	LPD3DXSPRITE mSpriteHandler;
-	D3DXIMAGE_INFO mImageInfo;
+	GVector3 mPosition;
+	LP_3DTEXTURE mTexture;
+	LP_SPRITE mSpriteHandler;
+	IMAGE_INFO mImageInfo;
 	RECT mSourceRect;
 
 	int mWidth, mHeight;
@@ -77,10 +72,10 @@ protected:
 
 	float mRotation;
 
-	D3DXVECTOR2 mScale;
-	D3DXVECTOR2 mTranslation;
+	GVector2 mScale;
+	GVector2 mTranslation;
 	D3DXMATRIX mMatrix;
-	D3DXVECTOR2 mRotationCenter;
+	GVector2 mRotationCenter;
 };
 
 #endif

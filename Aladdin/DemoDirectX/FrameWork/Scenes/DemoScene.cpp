@@ -19,9 +19,7 @@ void DemoScene::LoadContent()
 }
 
 void DemoScene::Update(float dt)
-{
-
-}
+{}
 
 void DemoScene::Draw()
 {

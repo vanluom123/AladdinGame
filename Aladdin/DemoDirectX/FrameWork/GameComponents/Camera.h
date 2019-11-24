@@ -1,29 +1,28 @@
-#pragma once
+#ifndef __VIEWPORT_H__
+#define __VIEWPORT_H__
 
-#include <d3dx9.h>
-#include <d3d9.h>
+#include "../GameDefines/define.h"
 
 class Camera
 {
 public:
     Camera(int width, int height);
+	~Camera();
 
     //center of camera
     void SetPosition(float x, float y);
-    void SetPosition(D3DXVECTOR3 pos);
+    void SetPosition(GVector3 pos);
 
     int GetWidth();
     int GetHeight();
 
-    D3DXVECTOR3 GetPosition();    
+    GVector3 GetPosition();    
     RECT GetBound();
 
-    ~Camera();
-
 private:
-    int             mWidth,
-                    mHeight;
+	int mWidth;
+	int mHeight;
 
-    D3DXVECTOR3     mPosition;
+    GVector3 mPosition;
 };
-
+#endif // __VIEWPORT_H__

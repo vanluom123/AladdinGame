@@ -1,7 +1,6 @@
 #include "Apple.h"
 #include "../../GameComponents/GameGlobal.h"
 
-
 Apple::Apple()
 {
 	mAnimation = new Animation(eID::ALADDIN, "apple", 1, 0.15f, NULL);
@@ -15,7 +14,7 @@ Apple::~Apple()
 
 }
 
-bool Apple::init(D3DXVECTOR3 position)
+bool Apple::init(GVector3 position)
 {
 	this->Tag = Entity::EntityTypes::AppleAladdin;
 
@@ -30,9 +29,9 @@ bool Apple::init(D3DXVECTOR3 position)
 
 }
 
-Apple::Apple(D3DXVECTOR2 position,bool isCamelThrow)
+Apple::Apple(GVector2 position, bool isCamelThrow)
 {
-	init(D3DXVECTOR3(position.x, position.y, 0));
+	init(GVector3(position.x, position.y, 0));
 	if (isCamelThrow == true)
 	{
 		delete mAnimation;
@@ -40,7 +39,7 @@ Apple::Apple(D3DXVECTOR2 position,bool isCamelThrow)
 		this->isCamelThrow = true;
 	}
 }
-Apple::Apple(D3DXVECTOR3 position,bool isCamelThrow)
+Apple::Apple(GVector3 position, bool isCamelThrow)
 {
 	init(position);
 	if (isCamelThrow == true)
@@ -50,7 +49,7 @@ Apple::Apple(D3DXVECTOR3 position,bool isCamelThrow)
 		this->isCamelThrow = true;
 	}
 }
-void Apple::OnSetPosition(D3DXVECTOR3 pos)
+void Apple::OnSetPosition(GVector3 pos)
 {
 	mAnimation->SetPosition(pos);
 }
@@ -58,19 +57,19 @@ void Apple::OnSetPosition(D3DXVECTOR3 pos)
 void Apple::Update(float dt)
 {
 	mAnimation->Update(dt);
-	if (isCamelThrow==false)
-	this->AddVy(2.0f);
+	if (isCamelThrow == false)
+		this->AddVy(2.0f);
 	Entity::Update(dt);
 	if (mAnimation->mCurrentIndex == 5) isDeleted = true;
 }
 
-void Apple::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVECTOR2 transform, float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
+void Apple::Draw(GVector3 position, RECT sourceRect, GVector2 scale, GVector2 transform, float angle, GVector2 rotationCenter, D3DXCOLOR colorKey)
 {
 	mAnimation->Draw(position, sourceRect, scale, transform, angle, rotationCenter, colorKey);
 }
 
 
-void Apple::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
+void Apple::OnCollision(Entity* impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
 	switch (impactor->Tag)
 	{
@@ -86,6 +85,7 @@ void Apple::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::
 	case Entity::EntityTypes::Stair1:
 	case Entity::EntityTypes::Stair2:
 	case Entity::EntityTypes::Jafar:
+	{
 		this->SetVx(0);
 		this->SetVy(0);
 		if (isDestroy == false)
@@ -95,19 +95,21 @@ void Apple::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::
 			mAnimation = new Animation(eID::ALADDIN, "appledestroy", 5, 0.05f, NULL);
 			Sound::getInstance()->play("AppleSplat", false, 1);
 		}
+	}
+	break;
 	default:
 		return;
 	}
 
 }
 
-void Apple::Draw(D3DXVECTOR3 transform)
+void Apple::Draw(GVector3 transform)
 {
 
 }
-void Apple::Draw(D3DXVECTOR2 transform)
+void Apple::Draw(GVector2 transform)
 {
-	mAnimation->Draw(D3DXVECTOR3(), RECT(), D3DXVECTOR2(1, 1), transform);
+	mAnimation->Draw(GVector3(), RECT(), GVector2(1, 1), transform);
 }
 RECT Apple::GetBound()
 {

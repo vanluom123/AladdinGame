@@ -147,7 +147,7 @@ void Scene1::CheckCameraAndWorldMap()
 
 void Scene1::checkCollision(float dt)
 {
-	std::unordered_set<Entity*> listCollision;
+	unordered_set<Entity*> listCollision;
 
 	int widthBottom = 0;
 
@@ -278,7 +278,7 @@ void Scene1::CheckCollisionEnemies(float dt)
 void Scene1::EnemiesWithStaticObject(float dt)
 {
 	int width = 0;
-	std::unordered_set<Entity*> objectsCollision;
+	unordered_set<Entity*> objectsCollision;
 	Grid::GetInstance()->GetListEntity(objectsCollision, mCamera);
 
 	for (auto objColl : objectsCollision)

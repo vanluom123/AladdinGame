@@ -1,6 +1,6 @@
 #include "JafarOriginalState.h"
 
-JafarOriginalState::JafarOriginalState(JafarData * jafarData)
+JafarOriginalState::JafarOriginalState(JafarData* jafarData)
 {
 	this->mJafarData = jafarData;
 }
@@ -12,7 +12,7 @@ JafarOriginalState::~JafarOriginalState()
 void JafarOriginalState::Update(float dt)
 {
 
-	if (timeThrow<=0)
+	if (timeThrow <= 0)
 	{
 
 		Entity* tmp = nullptr;
@@ -29,15 +29,15 @@ void JafarOriginalState::Update(float dt)
 	else (timeThrow -= dt);
 }
 
-void JafarOriginalState::OnCollision(Entity * impactor, Entity::SideCollisions side, Entity::CollisionReturn data)
+void JafarOriginalState::OnCollision(Entity* impactor, Entity::SideCollisions side, Entity::CollisionReturn data)
 {
 
 	switch (impactor->Tag)
 	{
 	case Entity::Aladdin:
-		if (this->mJafarData->jafar->mPlayer->IsMakeDamage()==true&&this->mJafarData->jafar->GetTimeImmortal()<=0)
+		if (this->mJafarData->jafar->mPlayer->IsMakeDamage() == true && this->mJafarData->jafar->GetTimeImmortal() <= 0)
 
-			this->mJafarData->jafar-> TakeDamage(1);
+			this->mJafarData->jafar->TakeDamage(1);
 		this->mJafarData->jafar->SetTimeImmortal(1);
 		if (this->mJafarData->jafar->mPlayer->GetTimeImmortal() <= 0)
 		{

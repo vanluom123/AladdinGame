@@ -11,7 +11,6 @@
 #include "../GameControllers/SpriteManager.h"
 #include "../GameDefines/define.h"
 #include "../GameObjects/Player/Player.h"
-#include "../GameComponents/GameMap.h"
 #include "../GameComponents/Camera.h"
 #include "../GameComponents/GameDebugDraw.h"
 #include "../GameObjects/Weapon/Apple.h"
@@ -35,7 +34,7 @@ public:
 	void PlayMusic();
 	Scene::SceneName GetSceneName();
 protected:
-	LPD3DXSPRITE mSpriteHandler;
+	LP_SPRITE mSpriteHandler;
 
 	std::map<int, bool> keys;
 

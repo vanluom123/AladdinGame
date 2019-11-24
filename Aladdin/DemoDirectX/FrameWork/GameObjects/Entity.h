@@ -1,7 +1,5 @@
-﻿ #pragma once
-
-#include <d3dx9.h>
-#include <d3d9.h>
+﻿#ifndef __ENTITY_H__
+#define __ENTITY_H__
 
 #include "../GameComponents/GameGlobal.h"
 #include "../GameComponents/Sound.h"
@@ -77,7 +75,7 @@ public:
 	FaceDirection faceDirection;
 
 	
-	virtual void Draw(D3DXVECTOR2 trans);
+	virtual void Draw(GVector2 trans);
 
 	virtual RECT GetBound();
 	virtual RECT GetBoundBody();
@@ -87,13 +85,13 @@ public:
 
 	virtual void SetPosition(float x, float y);
 
-	virtual void SetPosition(D3DXVECTOR2 pos);
+	virtual void SetPosition(GVector2 pos);
 
-	virtual void SetPosition(D3DXVECTOR3 pos);
+	virtual void SetPosition(GVector3 pos);
 
-	virtual void AddPosition(D3DXVECTOR3 pos);
+	virtual void AddPosition(GVector3 pos);
 
-	virtual void AddPosition(D3DXVECTOR2 pos);
+	virtual void AddPosition(GVector2 pos);
 
 	virtual void AddPosition(float x, float y);
 
@@ -117,7 +115,7 @@ public:
 
 	virtual void AddVy(float vy);
 	
-	virtual D3DXVECTOR3 GetPosition();
+	virtual GVector3 GetPosition();
 
 	virtual void Update(float dt);
 
@@ -145,7 +143,7 @@ public:
 	bool IsMakeDamage();
 
 protected:
-	virtual void OnSetPosition(D3DXVECTOR3 pos);
+	virtual void OnSetPosition(GVector3 pos);
 
 	bool isDeleted = false;;
 	bool isMakeDamage = false;
@@ -167,3 +165,4 @@ protected:
 
 
 };
+#endif // __ENTITY_H__

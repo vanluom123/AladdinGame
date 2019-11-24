@@ -2,10 +2,6 @@
 #define __SCENE1_H__
 
 #include <math.h>
-#include <vector>
-#include <d3dx9.h>
-#include <d3d9.h>
-
 #include "../GameComponents/Sprite.h"
 #include "../GameComponents/Scene.h"
 #include "../GameComponents/Animation.h"
@@ -21,7 +17,6 @@
 #include "../GameControllers/SceneManager.h"
 #include "Intro.h"
 #include "EndScene.h"
-#include <unordered_set>
 
 class Scene1 : public Scene
 {
@@ -47,14 +42,14 @@ protected:
 	void EnemiesWithStaticObject(float dt);
 	void CheckCameraAndWorldMap();
 
-	LPD3DXSPRITE mSpriteHandler;
+	LP_SPRITE mSpriteHandler;
 
 	Camera* mCamera;
 	Player* mPlayer;
 	PlayerInfo* playerInfo;
 
-	std::map<int, bool> keys;
-	std::unordered_set<Entity*> mCollidable;
+	map<int, bool> keys;
+	unordered_set<Entity*> mCollidable;
 
 	float mTimeCounter;
 };

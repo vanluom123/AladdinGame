@@ -1,16 +1,17 @@
 #include "Guard2RunState.h"
+#include "../Guard_1st/Guard1State.h"
 
-Guard2RunState::Guard2RunState(Guard2Data * guard2Data)
+Guard2RunState::Guard2RunState(Guard2Data* guard2Data)
 {
 	this->mGuard2Data = guard2Data;
 	mGuard2Data->guard2->SetVy(0);
-	
+
 	if (this->mGuard2Data->guard2->getFaceDirection() == Entity::LEFT)
 	{
 		mGuard2Data->guard2->SetVx(-mGuard2Data->guard2->Vx);
 		this->mGuard2Data->guard2->SetReverse(false);
 	}
-	else 
+	else
 	{
 		mGuard2Data->guard2->SetVx(mGuard2Data->guard2->Vx);
 		this->mGuard2Data->guard2->SetReverse(true);
@@ -39,7 +40,7 @@ void Guard2RunState::Update(float dt)
 		this->mGuard2Data->guard2->SetState(new Guard2DartState(mGuard2Data));
 }
 
-void Guard2RunState::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
+void Guard2RunState::OnCollision(Entity* impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
 	switch (impactor->Tag)
 	{

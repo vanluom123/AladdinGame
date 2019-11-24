@@ -1,17 +1,12 @@
 #pragma once
 
 #include <math.h>
-#include <vector>
-#include <d3dx9.h>
-#include <d3d9.h>
-
 #include "../GameComponents/Sprite.h"
 #include "../GameComponents/Scene.h"
 #include "../GameComponents/Animation.h"
 #include "../GameControllers/SpriteManager.h"
 #include "../GameDefines/define.h"
 #include "../GameObjects/Player/Player.h"
-#include "../GameComponents/GameMap.h"
 #include "../GameComponents/Camera.h"
 #include "../GameComponents/GameDebugDraw.h"
 #include "../GameObjects/Weapon/Apple.h"
@@ -35,7 +30,7 @@ public:
 	Scene::SceneName GetSceneName();
 
 protected:
-	LPD3DXSPRITE mSpriteHandler;
+	LP_SPRITE mSpriteHandler;
 
 	std::map<int, bool> keys;
 

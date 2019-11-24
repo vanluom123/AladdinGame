@@ -60,7 +60,7 @@ void GameMap::LoadMap(char* filePath)
 	{
 		const Tmx::Tileset* tileset = mMap->GetTileset(i);
 		Sprite* sprite = new Sprite(tileset->GetImage()->GetSource().c_str(), RECT(), NULL, NULL, D3DCOLOR_XRGB(0x00, 0xff, 0xff));
-		mTilesets.insert(std::pair<int, Sprite*>(i, sprite));
+		mTilesets.insert(pair<int, Sprite*>(i, sprite));
 	}
 
 #pragma region -OBJECTGROUP, STATIC OBJECT-
@@ -68,7 +68,7 @@ void GameMap::LoadMap(char* filePath)
 	for (size_t i = 0; i < mMap->GetNumObjectGroups(); i++)
 	{
 		const Tmx::ObjectGroup* objectGroup = mMap->GetObjectGroup(i);
-		
+
 		// Visible object
 		if (!objectGroup->IsVisible())
 			continue;
@@ -116,7 +116,7 @@ void GameMap::LoadMapItems(char* filePath)
 			fgets(info, 100, file);
 			float x, y;
 			(void)fscanf(file, "%s %f %f", &name, &x, &y);
-			D3DXVECTOR2 position = D3DXVECTOR2(x, y);
+			GVector2 position = GVector2(x, y);
 			Items* tmp;
 
 			char chr = name[strlen(name) - 1];
@@ -204,7 +204,7 @@ void GameMap::LoadMapObjects(char* filePath)
 			char type[100];
 			float x, y;
 			(void)fscanf(file, "%s %s %f %f", &name, &type, &x, &y);
-			D3DXVECTOR2 position = D3DXVECTOR2(x, y);
+			GVector2 position = GVector2(x, y);
 			Entity* tmp = nullptr;
 			Items* temp;
 			char chr = name[strlen(name) - 1];
@@ -217,26 +217,14 @@ void GameMap::LoadMapObjects(char* filePath)
 				tmp = new Guard2(position, this->mPlayer);
 				break;
 			case '3':
-			{
-				Guard3* temp = new Guard3(position, this->mPlayer);
-				temp->SetGameMap(this);
-				tmp = temp;
-			}
-			break;
+				tmp = new Guard3(position, this->mPlayer);
+				break;
 			case '4':
-			{
-				CivilianEnemy1st* temp = new CivilianEnemy1st(position, this->mPlayer);
-				temp->SetGameMap(this);
-				tmp = temp;
-			}
-			break;
+				tmp = new CivilianEnemy1st(position, this->mPlayer);
+				break;
 			case '5':
-			{
-				CivilianEnemy2nd* temp = new CivilianEnemy2nd(position, this->mPlayer);
-				temp->SetGameMap(this);
-				tmp = temp;
-			}
-			break;
+				tmp = new CivilianEnemy2nd(position, this->mPlayer);
+				break;
 			case '7':
 			{
 				CivilianEnemy4th* temp = new CivilianEnemy4th(position, this->mPlayer);
@@ -244,23 +232,19 @@ void GameMap::LoadMapObjects(char* filePath)
 			}
 			break;
 			case 'b':
-			{
-				BatEnemy* temp = new BatEnemy(position, this->mPlayer);
-				temp->SetGameMap(this);
-				tmp = temp;
-			}
-			break;
+				tmp = new BatEnemy(position, this->mPlayer);
+				break;
 			case 'p':
-				tmp = new class Pendulum(position, this);
+				tmp = new class Pendulum(position);
 				break;
 			case 'f':
-				tmp = new FloatingGround(D3DXVECTOR3(position.x, position.y, 0));
+				tmp = new FloatingGround(GVector3(position.x, position.y, 0));
 				break;
 			case 'j':
 				tmp = new class Jafar(position, mPlayer);
 				break;
 			case 'a':
-				tmp = new class Camel(position, this);
+				tmp = new class Camel(position);
 				break;
 			case 's':
 				tmp = new class SpringBoard(position);
@@ -284,12 +268,10 @@ void GameMap::LoadMapObjects(char* filePath)
 
 bool GameMap::isContain(RECT rect1, RECT rect2)
 {
-	if (rect1.left > rect2.right || rect1.right < rect2.left || rect1.top > rect2.bottom || rect1.bottom < rect2.top)
-	{
-		return false;
-	}
-
-	return true;
+	return !(rect1.left > rect2.right
+		|| rect1.right < rect2.left
+		|| rect1.top > rect2.bottom
+		|| rect1.bottom < rect2.top);
 }
 
 Tmx::Map* GameMap::GetMap()
@@ -300,12 +282,10 @@ Tmx::Map* GameMap::GetMap()
 int GameMap::GetWidth()
 {
 	return mMap->GetWidth() * mMap->GetTileWidth();
-
 }
 
 int GameMap::GetHeight()
 {
-	//return mMap->GetHeight();
 	return mMap->GetHeight() * mMap->GetTileHeight();
 }
 
@@ -399,7 +379,7 @@ void GameMap::Update(float dt)
 
 void GameMap::Draw()
 {
-	D3DXVECTOR2 trans = D3DXVECTOR2(GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x,
+	GVector2 trans = GVector2(GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x,
 		GameGlobal::GetHeight() / 2 - mCamera->GetPosition().y);
 
 #pragma region Draw_MAP
@@ -427,7 +407,7 @@ void GameMap::Draw()
 			for (auto it : mApples)
 			{
 				if (it->IsDraw() == true)
-					it->Draw(it->GetPosition(), RECT(), D3DXVECTOR2(), trans);
+					it->Draw(it->GetPosition(), RECT(), GVector2(), trans);
 			}
 			for (auto it : mWeapons)
 			{
@@ -438,7 +418,7 @@ void GameMap::Draw()
 			mPlayer->Draw();
 		}
 
-		RECT sourceRECT;
+		RECT srcRect;
 
 		int tileWidth = mMap->GetTileWidth();
 		int tileHeight = mMap->GetTileHeight();
@@ -464,31 +444,29 @@ void GameMap::Draw()
 					int y = tileID / tileSetWidth;
 					int x = tileID - y * tileSetWidth;
 
-					sourceRECT.top = y * tileHeight;
-					sourceRECT.bottom = sourceRECT.top + tileHeight;
-					sourceRECT.left = x * tileWidth;
-					sourceRECT.right = sourceRECT.left + tileWidth;
+					srcRect.top = y * tileHeight;
+					srcRect.bottom = srcRect.top + tileHeight;
+					srcRect.left = x * tileWidth;
+					srcRect.right = srcRect.left + tileWidth;
 
-					//tru tilewidth/2 va tileheight/2 vi Sprite ve o vi tri giua hinh anh cho nen doi hinh de cho
-					//dung toa do (0,0) cua the gioi thuc la (0,0) neu khong thi se la (-tilewidth/2, -tileheigth/2);
-					D3DXVECTOR3 position(n * tileWidth + tileWidth / 2, m * tileHeight + tileHeight / 2, 0);
+					GVector3 position(n * tileWidth + tileWidth / 2, m * tileHeight + tileHeight / 2, 0);
 
 					if (mCamera != NULL)
 					{
-						RECT objRECT;
-						objRECT.left = position.x - tileWidth / 2;
-						objRECT.top = position.y - tileHeight / 2;
-						objRECT.right = objRECT.left + tileWidth;
-						objRECT.bottom = objRECT.top + tileHeight;
+						RECT entRect;
+						entRect.left = position.x - tileWidth / 2;
+						entRect.top = position.y - tileHeight / 2;
+						entRect.right = entRect.left + tileWidth;
+						entRect.bottom = entRect.top + tileHeight;
 
 						//neu nam ngoai camera thi khong Draw
-						if (isContain(objRECT, mCamera->GetBound()) == false)
+						if (isContain(entRect, mCamera->GetBound()) == false)
 							continue;
 					}
 
 					sprite->SetWidth(tileWidth);
 					sprite->SetHeight(tileHeight);
-					sprite->Draw(position, sourceRECT, D3DXVECTOR2(), trans);
+					sprite->Draw(position, srcRect, GVector2(), trans);
 				}
 			}
 		}
