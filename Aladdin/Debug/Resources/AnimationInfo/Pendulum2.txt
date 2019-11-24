@@ -1,0 +1,13 @@
+Pendulum13 87 1 33 53 0 0
+Pendulum12 1 56 32 56 0 0
+Pendulum11 53 56 31 57 0 0
+Pendulum10 86 56 30 59 0 0
+Pendulum9 19 117 28 63 0 0
+Pendulum8 49 117 26 65 0 0
+Pendulum7 97 117 21 67 0 0
+Pendulum6 77 117 18 65 0 0
+Pendulum5 1 117 16 60 0 0
+Pendulum4 35 56 16 56 0 0
+Pendulum3 70 1 15 52 0 0
+Pendulum2 18 1 15 50 0 0
+Pendulum1 1 1 15 47 0 0

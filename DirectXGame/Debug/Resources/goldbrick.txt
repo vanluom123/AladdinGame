@@ -1,6 +1,0 @@
-GOLDBRICK	left	top	right	bottom
-goldbrick1 	2 	2 	32 	32
-goldbrick2 	38	2 	32	32
-goldbrick3 	74 	2 	32 	32
-goldbrick4 	110 	2 	32 	32
-normalbrick1 	146 	2 	32 	32

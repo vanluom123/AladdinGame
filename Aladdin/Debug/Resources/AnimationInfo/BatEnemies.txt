@@ -1,0 +1,4 @@
+	BAT_INFO  BackGroundTransparent = (255,0,255)
+BatEnemy 9 18 7 16 0 0
+
+

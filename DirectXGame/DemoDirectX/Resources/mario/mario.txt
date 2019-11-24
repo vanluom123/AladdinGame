@@ -1,5 +1,0 @@
-MARIO		left	top	right	bottom
-jump1		2 	2 	32 	32
-run1		38 	2 	31 	32
-run2		73 	2 	24 	32
-stand1		101 	2 	24 	32
