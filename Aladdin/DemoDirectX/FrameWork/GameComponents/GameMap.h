@@ -1,7 +1,12 @@
-﻿#ifndef __GAME_MAP__
+﻿#pragma once
+#ifndef __GAME_MAP__
 #define __GAME_MAP__
 
+#include <d3dx9.h>
+#include <d3d9.h>
+#include <vector>
 #include <fstream>
+
 
 #include "../GameComponents/Sprite.h"
 #include "../MapReader/Tmx.h.in"
@@ -26,32 +31,31 @@
 #include "../GameObjects/MapObject/Camel.h"
 #include "../GameObjects/MapObject/SpringBoard.h"
 #include "../GameObjects/MapObject/Pelder.h"
-
-
 class GameMap
 {
 public:
-	~GameMap();
-	static GameMap* GetInstance();
-
-	void Initialize(char* filePath);
-
-	static void Release();
-
+	GameMap() {};
+	GameMap(char* filePath);
 	void LoadMapItems(char* filePath);
 	void ReloadItems();
 
 	void LoadMapObjects(char* filePath);
 	void ReloadObjects();
+	std::vector<Entity*>* GetListEnemies();
 
 	void InsertAppleAladdin(Apple* apple);
+
+	std::vector<Apple*>* GetListApples();
+
 	void InsertStaticObject(Entity* entity);
+
 	void InsertWeapon(Entity* weapon);
+	std::vector<Entity*>* GetListWeapons();
 
 	void ClearList();
-	void ClearEnemiesInRegion(RECT region);
+	void ClearEnemiesInRegion(RECT region);//enemies trong region ->chet'.S
 
-	Player* mPlayer;
+	Player* mPlayer;	//
 
 	Tmx::Map* GetMap();
 
@@ -64,47 +68,30 @@ public:
 	void Update(float dt);
 	void Draw();
 
-private:
-	GameMap() = default;
-	static GameMap* _instance;
+	~GameMap();
 
-	void LoadMap(char* filePath);
-	bool isContain(RECT rect1, RECT rect2);
 
-	Tmx::Map* mMap;
-	Grid* mGrid;
-	Camera* mCamera;
+	Grid* GetGrid();
+
 
 	char* mListItemsFile;
 	char* mListObjectsFile;
 
-	unordered_map<int, Sprite*> mTilesets;
+private:
+	void LoadMap(char* filePath);
+	bool isContain(RECT rect1, RECT rect2);
 
-	unordered_set<Entity*> mWeapons;
-	unordered_set<Entity*> mEnemies;
-	unordered_set<Apple*> mApples;
-	unordered_set<Items*> mItems;
+	Tmx::Map* mMap;
+	std::map<int, Sprite*> mListTileset;
 
-public:
-	unordered_set<Items*>* GetItems()
-	{
-		return &mItems;
-	}
+	Grid* mGrid;
 
-	unordered_set<Entity*>* GetEnemies()
-	{
-		return &mEnemies;
-	}
+	Camera* mCamera;
 
-	unordered_set<Apple*>* GetApples()
-	{
-		return &mApples;
-	}
-
-	unordered_set<Entity*>* GetWeapons()
-	{
-		return &mWeapons;
-	}
+	std::vector<Items*> mListItems;	//Vector Items.
+	std::vector<Apple*>* mListApples; // Vector giữ con trỏ Apple Aladidn ném ra
+	std::vector<Entity*>* mListEnemies; // Vector giữ con trỏ các Enemies
+	std::vector<Entity*>* mListWeapons; // Vector giữ con trỏ vũ khí mà Enemies ném ra.
 };
 
 #endif

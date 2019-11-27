@@ -9,7 +9,7 @@ BatEnemy::BatEnemy()
 	this->mBatEnemyData->batEnemy->SetState(new BatEnemyFlyState(this->mBatEnemyData));
 }
 
-BatEnemy::BatEnemy(GVector2 position, Player* mplayer)
+BatEnemy::BatEnemy(D3DXVECTOR2 position, Player* mplayer)
 {
 	this->isDraw = true;
 	this->isDeleted = false;
@@ -28,6 +28,16 @@ BatEnemy::BatEnemy(GVector2 position, Player* mplayer)
 
 BatEnemy::~BatEnemy()
 {
+}
+
+void BatEnemy::SetGameMap(GameMap * gamemap)
+{
+	this->mGamMap = gamemap;
+}
+
+GameMap * BatEnemy::getGameMap()
+{
+	return this->mGamMap;
 }
 
 void BatEnemy::Update(float dt)
@@ -52,15 +62,15 @@ void BatEnemy::Update(float dt)
 	}
 }
 
-void BatEnemy::SetState(BatEnemyState* newState)
+void BatEnemy::SetState(BatEnemyState *newState)
 {
 	delete this->mBatEnemyData->state;
 	this->mBatEnemyData->state = newState;
-	this->changeAnimation(newState->GetState());
+	this -> changeAnimation(newState->GetState());
 	mCurrentState = newState->GetState();
 }
 
-void BatEnemy::Draw(GVector3 position, RECT sourceRect, GVector2 scale, GVector2 transform, float angle, GVector2 rotationCenter, D3DXCOLOR colorKey)
+void BatEnemy::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVECTOR2 transform, float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
 {
 	if (IsNearToPlayer() == true)
 	{
@@ -69,16 +79,16 @@ void BatEnemy::Draw(GVector3 position, RECT sourceRect, GVector2 scale, GVector2
 	}
 }
 
-void BatEnemy::Draw(GVector2 transform)
+void BatEnemy::Draw(D3DXVECTOR2 transform)
 {
 	if (IsNearToPlayer() == true)
 	{
 		mCurrentAnimation->SetPosition(this->GetPosition());
-		mCurrentAnimation->Draw(this->GetPosition(), RECT(), GVector2(), transform);
+		mCurrentAnimation->Draw(this->GetPosition(), RECT(), D3DXVECTOR2(), transform);
 	}
 }
 
-void BatEnemy::OnCollision(Entity* impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
+void BatEnemy::OnCollision(Entity * impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
 	switch (impactor->Tag)
 	{
@@ -98,8 +108,8 @@ void BatEnemy::OnCollision(Entity* impactor, Entity::CollisionReturn data, Entit
 
 RECT BatEnemy::GetBound()
 {
-	RECT rect;
 	POINT tmp = this->mBatEnemyData->batEnemy->GetCurrentAnimation()->GetAnchorPoint();
+	RECT rect;
 	if (tmp.x == -1 && tmp.y == -1)
 	{
 		rect.left = this->posX - mCurrentAnimation->GetSprite()->GetWidth() / 2;
@@ -109,27 +119,28 @@ RECT BatEnemy::GetBound()
 	}
 	else
 	{
-		rect.left = this->posX - tmp.x;
-		rect.right = rect.left + mCurrentAnimation->GetSprite()->GetWidth();
+		{
+			rect.left = this->posX - tmp.x;
+			rect.right = rect.left + mCurrentAnimation->GetSprite()->GetWidth();
+		}
 		rect.top = this->posY - tmp.y;
 		rect.bottom = rect.top + mCurrentAnimation->GetSprite()->GetHeight();
 	}
-
 	return rect;
 }
 
-Animation* BatEnemy::GetCurrentAnimation()
+Animation * BatEnemy::GetCurrentAnimation()
 {
 	return mCurrentAnimation;
 }
 
-Animation* BatEnemy::GetAnimation(BatEnemyState::StateName state)
+Animation * BatEnemy::GetAnimation(BatEnemyState::StateName state)
 {
 	switch (state)
 	{
 	case BatEnemyState::fly:
 		return mAnimationFly;
-
+	
 	default:
 		break;
 	}
@@ -148,7 +159,7 @@ bool BatEnemy::IsNearToPlayer()
 	return false;
 }
 
-void BatEnemy::OnSetPosition(GVector3 pos)
+void BatEnemy::OnSetPosition(D3DXVECTOR3 pos)
 {
 	mCurrentAnimation->SetPosition(pos);
 }

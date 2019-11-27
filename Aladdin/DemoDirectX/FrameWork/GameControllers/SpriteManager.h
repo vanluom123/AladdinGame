@@ -7,6 +7,7 @@
 
 #include "../GameDefines/define.h"
 #include "../GameComponents/Sprite.h"
+#include <unordered_map>
 
 
 class SpriteManager
@@ -21,7 +22,11 @@ public:
 	RECT getSourceRect(eID id, string name);
 	POINT getAnchorPoint(eID id, string name);
 	void loadSpriteInfo(eID id, const char* fileInfoPath);
-	void loadSpriteInfo(eID id, const char* fileInfoPath,bool isHaveAnchorPoint);
+	void loadSpriteInfo(eID id, const char* fileInfoPath, bool isHaveAnchorPoint);
+
+	void loadXMLDoc(eID id, const char* XMLPath);
+	void loadXMLDoc(eID id, const char* XMLPath, bool isPivot);
+
 	// release Sprite, dont release Texture, keep Texture to use in another Sprite.
 	void releaseSprite(eID id);
 
@@ -34,10 +39,8 @@ public:
 private:
 	SpriteManager(void);
 	static SpriteManager* _instance;
-	map<eID, Sprite*> _listSprite;
-	map<eID, map<string, RECT> > _sourceRectList;
-	map<eID, map<string, POINT> > _anchorPointList;
-
-	Sprite* loadXMLDoc(LPD3DXSPRITE spritehandle, LPWSTR path);
+	unordered_map<eID, Sprite*> _listSprite;
+	unordered_map<eID, unordered_map<string, RECT> > _sourceRectList;
+	unordered_map<eID, unordered_map<string, POINT> > _anchorPointList;
 };
 #endif // !__SPRITEMANAGER_H__

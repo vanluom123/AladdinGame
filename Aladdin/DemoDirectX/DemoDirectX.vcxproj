@@ -60,10 +60,9 @@
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CallingConvention>StdCall</CallingConvention>
       <SDLCheck>true</SDLCheck>
-      <DisableSpecificWarnings>26812;26495;4244;4035;4305;4267;4018;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3dx9.lib;d3d9.lib;dxguid.lib;dinput8.lib;winmm.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -151,10 +150,12 @@
     <ClCompile Include="FrameWork\GameObjects\Jafar\JafarOriginalState.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Jafar\JafarSnakeState.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Jafar\JafarState.cpp" />
+    <ClCompile Include="FrameWork\GameObjects\MapObject\BrickDynamic.cpp" />
     <ClCompile Include="FrameWork\GameObjects\MapObject\Camel.cpp" />
     <ClCompile Include="FrameWork\GameObjects\MapObject\Pelder.cpp" />
     <ClCompile Include="FrameWork\GameObjects\MapObject\Pendulum.cpp" />
     <ClCompile Include="FrameWork\GameObjects\MapObject\SpringBoard.cpp" />
+    <ClCompile Include="FrameWork\GameObjects\MapObject\Trap.cpp" />
     <ClCompile Include="FrameWork\GameObjects\PlayerInfo.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Items.cpp" />
     <ClCompile Include="FrameWork\GameObjects\MapObject\FloatingGround.cpp" />
@@ -223,6 +224,10 @@
     <ClCompile Include="FrameWork\Scenes\EndScene.cpp" />
     <ClCompile Include="FrameWork\Scenes\Intro.cpp" />
     <ClCompile Include="FrameWork\Scenes\Scene1.cpp" />
+    <ClCompile Include="FrameWork\TinyXML\tinystr.cpp" />
+    <ClCompile Include="FrameWork\TinyXML\tinyxml.cpp" />
+    <ClCompile Include="FrameWork\TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="FrameWork\TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -293,10 +298,12 @@
     <ClInclude Include="FrameWork\GameObjects\Jafar\JafarOriginalState.h" />
     <ClInclude Include="FrameWork\GameObjects\Jafar\JafarSnakeState.h" />
     <ClInclude Include="FrameWork\GameObjects\Jafar\JafarState.h" />
+    <ClInclude Include="FrameWork\GameObjects\MapObject\BrickDynamic.h" />
     <ClInclude Include="FrameWork\GameObjects\MapObject\Camel.h" />
     <ClInclude Include="FrameWork\GameObjects\MapObject\Pelder.h" />
     <ClInclude Include="FrameWork\GameObjects\MapObject\Pendulum.h" />
     <ClInclude Include="FrameWork\GameObjects\MapObject\SpringBoard.h" />
+    <ClInclude Include="FrameWork\GameObjects\MapObject\Trap.h" />
     <ClInclude Include="FrameWork\GameObjects\PlayerInfo.h" />
     <ClInclude Include="FrameWork\GameObjects\Items.h" />
     <ClInclude Include="FrameWork\GameObjects\MapObject\FloatingGround.h" />
@@ -368,6 +375,8 @@
     <ClInclude Include="FrameWork\Scenes\EndScene.h" />
     <ClInclude Include="FrameWork\Scenes\Intro.h" />
     <ClInclude Include="FrameWork\Scenes\Scene1.h" />
+    <ClInclude Include="FrameWork\TinyXML\tinystr.h" />
+    <ClInclude Include="FrameWork\TinyXML\tinyxml.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FrameWork\MapReader\Tmx.h.in" />

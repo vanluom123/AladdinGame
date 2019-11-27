@@ -3,19 +3,23 @@
 
 
 PlayerInfo::PlayerInfo()
-{}
+{
+
+}
 
 PlayerInfo::~PlayerInfo()
-{}
+{
 
+}
 PlayerInfo::PlayerInfo(Player* player)
 {
 	init(player);
 }
-
 bool PlayerInfo::init(Player* player)
 {
-	this->position = GVector3(0, 0, 0);
+
+
+	this->position = D3DXVECTOR3(0, 0, 0);
 
 	this->player = player;
 	playerHP = player->GetHealth();
@@ -23,14 +27,14 @@ bool PlayerInfo::init(Player* player)
 	this->Apple = new Animation(eID::ITEMS, "apple", 1, 1.0f, NULL);
 	this->Money = new Animation(eID::ITEMS, "spendthese", 1, 1.0f, NULL);
 	this->UP = new Animation(eID::ITEMS, "UP", 1, 1.0f, NULL);
-	healthMeterPosition = GVector3(10, 20, 0);
-	ApplePosition = GVector3(GameGlobal::GetWidth() / 2 - 20, GameGlobal::GetHeight() / 2 - 10, 0);
-	MoneyPosition = GVector3(GameGlobal::GetWidth() / 2 - 40, GameGlobal::GetHeight() / 2 - 10, 0);
-	UPPosition = GVector3(20, GameGlobal::GetHeight() / 2 - 10, 0);
-	numScorePosition = GVector3(GameGlobal::GetWidth() - 47, 50, 0);
-	numApplesPosition = GVector3(GameGlobal::GetWidth() - 7, GameGlobal::GetHeight() - 5, 0);
-	numLivesPosition = GVector3(80, GameGlobal::GetHeight() - 5, 1000);
-	numMoneyPosition = GVector3(GameGlobal::GetWidth() - 47, GameGlobal::GetHeight() - 5, -1001);
+	healthMeterPosition = D3DXVECTOR3(10, 20, 0);
+	ApplePosition = D3DXVECTOR3(GameGlobal::GetWidth() / 2 - 20, GameGlobal::GetHeight() / 2 - 10, 0);
+	MoneyPosition = D3DXVECTOR3(GameGlobal::GetWidth() / 2 - 40, GameGlobal::GetHeight() / 2 - 10, 0);
+	UPPosition = D3DXVECTOR3(20, GameGlobal::GetHeight() / 2 - 10, 0);
+	numScorePosition = D3DXVECTOR3(GameGlobal::GetWidth() - 47, 50, 0);
+	numApplesPosition = D3DXVECTOR3(GameGlobal::GetWidth() - 7, GameGlobal::GetHeight()-5,0);
+	numLivesPosition = D3DXVECTOR3( 80 ,GameGlobal::GetHeight() - 5, 1000);
+	numMoneyPosition = D3DXVECTOR3(GameGlobal::GetWidth() - 47, GameGlobal::GetHeight() - 5, -1001);
 
 	this->numApples = Text(to_wstring(this->player->GetNumApples()), 50, 50, FW_NORMAL, false, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255), L"Consolas");
 	this->numLives = Text(to_wstring(this->player->GetNumLives()), 50, 50, FW_NORMAL, false, DT_LEFT, D3DCOLOR_XRGB(0, 0, 255), L"Consolas");
@@ -60,6 +64,8 @@ void PlayerInfo::Draw()
 
 	if (mCamera)
 	{
+		//D3DXVECTOR2 trans = D3DXVECTOR2(GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x,
+		//	GameGlobal::GetHeight() / 2 - mCamera->GetPosition().y);
 		D3DXVECTOR2 trans = D3DXVECTOR2(GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x + mCamera->GetBound().left + healthMeterPosition.x,
 			GameGlobal::GetHeight() / 2 - mCamera->GetPosition().y + mCamera->GetBound().top + healthMeterPosition.y);
 		healthMeter->Draw(healthMeterPosition, RECT(), D3DXVECTOR2(), trans);

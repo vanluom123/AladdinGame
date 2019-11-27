@@ -70,10 +70,10 @@ void EndScene::OnKeyDown(int keyCode)
 		}
 		}
 	}
-	else
+	else 
 		if (keyCode == VK_LEFT || keyCode == VK_RIGHT)
 		{
-			if (currentEndScene == 3 || currentEndScene == 4)
+			if (currentEndScene == 3||currentEndScene==4)
 			{
 				if (keyCode == VK_LEFT)
 				{

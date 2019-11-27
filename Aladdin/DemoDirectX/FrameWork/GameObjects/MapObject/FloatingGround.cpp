@@ -78,7 +78,7 @@ void FloatingGround::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 sca
 
 void FloatingGround::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
-	Entity::SideCollisions sideCol = GameCollision::GetSideCollision(this, data);
+	Entity::SideCollisions sideCol = GameCollision::getSideCollision(this, data);
 	if (sideCol == Entity::SideCollisions::Top|| sideCol == Entity::SideCollisions::TopLeft|| sideCol == Entity::SideCollisions::TopRight)
 	{
 		isCollision_with_Aladdin = true;

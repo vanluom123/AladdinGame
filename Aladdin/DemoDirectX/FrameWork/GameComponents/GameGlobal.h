@@ -1,22 +1,26 @@
+#pragma once
 #ifndef __GAME_GLOBAL__
 #define __GAME_GLOBAL__
+#include <d3dx9.h>
+#include <d3d9.h>
 #include <Windows.h>
-#include "../GameDefines/define.h"
-
 class GameGlobal
 {
 public:
+	GameGlobal();
+	~GameGlobal();
+
 	static HINSTANCE GetCurrentHINSTANCE();
 	static HWND getCurrentHWND();
 
 	static void SetCurrentHINSTANCE(HINSTANCE hInstance);
 	static void SetCurrentHWND(HWND hWnd);
 
-	static void SetCurrentSpriteHandler(LP_SPRITE spriteHandler);
-	static LP_SPRITE GetCurrentSpriteHandler();
+	static void SetCurrentSpriteHandler(LPD3DXSPRITE spriteHandler);
+	static LPD3DXSPRITE GetCurrentSpriteHandler();
 
-	static void SetCurrentDevice(LP_3DDEVICE device);
-	static LP_3DDEVICE GetCurrentDevice();
+	static void SetCurrentDevice(LPDIRECT3DDEVICE9 device);
+	static LPDIRECT3DDEVICE9 GetCurrentDevice();
 
 	static void SetWidth(int width);
 	static int GetWidth();
@@ -24,16 +28,17 @@ public:
 	static void SetHeight(int height);
 	static int GetHeight();
 
-	static LP_3DSURFACE backSurface;
+	static LPDIRECT3DSURFACE9 backSurface;
 
 	static bool isGameRunning;
 	
 private:
+	
 	static HINSTANCE mHInstance;
 	static HWND mHwnd;
-	static LP_SPRITE mSpriteHandler;
+	static LPD3DXSPRITE mSpriteHandler;
 	static int mWidth, mHeight;
-	static LP_3DDEVICE mDevice;
+	static LPDIRECT3DDEVICE9 mDevice;
 
 };
 

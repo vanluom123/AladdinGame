@@ -36,8 +36,6 @@ OBJECT INFO SCENE1
 5 CivilianEnemy2 2544 165
 5 CivilianEnemy2 3081 165
 7 CivilianEnemy4 2848 422
-b BatEnemy 345 975
-p Pendulum 605 990
 a Camel 1551 663
 f FloatingGround 1650 446
 f FloatingGround 4145 442
@@ -46,3 +44,19 @@ s SpringBoard 3443 252
 s SpringBoard 3456 173
 s SpringBoard 4227 127
 S Pelder 3947 215
+
+b BatEnemy 345 975
+
+p Pendulum 976.33 1027.00 1
+p Pendulum 1032.67 1012.33 0
+p Pendulum 1119.00 1007.33 1
+
+t trap 736.50 1058.00 1
+t trap 736.75 1081.00 0
+t trap 762.00 1058.00 1
+t trap 762.25 1080.75 0
+
+k brick 1310.50 1048.00 1
+k brick 1272.00 1011.00 0
+k brick 1316.00 968.00 1
+k brick 1320.33 643.67 0

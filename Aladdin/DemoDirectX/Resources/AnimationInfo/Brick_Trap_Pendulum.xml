@@ -1,0 +1,28 @@
+<TextureAtlas imagePath="objectmapspritesheet.png" width="251" height="219">
+    <sprite n="brick_1" x="4" y="4" w="30" h="15" pX="0" pY="0"/>
+    <sprite n="brick_2" x="44" y="4" w="31" h="15" pX="0" pY="0"/>
+    <sprite n="brick_3" x="85" y="4" w="34" h="17" pX="0" pY="0"/>
+    <sprite n="brick_4" x="161" y="4" w="38" h="21" pX="0" pY="0"/>
+    <sprite n="brick_5" x="4" y="37" w="40" h="24" pX="0" pY="0"/>
+    <sprite n="pendulum_1" x="4" y="82" w="14" h="45" pX="0" pY="0"/>
+    <sprite n="pendulum_2" x="28" y="82" w="15" h="47" pX="1" pY="0"/>
+    <sprite n="pendulum_3" x="53" y="82" w="15" h="50" pX="1" pY="0"/>
+    <sprite n="pendulum_4" x="121" y="82" w="15" h="52" pX="1" pY="0"/>
+    <sprite n="pendulum_5" x="189" y="82" w="16" h="56" pX="1" pY="0"/>
+    <sprite n="pendulum_6" x="85" y="148" w="16" h="60" pX="0" pY="0"/>
+    <sprite n="pendulum_7" x="149" y="148" w="18" h="65" pX="0" pY="0"/>
+    <sprite n="pendulum_8" x="213" y="148" w="21" h="67" pX="0" pY="0"/>
+    <sprite n="pendulum_9" x="177" y="148" w="26" h="65" pX="0" pY="0"/>
+    <sprite n="pendulum_10" x="111" y="148" w="28" h="63" pX="0" pY="0"/>
+    <sprite n="pendulum_11" x="45" y="148" w="30" h="59" pX="0" pY="0"/>
+    <sprite n="pendulum_12" x="4" y="148" w="31" h="57" pX="0" pY="0"/>
+    <sprite n="pendulum_13" x="215" y="82" w="32" h="56" pX="0" pY="0"/>
+    <sprite n="pendulum_14" x="146" y="82" w="33" h="53" pX="0" pY="0"/>
+    <sprite n="pendulum_15" x="78" y="82" w="33" h="52" pX="0" pY="0"/>
+    <sprite n="Trap_1" x="129" y="4" w="22" h="20" pX="0" pY="0"/>
+    <sprite n="Trap_2" x="209" y="4" w="23" h="23" pX="1" pY="0"/>
+    <sprite n="Trap_3" x="54" y="37" w="26" h="28" pX="1" pY="0"/>
+    <sprite n="Trap_4" x="90" y="37" w="33" h="31" pX="1" pY="0"/>
+    <sprite n="Trap_5" x="133" y="37" w="42" h="34" pX="1" pY="0"/>
+    <sprite n="Trap_6" x="185" y="37" w="49" h="35" pX="1" pY="0"/>
+</TextureAtlas>

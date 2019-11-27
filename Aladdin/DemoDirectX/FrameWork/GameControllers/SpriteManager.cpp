@@ -32,7 +32,10 @@ they often are called in object::release
 
 Call SpriteManager::release() in game:release() to clean all memory.
 */
+
+
 #include "SpriteManager.h"
+#include "../TinyXML/tinyxml.h"
 
 SpriteManager* SpriteManager::_instance = nullptr;
 SpriteManager::SpriteManager(void)
@@ -54,81 +57,71 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 {
 
 	Sprite* sp = NULL;
-	
-	sp = new Sprite("Resources/AnimationInfo/Aladdin.png",RECT(),NULL,NULL,D3DCOLOR_XRGB(255,0,255));
+
+	sp = new Sprite("Resources/AnimationInfo/Aladdin.png", RECT(), NULL, NULL, D3DCOLOR_XRGB(255, 0, 255));
 	sp->SetAnchorPoint(0.5, 1);
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::ALADDIN, sp));
-	this->loadSpriteInfo(eID::ALADDIN, "Resources//AnimationInfo//Aladdin.txt",true);
+	_listSprite.insert(pair<eID, Sprite*>(eID::ALADDIN, sp));
+	loadSpriteInfo(eID::ALADDIN, "Resources//AnimationInfo//Aladdin.txt", true);
 
 	sp = new Sprite("Resources/AnimationInfo/Guards.png", RECT(), NULL, NULL, D3DCOLOR_XRGB(120, 193, 152));
 	sp->SetAnchorPoint(0.5, 1);
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::GUARDS, sp));
-	this->loadSpriteInfo(eID::GUARDS, "Resources//AnimationInfo//Guards.txt",true);
+	_listSprite.insert(pair<eID, Sprite*>(eID::GUARDS, sp));
+	loadSpriteInfo(eID::GUARDS, "Resources//AnimationInfo//Guards.txt", true);
 
 	sp = new Sprite("Resources/AnimationInfo/Items.png", RECT(), NULL, NULL, D3DCOLOR_XRGB(255, 0, 255));
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::ITEMS, sp));
+	_listSprite.insert(pair<eID, Sprite*>(eID::ITEMS, sp));
 	sp->SetAnchorPoint(true);
-	this->loadSpriteInfo(eID::ITEMS, "Resources//AnimationInfo//Items.txt",true);
+	loadSpriteInfo(eID::ITEMS, "Resources//AnimationInfo//Items.txt", true);
 
 	sp = new Sprite("Resources/AnimationInfo/CivilianEnemies.png", RECT(), NULL, NULL, D3DCOLOR_XRGB(120, 193, 152));
 	sp->SetAnchorPoint(true);
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::CIVILIANENEMIES, sp));
-	this->loadSpriteInfo(eID::CIVILIANENEMIES, "Resources//AnimationInfo//CivilianEnemies.txt",true);
+	_listSprite.insert(pair<eID, Sprite*>(eID::CIVILIANENEMIES, sp));
+	loadSpriteInfo(eID::CIVILIANENEMIES, "Resources//AnimationInfo//CivilianEnemies.txt", true);
 
 	sp = new Sprite("Resources/AnimationInfo/Jafar.png", RECT(), NULL, NULL, D3DCOLOR_XRGB(186, 254, 202));
 	sp->SetAnchorPoint(true);
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::JAFAR, sp));
-	this->loadSpriteInfo(eID::JAFAR, "Resources//AnimationInfo//Jafar.txt",true);
+	_listSprite.insert(pair<eID, Sprite*>(eID::JAFAR, sp));
+	loadSpriteInfo(eID::JAFAR, "Resources//AnimationInfo//Jafar.txt", true);
 
 	sp = new Sprite("Resources/AnimationInfo/EnemyExplosion.png", RECT(), NULL, NULL, D3DCOLOR_XRGB(186, 254, 202));
 	sp->SetAnchorPoint(0.5, 1);
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::EXPLOSION, sp));
-	this->loadSpriteInfo(eID::EXPLOSION, "Resources//AnimationInfo//EnemyExplosion.txt");
+	_listSprite.insert(pair<eID, Sprite*>(eID::EXPLOSION, sp));
+	loadSpriteInfo(eID::EXPLOSION, "Resources//AnimationInfo//EnemyExplosion.txt");
 
 	sp = new Sprite("Resources/AnimationInfo/AladdinSP.png", RECT(), NULL, NULL, D3DCOLOR_XRGB(255, 0, 255));
 	sp->SetAnchorPoint(true);
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::ALADDINSP, sp));
-	this->loadSpriteInfo(eID::ALADDINSP, "Resources//AnimationInfo//AladdinSP.txt",true);
+	_listSprite.insert(pair<eID, Sprite*>(eID::ALADDINSP, sp));
+	loadSpriteInfo(eID::ALADDINSP, "Resources//AnimationInfo//AladdinSP.txt", true);
 
 	sp = new Sprite("Resources/AnimationInfo/Intro.png", RECT(), NULL, NULL, D3DCOLOR_XRGB(255, 0, 255));
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::Intro, sp));
-	this->loadSpriteInfo(eID::Intro, "Resources//AnimationInfo//Intro.txt");
-	
+	_listSprite.insert(pair<eID, Sprite*>(eID::Intro, sp));
+	loadSpriteInfo(eID::Intro, "Resources//AnimationInfo//Intro.txt");
+
 	sp = new Sprite("Resources/AnimationInfo/StoryLine.png", RECT(), NULL, NULL, D3DCOLOR_XRGB(255, 0, 255));
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::StoryLine_BeginScene_EndScene, sp));
-	this->loadSpriteInfo(eID::StoryLine_BeginScene_EndScene, "Resources//AnimationInfo//StoryLine.txt");
+	_listSprite.insert(pair<eID, Sprite*>(eID::StoryLine_BeginScene_EndScene, sp));
+	loadSpriteInfo(eID::StoryLine_BeginScene_EndScene, "Resources//AnimationInfo//StoryLine.txt");
 
 	sp = new Sprite("Resources/AnimationInfo/GameComplete.png", RECT(), NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::GameComplete, sp));
-	this->loadSpriteInfo(eID::GameComplete, "Resources//AnimationInfo//GameComplete.txt");
+	_listSprite.insert(pair<eID, Sprite*>(eID::GameComplete, sp));
+	loadSpriteInfo(eID::GameComplete, "Resources//AnimationInfo//GameComplete.txt");
 
-	sp = new Sprite("Resources/AnimationInfo/BatEnemies.png", RECT(), NULL, NULL, D3DCOLOR_XRGB(255, 0, 255));
-	sp->SetAnchorPoint(true);
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::BATENEMY, sp));
-	this->loadSpriteInfo(eID::BATENEMY, "Resources//AnimationInfo//BatEnemies.txt", true);
-
-	sp = new Sprite("Resources/AnimationInfo/Pendulum2.png", RECT(), NULL, NULL, D3DCOLOR_XRGB(255, 0, 255));
-	sp->SetAnchorPoint(true);
-	this->_listSprite.insert(pair<eID, Sprite*>(eID::Pendulum, sp));
-	this->loadSpriteInfo(eID::Pendulum, "Resources//AnimationInfo//Pendulum2.txt", true);
+	sp = new Sprite("Resources/AnimationInfo/Brick_Trap_Pendulum.png", RECT(), 0, 0, D3DCOLOR_XRGB(255, 0, 255));
+	_listSprite.insert(pair<eID, Sprite*>(eID::BRICK_TRAP_PENDULUM, sp));
+	loadXMLDoc(eID::BRICK_TRAP_PENDULUM, "Resources/AnimationInfo/Brick_Trap_Pendulum.xml", true);
 }
-
-
 
 Sprite* SpriteManager::getSprite(eID id)
 {
-	Sprite *it = this->_listSprite.find(id)->second;
-	return new Sprite(*it);			// get the copy version of Sprite
+	return _listSprite.find(id)->second->ShallowCoppy();
 }
 
 RECT SpriteManager::getSourceRect(eID id, string name)
 {
-	//return _sourceRectList[id].at(name);
 	return _sourceRectList[id][name];
 }
+
 POINT SpriteManager::getAnchorPoint(eID id, string name)
 {
-	//return _sourceRectList[id].at(name);
 	return _anchorPointList[id][name];
 }
 
@@ -161,7 +154,7 @@ void SpriteManager::loadSpriteInfo(eID id, const char* fileInfoPath)
 	fclose(file);
 }
 
-void SpriteManager::loadSpriteInfo(eID id, const char* fileInfoPath,bool isHaveAnchorPoint)
+void SpriteManager::loadSpriteInfo(eID id, const char* fileInfoPath, bool isHaveAnchorPoint)
 {
 	FILE* file;
 	file = fopen(fileInfoPath, "r");
@@ -175,7 +168,7 @@ void SpriteManager::loadSpriteInfo(eID id, const char* fileInfoPath,bool isHaveA
 			char name[100];
 			fgets(name, 100, file);
 
-			fscanf(file, "%s %d %d %d %d %d %d", &name, &rect.left, &rect.top, &rect.right, &rect.bottom,&anchorPoint.x,&anchorPoint.y);
+			fscanf(file, "%s %d %d %d %d %d %d", &name, &rect.left, &rect.top, &rect.right, &rect.bottom, &anchorPoint.x, &anchorPoint.y);
 
 			//Đã chỉnh sửa để phù hợp với file : Left Top Width Height
 			rect.right += rect.left;
@@ -188,19 +181,102 @@ void SpriteManager::loadSpriteInfo(eID id, const char* fileInfoPath,bool isHaveA
 	fclose(file);
 }
 
+void SpriteManager::loadXMLDoc(eID id, const char* XMLPath)
+{
+	TiXmlDocument doc(XMLPath);
+
+	if (!doc.LoadFile())
+	{
+		MessageBox(NULL, L"Failed to read file XML\nPlease check path file XML", L"Error", MB_OK);
+		return;
+	}
+
+	// get info root
+	TiXmlElement* root = doc.RootElement();
+	TiXmlElement* tile = nullptr;
+
+	//// loop to get element name, x, y, width, height
+	for (tile = root->FirstChildElement(); tile != NULL; tile = tile->NextSiblingElement())
+	{
+		int left, top, right, bottom;
+		const char* nameTileTemp;
+
+		// get value from file xml
+		nameTileTemp = tile->Attribute("n");
+		tile->QueryIntAttribute("x", &left);
+		tile->QueryIntAttribute("y", &top);
+		tile->QueryIntAttribute("w", &right);
+		tile->QueryIntAttribute("h", &bottom);
+
+		right += left;
+		bottom += top;
+		RECT r = { left, top, right, bottom };
+		_sourceRectList[id][string(nameTileTemp)] = r;
+
+		POINT anchor;
+		anchor.x = -1;
+		anchor.y = -1;
+		_anchorPointList[id][string(nameTileTemp)] = anchor;
+	};
+}
+
+void SpriteManager::loadXMLDoc(eID id, const char* XMLPath, bool isPivot)
+{
+	TiXmlDocument doc(XMLPath);
+
+	if (!doc.LoadFile())
+	{
+		MessageBox(NULL, L"Failed to read file XML\nPlease check path file XML", L"Error", MB_OK);
+		return;
+	}
+
+	// get info root
+	TiXmlElement* root = doc.RootElement();
+	TiXmlElement* tile = nullptr;
+
+	//// loop to get element name, x, y, width, height
+	for (tile = root->FirstChildElement(); tile != NULL; tile = tile->NextSiblingElement())
+	{
+		int left, top, right, bottom;
+		int px, py;
+		const char* nameTileTemp;
+
+		// get value from file xml
+		nameTileTemp = tile->Attribute("n");
+		tile->QueryIntAttribute("x", &left);
+		tile->QueryIntAttribute("y", &top);
+		tile->QueryIntAttribute("w", &right);
+		tile->QueryIntAttribute("h", &bottom);
+		tile->QueryIntAttribute("pX", &px);
+		tile->QueryIntAttribute("pY", &py);
+
+		right += left;
+		bottom += top;
+		RECT r = { left, top, right, bottom };
+		_sourceRectList[id][string(nameTileTemp)] = r;
+
+		POINT anchor;
+		anchor.x = px;
+		anchor.y = py;
+		_anchorPointList[id][string(nameTileTemp)] = anchor;
+	};
+}
+
 
 void SpriteManager::releaseSprite(eID id)
 {
-	Sprite *it = this->_listSprite.find(id)->second;
+	Sprite* it = _listSprite.find(id)->second;
 	delete it;							// delete the sprite only, dont relase image
-	this->_listSprite.erase(id);		// erase funciotn only remove the pointer from MAP, dont delete it.
+	_listSprite.erase(id);		// erase funciotn only remove the pointer from MAP, dont delete it.
 }
+
 void SpriteManager::releaseTexture(eID id)
 {
-	Sprite *spr = this->_listSprite.find(id)->second;				// release image
+	Sprite* spr = _listSprite.find(id)->second;				// release image
 	delete spr;
-	this->_listSprite.erase(id);		// erase funciotn only remove the pointer from MAP, dont delete it.
+	_listSprite.erase(id);		// erase funciotn only remove the pointer from MAP, dont delete it.
 }
+
 SpriteManager* SpriteManager::getInstance()
 {
 	if (_instance == nullptr)

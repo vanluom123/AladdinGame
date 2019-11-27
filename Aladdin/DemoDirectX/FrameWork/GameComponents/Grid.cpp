@@ -1,25 +1,12 @@
 #include "Grid.h"
 
-Grid* Grid::_instance = nullptr;
-
-
 Grid::Grid()
-{}
-
-Grid::~Grid()
-{}
-
-Grid* Grid::GetInstance()
 {
-	if (_instance == nullptr)
-		_instance = new Grid();
-	return _instance;
 }
 
-void Grid::Release()
+Grid::~Grid()
 {
-	delete _instance;
-	_instance = nullptr;
+
 }
 
 void Grid::InsertEntity(Entity* entity)
@@ -37,7 +24,7 @@ void Grid::InsertEntity(Entity* entity)
 	{
 		for (int j = startX; j <= endX; j++)
 		{
-			_cells[i][j].insert(entity);
+			mcells[i][j].push_back(entity);
 		}
 	}
 }
@@ -56,19 +43,22 @@ void Grid::RemoveEntiy(Entity* entity)
 	{
 		for (int j = startX; j <= endX; j++)
 		{
-			for (auto it : _cells[i][j])
+			for (int k = 0; k < mcells[i][j].size(); k++)
 			{
-				if (it == entity)
-					_cells[i][j].erase(it);
+				if (mcells[i][j].at(k) == entity)
+				{
+					mcells[i][j].erase(mcells[i][j].begin() + k);
+				}
+
 			}
+
 		}
 	}
 }
 
-void Grid::GetListEntity(unordered_set<Entity*>& ListObj, Camera* camera)
+void Grid::GetListEntity(vector<Entity*>& ListObj, Camera* camera)
 {
 	ListObj.clear();
-
 	int startX = floor(camera->GetBound().left / CELL_WIDTH);
 	int endX = floor(camera->GetBound().right / CELL_WIDTH);
 	int startY = floor(camera->GetBound().top / CELL_HEIGHT);
@@ -78,15 +68,17 @@ void Grid::GetListEntity(unordered_set<Entity*>& ListObj, Camera* camera)
 	{
 		for (int j = startX; j <= endX; j++)
 		{
-			for (auto it : _cells[i][j])
+			for (UINT k = 0; k < mcells[i][j].size(); k++)
 			{
-				if (it->IsDestroy() == false)
-					ListObj.insert(it);
+				if (mcells[i][j].at(k)->IsDestroy() == false)
+				{
+					ListObj.push_back(mcells[i][j].at(k));
+				}
 			}
 		}
 	}
 }
 
-void Grid::GetPossibleObjectCollide(unordered_set<Entity*>& ListObj, Entity* entity)
+void Grid::GetCollisionableListEntity(vector<Entity*>& ListObj, Entity* entity)
 {
 }

@@ -4,7 +4,7 @@ Intro::Intro()
 {
 	SceneTag = Scene::SceneName::IntroScene;
 	nextIntro = currentIntro + 1;
-	animation_1 = new Animation(eID::Intro, "Begin", 98, 0.08f, NULL);
+	animation_1 = new Animation(eID::Intro,"Begin",98,0.08f,NULL);
 	animation_1->SetStop(true);
 	currentIntro = 1;
 	Sound::getInstance()->play("Intro1", false, 1);
@@ -42,21 +42,21 @@ void Intro::Update(float dt)
 			animation_1 = new Animation(eID::Intro, "store", 2, 2.0f, NULL);
 			animation_1->SetStop(true);
 			break;
-
+		
 		}
 		nextIntro++;
 	}
 	if (currentIntro == 1 && animation_1->mCurrentIndex == animation_1->mTotalFrame)
 		currentIntro++;
-	animation_1->Update(dt);
+		animation_1->Update(dt);
 }
 
 void Intro::Draw()
 {
 	GameGlobal::GetCurrentDevice()->Clear(0, NULL, D3DCLEAR_TARGET, 0x000000, 0.0f, 0);
-	GVector2 trans = GVector2(GameGlobal::GetWidth() / 2,
-		GameGlobal::GetHeight() / 2 + animation_1->GetSprite()->GetHeight() / 2);
-	animation_1->Draw(animation_1->GetSprite()->GetPosition(), RECT(), GVector2(), trans);
+	D3DXVECTOR2 trans = D3DXVECTOR2(GameGlobal::GetWidth() / 2 ,
+		GameGlobal::GetHeight() / 2 +animation_1->GetSprite()->GetHeight()/2);
+	animation_1->Draw(animation_1->GetSprite()->GetPosition(), RECT(), D3DXVECTOR2(), trans);
 }
 
 
@@ -68,10 +68,10 @@ void Intro::OnKeyDown(int keyCode)
 		currentIntro++;
 		if (currentIntro == 4)
 		{
-			Scene* t = new class BeginScene(1, NULL);
-			Sound::getInstance()->stop("Intro2");
-			SceneManager::GetInstance()->ReplaceScene(t);
-			return;
+		Scene* t = new class BeginScene(1,NULL);
+		Sound::getInstance()->stop("Intro2");
+		SceneManager::GetInstance()->ReplaceScene(t);
+		return;
 		}
 	}
 

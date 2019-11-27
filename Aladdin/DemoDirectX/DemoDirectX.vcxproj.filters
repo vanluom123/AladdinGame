@@ -71,6 +71,9 @@
     <Filter Include="FrameWork\GameObjects\Enemies\BatEnemy">
       <UniqueIdentifier>{c564fbe0-3e3f-42a5-928e-7cd93cf7e695}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\TinyXML">
+      <UniqueIdentifier>{203421a0-d2d9-41f0-a800-1904821c09f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -481,8 +484,26 @@
     <ClCompile Include="FrameWork\GameComponents\Grid.cpp">
       <Filter>FrameWork\GameComponents</Filter>
     </ClCompile>
+    <ClCompile Include="FrameWork\TinyXML\tinystr.cpp">
+      <Filter>FrameWork\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\TinyXML\tinyxml.cpp">
+      <Filter>FrameWork\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\TinyXML\tinyxmlerror.cpp">
+      <Filter>FrameWork\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\TinyXML\tinyxmlparser.cpp">
+      <Filter>FrameWork\TinyXML</Filter>
+    </ClCompile>
     <ClCompile Include="FrameWork\GameObjects\MapObject\Pendulum.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>FrameWork\GameObjects\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\GameObjects\MapObject\BrickDynamic.cpp">
+      <Filter>FrameWork\GameObjects\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\GameObjects\MapObject\Trap.cpp">
+      <Filter>FrameWork\GameObjects\MapObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -909,8 +930,20 @@
     <ClInclude Include="FrameWork\GameComponents\Grid.h">
       <Filter>FrameWork\GameComponents</Filter>
     </ClInclude>
+    <ClInclude Include="FrameWork\TinyXML\tinystr.h">
+      <Filter>FrameWork\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\TinyXML\tinyxml.h">
+      <Filter>FrameWork\TinyXML</Filter>
+    </ClInclude>
     <ClInclude Include="FrameWork\GameObjects\MapObject\Pendulum.h">
-      <Filter>Header Files</Filter>
+      <Filter>FrameWork\GameObjects\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\GameObjects\MapObject\BrickDynamic.h">
+      <Filter>FrameWork\GameObjects\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\GameObjects\MapObject\Trap.h">
+      <Filter>FrameWork\GameObjects\MapObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

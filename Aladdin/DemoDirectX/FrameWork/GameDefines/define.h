@@ -14,11 +14,8 @@
 #include <string>
 #include <map>
 #include <vector>
-#include <unordered_map>
-#include <unordered_set>
-using namespace std;
 
-#pragma warning(disable : 26495)
+using namespace std;
 
 #define WINDOW_WIDTH 512
 #define WINDOW_HEIGHT 448
@@ -42,8 +39,7 @@ enum eID
 	StoryLine_BeginScene_EndScene,
 	GameComplete,
 	BATENEMY,
-	Pendulum
-
+	BRICK_TRAP_PENDULUM
 };
 
 enum eStatus
@@ -117,7 +113,7 @@ enum eMapType
 
 enum eSoundId
 {
-	nope
+		nope																																																																																															
 };
 enum eWT_Status
 {
@@ -137,20 +133,10 @@ enum eWT_Status
 	WT_CLOSE = (1 << 13),
 	WT_SHOOTING = (1 << 14)
 };
-
-#define LP_SPRITE LPD3DXSPRITE
-#define LP_3DDEVICE LPDIRECT3DDEVICE9
-#define LP_3DSURFACE LPDIRECT3DSURFACE9
-#define LP_3DTEXTURE LPDIRECT3DTEXTURE9
-#define IMAGE_INFO D3DXIMAGE_INFO
-#define GVector3 D3DXVECTOR3 
-#define GVector2 D3DXVECTOR2
-#define MATRIX D3DXMATRIX
-#define LP_LINE LPD3DXLINE
-#define LP_FONT LPD3DXFONT
+typedef D3DXVECTOR3 GVector3;
+typedef D3DXVECTOR2 GVector2;
 #define VECTOR2ZERO GVector2(0.0f, 0.0f)
 #define VECTOR2ONE  GVector2(1.0f, 1.0f)
-#define VECTOR3ZERO GVector3(0.0f, 0.0f, 0.0f);
 
 #define ACTOR_SCENARIO [event_receiver(native)]
 
@@ -173,7 +159,7 @@ if(p) \
 
 namespace Define
 {
-	const float PLAYER_RUN_SPEED = 70.0f;
+	const float PLAYER_RUN_SPEED = 70.0f;	
 	const float PLAYER_JUMP_SPEED = 15.0f;
 	const float PLAYER_MAX_JUMP_HEIGHT = 5.0f;
 	const float PLAYER_MAX_JUMP_VELOCITY = 115.0f; //van toc nhay lon nhat

@@ -26,7 +26,7 @@ Guard3::Guard3()
 	maxX = x + 100;
 }
 
-Guard3::Guard3(GVector2 position, Player *player)
+Guard3::Guard3(D3DXVECTOR2 position, Player *player)
 {
 	this->Tag = Entity::Guard3;
 	this->HP = 1;
@@ -133,17 +133,17 @@ Guard3State::StateName Guard3::GetState()
 	return mCurrentState;
 }
 
-void Guard3::Draw(GVector3 position, RECT sourceRect, GVector2 scale, GVector2 transform, float angle, GVector2 rotationCenter, D3DXCOLOR colorKey)
+void Guard3::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVECTOR2 transform, float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
 {
 	mCurrentAnimation->SetFlipHorizontal(mCurrentReverse);
 	mCurrentAnimation->SetPosition(this->GetPosition());
 	mCurrentAnimation->Draw(position, sourceRect, scale, transform, angle, rotationCenter, colorKey);
 }
-void Guard3::Draw(GVector2 transform)
+void Guard3::Draw(D3DXVECTOR2 transform)
 {
 	mCurrentAnimation->SetFlipHorizontal(mCurrentReverse);
 	mCurrentAnimation->SetPosition(this->GetPosition());
-	mCurrentAnimation->Draw(this->GetPosition(), RECT(), GVector2(), transform);
+	mCurrentAnimation->Draw(this->GetPosition(), RECT(), D3DXVECTOR2(), transform);
 }
 
 RECT Guard3::GetBound()
@@ -266,6 +266,15 @@ void Guard3::changeAnimation(Guard3State::StateName state)
 		mCurrentAnimation = new Animation(eID::GUARDS, "Guard3rdBeaten", 7, 0.3f, NULL);
 		break;
 	}
+}
+void Guard3::SetGameMap(GameMap *gamemap)
+{
+	this->mGameMap = gamemap;
+}
+
+GameMap* Guard3::getGameMap()
+{
+	return this->mGameMap;
 }
 
 void Guard3::LimitDistance()

@@ -3,11 +3,11 @@ BeginScene::BeginScene()
 {
 
 }
-BeginScene::BeginScene(int numBeginScene, Player* player)
+BeginScene::BeginScene(int numBeginScene,Player* player)
 {
 	SceneTag = Scene::SceneName::BeginScene;
 	currentBeginScene = numBeginScene;
-	this->player = player;
+	this->player = player;																						
 	switch (numBeginScene)
 	{
 	case 1:
@@ -39,15 +39,15 @@ void BeginScene::Update(float dt)
 	{
 		OnKeyDown(0x0D);
 	}
-
+	
 }
 
 void BeginScene::Draw()
 {
 	GameGlobal::GetCurrentDevice()->Clear(0, NULL, D3DCLEAR_TARGET, 0x000000, 0.0f, 0);
-	GVector2 trans = GVector2(GameGlobal::GetWidth() / 2,
+	D3DXVECTOR2 trans = D3DXVECTOR2(GameGlobal::GetWidth() / 2,
 		GameGlobal::GetHeight() / 2 + animation_1->GetSprite()->GetHeight() / 2);
-	animation_1->Draw(animation_1->GetSprite()->GetPosition(), RECT(), GVector2(), trans);
+	animation_1->Draw(animation_1->GetSprite()->GetPosition(), RECT(), D3DXVECTOR2(), trans);
 }
 
 
@@ -62,16 +62,16 @@ void BeginScene::OnKeyDown(int keyCode)
 			delete animation_1;
 			animation_1 = new Animation(eID::StoryLine_BeginScene_EndScene, "BeginScene1_", 2, 0.2f, NULL);
 			Sound::getInstance()->stop("Intro3");
-			Sound::getInstance()->play("BeginSceneSound", false, 1);
+			Sound::getInstance()->play("BeginSceneSound",false,1);
 			currentBeginScene++;
 			break;
 		case 2:
-		{
-			Scene* t = new class Scene1();
-			Sound::getInstance()->stop("BeginSceneSound");
-			SceneManager::GetInstance()->ReplaceScene(t);
-			return;
-		}
+			{
+				Scene* t = new class Scene1();
+				Sound::getInstance()->stop("BeginSceneSound");
+				SceneManager::GetInstance()->ReplaceScene(t);
+				return;
+			}
 		case 3:
 			timeBeginScene = 15.0f;
 			delete animation_1;
@@ -100,7 +100,7 @@ void BeginScene::OnKeyUp(int keyCode)
 
 void BeginScene::PlayMusic()
 {
-	Sound::getInstance()->play("BeginScene1", true, 1);
+	Sound::getInstance()->play("BeginScene1",true,1);
 }
 Scene::SceneName BeginScene::GetSceneName()
 {

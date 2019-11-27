@@ -6,22 +6,28 @@
 class Apple : public Entity
 {
 public:
+
+
 	~Apple();
 	Apple();
-	Apple(GVector3 position, bool isCamelThrow = false);
-	Apple(GVector2 position, bool isCamelThrow = false);
-
+	Apple(D3DXVECTOR3 position,bool isCamelThrow=false);
+	Apple(D3DXVECTOR2 position, bool isCamelThrow = false);
 	void Update(float dt);
-	RECT GetBound();
-	void Draw(GVector3 position = GVector3(), RECT sourceRect = RECT(), GVector2 scale = GVector2(), GVector2 transform = GVector2(), float angle = 0, GVector2 rotationCenter = GVector2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 255, 255));
-	void Draw(GVector3 transform);
-	void Draw(GVector2 transform);
-	void OnCollision(Entity* impactor, Entity::CollisionReturn data, Entity::SideCollisions side) override;
 
+	RECT GetBound();
+
+	void Draw(D3DXVECTOR3 position = D3DXVECTOR3(), RECT sourceRect = RECT(), D3DXVECTOR2 scale = D3DXVECTOR2(), D3DXVECTOR2 transform = D3DXVECTOR2(), float angle = 0, D3DXVECTOR2 rotationCenter = D3DXVECTOR2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 255, 255));
+
+	void Draw(D3DXVECTOR3 transform);
+
+	void Draw(D3DXVECTOR2 transform);
+	virtual void OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::SideCollisions side);
 protected:
-	bool init(GVector3 position);
-	void OnSetPosition(GVector3 poks);
-	Animation* mAnimation;
+
+
+	bool init(D3DXVECTOR3 position);
+	void OnSetPosition(D3DXVECTOR3 poks);
+	Animation *mAnimation;
 	bool isCamelThrow;
 
 };

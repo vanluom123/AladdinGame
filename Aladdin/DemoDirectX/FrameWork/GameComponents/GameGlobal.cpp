@@ -2,20 +2,28 @@
 
 HINSTANCE GameGlobal::mHInstance = NULL;
 HWND GameGlobal::mHwnd = NULL;
-LP_SPRITE GameGlobal::mSpriteHandler = NULL;
+LPD3DXSPRITE GameGlobal::mSpriteHandler = NULL;
 int GameGlobal::mWidth = 320; 
 int GameGlobal::mHeight = 224;
-LP_3DDEVICE GameGlobal::mDevice = nullptr;
+LPDIRECT3DDEVICE9 GameGlobal::mDevice = nullptr;
 bool GameGlobal::isGameRunning = true;
 IDirect3DSurface9* GameGlobal::backSurface = nullptr;
 
+GameGlobal::GameGlobal()
+{
 
-void GameGlobal::SetCurrentDevice(LP_3DDEVICE device)
+}
+
+GameGlobal::~GameGlobal()
+{
+}
+
+void GameGlobal::SetCurrentDevice(LPDIRECT3DDEVICE9 device)
 {
 	mDevice = device;
 }
 
-LP_3DDEVICE GameGlobal::GetCurrentDevice()
+LPDIRECT3DDEVICE9 GameGlobal::GetCurrentDevice()
 {
 	return mDevice;
 }
@@ -40,12 +48,11 @@ void GameGlobal::SetCurrentHWND(HWND hWnd)
 	mHwnd = hWnd;
 }
 
-void GameGlobal::SetCurrentSpriteHandler(LP_SPRITE spriteHandler)
+void GameGlobal::SetCurrentSpriteHandler(LPD3DXSPRITE spriteHandler)
 {
 	mSpriteHandler = spriteHandler;
 }
-
-LP_SPRITE GameGlobal::GetCurrentSpriteHandler()
+LPD3DXSPRITE GameGlobal::GetCurrentSpriteHandler()
 {
 	return mSpriteHandler;
 }

@@ -1,5 +1,7 @@
 #ifndef __SCENE__
 #define __SCENE__
+#include <d3dx9.h>
+#include <d3d9.h>
 
 #include "../GameComponents/GameGlobal.h"
 

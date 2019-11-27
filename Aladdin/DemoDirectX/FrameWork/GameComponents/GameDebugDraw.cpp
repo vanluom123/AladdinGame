@@ -12,20 +12,25 @@ GameDebugDraw::GameDebugDraw()
 
     //set mau cho line
     mColor = D3DCOLOR_XRGB(255, 0, 0);
+    
 }
 
 GameDebugDraw::~GameDebugDraw()
-{}
+{
+    
+}
 
 void GameDebugDraw::Draw()
-{}
+{
+
+}
 
 void GameDebugDraw::setLineSize(float width)
 {
     LineDraw->SetWidth(width);
 }
 
-void GameDebugDraw::DrawLine(GVector2 lines[], int count)
+void GameDebugDraw::DrawLine(D3DXVECTOR2 lines[], int count)
 {
     LineDraw->Begin();
     LineDraw->Draw(lines, count, mColor);
@@ -34,18 +39,19 @@ void GameDebugDraw::DrawLine(GVector2 lines[], int count)
 
 void GameDebugDraw::DrawRect(RECT rect, Camera *camera)
  {
-    GVector3 trans = GVector3(0, 0, 0);
+
+    D3DXVECTOR3 trans = D3DXVECTOR3(0, 0, 0);
 
     if (camera)
     {
-        trans = GVector3(GameGlobal::GetWidth() / 2, GameGlobal::GetHeight() / 2, 0) - camera->GetPosition();
+        trans = D3DXVECTOR3(GameGlobal::GetWidth() / 2, GameGlobal::GetHeight() / 2, 0) - camera->GetPosition();
     }    
 
-    GVector2 lines[] = { GVector2(rect.left + trans.x, rect.top + trans.y),
-                            GVector2(rect.right + trans.x, rect.top + trans.y), 
-                            GVector2(rect.right + trans.x, rect.bottom + trans.y), 
-                            GVector2(rect.left + trans.x, rect.bottom + trans.y), 
-                            GVector2(rect.left + trans.x, rect.top + trans.y) };
+    D3DXVECTOR2 lines[] = { D3DXVECTOR2(rect.left + trans.x, rect.top + trans.y),
+                            D3DXVECTOR2(rect.right + trans.x, rect.top + trans.y), 
+                            D3DXVECTOR2(rect.right + trans.x, rect.bottom + trans.y), 
+                            D3DXVECTOR2(rect.left + trans.x, rect.bottom + trans.y), 
+                            D3DXVECTOR2(rect.left + trans.x, rect.top + trans.y) };
 
     DrawLine(lines, 5);
 }

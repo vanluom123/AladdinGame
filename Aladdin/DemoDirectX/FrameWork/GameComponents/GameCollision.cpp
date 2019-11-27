@@ -1,12 +1,23 @@
 ﻿#include "GameCollision.h"
 
-Entity::CollisionReturn GameCollision::RectBox(RECT rect1, RECT rect2)
+GameCollision::GameCollision()
+{
+
+}
+
+
+GameCollision::~GameCollision()
+{
+}
+
+Entity::CollisionReturn GameCollision::RecteAndRect(RECT rect1, RECT rect2)
 {
 	Entity::CollisionReturn result;
 
 	if (!isCollide(rect1, rect2))
 	{
 		result.IsCollided = false;
+
 		return result;
 	}
 
@@ -64,7 +75,7 @@ bool GameCollision::isCollide(RECT rect1, RECT rect2)
 }
 
 
-Entity::SideCollisions GameCollision::GetSideCollision(Entity *e1, Entity *e2)
+Entity::SideCollisions GameCollision::getSideCollision(Entity *e1, Entity *e2)
 {
 	RECT rect1 = e1->GetBound();
 	RECT rect2 = e2->GetBound();
@@ -107,7 +118,7 @@ Entity::SideCollisions GameCollision::GetSideCollision(Entity *e1, Entity *e2)
 	}
 }
 
-Entity::SideCollisions GameCollision::GetSideCollision(Entity *e1, Entity::CollisionReturn data)
+Entity::SideCollisions GameCollision::getSideCollision(Entity *e1, Entity::CollisionReturn data)
 {
 	float xCenter = data.RegionCollision.left + (data.RegionCollision.right - data.RegionCollision.left) / 2.0f;
 	float yCenter = data.RegionCollision.top + (data.RegionCollision.bottom - data.RegionCollision.top) / 2.0f;

@@ -6,28 +6,30 @@ Entity::Entity()
 	this->HP = 1;
 }
 
-GVector3 Entity::GetPosition()
+D3DXVECTOR3 Entity::GetPosition()
 {
-	return GVector3(posX, posY, 0);
+	return D3DXVECTOR3(posX, posY, 0);
+}
+void Entity::Draw(D3DXVECTOR2 trans)
+{
+
 }
 
-void Entity::Draw(GVector2 trans)
-{}
 
 RECT Entity::GetBound()
 {
 	RECT bound;
-
+	
 	bound.left = posX - width / 2;
 	bound.right = posX + width / 2;
 	bound.top = posY - height / 2;
 	bound.bottom = posY + height / 2;
-
+	
 	return bound;
 }
 RECT Entity::GetBoundBody()
 {
-	RECT bound = RECT();
+	RECT bound=RECT();
 
 	return bound;
 }
@@ -39,12 +41,13 @@ RECT Entity::GetBoundWeapon()
 	return bound;
 }
 
-void Entity::OnCollision(Entity* impactor, CollisionReturn data, Entity::SideCollisions side)
+
+
+void Entity::OnCollision(Entity *impactor, CollisionReturn data, Entity::SideCollisions side)
 {
 	vx = 0, vy = 0;
 }
-
-void Entity::OnCollision(Entity* impactor, CollisionReturn data)
+void Entity::OnCollision(Entity *impactor, CollisionReturn data)
 {
 	vx = 0, vy = 0;
 }
@@ -63,59 +66,58 @@ void Entity::TakeDamage(int Damage)
 {
 	HP -= Damage;
 }
-
 void Entity::SetTimeImmortal(float timeImmortal)
 {
 	this->timeImmortal = timeImmortal;
 }
-
 float Entity::GetTimeImmortal()
 {
 	return this->timeImmortal;
 }
 
-void Entity::OnSetPosition(GVector3 pos)
+void Entity::OnSetPosition(D3DXVECTOR3 pos)
 {
 
 }
 
 void Entity::Update(float dt)
 {
-	posX += vx * dt;
-	posY += vy * dt;
+	posX += vx*dt;
+	posY += vy*dt;
 	if (timeImmortal > 0) timeImmortal -= dt;
 }
 
 void Entity::SetPosition(float x, float y)
 {
-	SetPosition(GVector2(x, y));
+	SetPosition(D3DXVECTOR2(x, y));
 }
 
-void Entity::SetPosition(GVector2 pos)
+void Entity::SetPosition(D3DXVECTOR2 pos)
 {
-	SetPosition(GVector3(pos.x, pos.y, 0));
+	SetPosition(D3DXVECTOR3(pos.x, pos.y, 0));
 }
 
-void Entity::SetPosition(GVector3 pos)
+void Entity::SetPosition(D3DXVECTOR3 pos)
 {
 	posX = pos.x;
 	posY = pos.y;
 	OnSetPosition(pos);
+
 }
 
-void Entity::AddPosition(GVector3 pos)
+void Entity::AddPosition(D3DXVECTOR3 pos)
 {
 	this->SetPosition(this->GetPosition() + pos);
 }
 
-void Entity::AddPosition(GVector2 pos)
+void Entity::AddPosition(D3DXVECTOR2 pos)
 {
-	AddPosition(GVector3(pos));
+	AddPosition(D3DXVECTOR3(pos));
 }
 
 void Entity::AddPosition(float x, float y)
 {
-	AddPosition(GVector3(x, y, 0));
+	AddPosition(D3DXVECTOR3(x, y, 0));
 }
 
 void Entity::SetWidth(int width)
@@ -174,7 +176,7 @@ bool Entity::IsDeleted()
 
 void Entity::SetDelete(bool flag)
 {
-	isDeleted = flag;
+	isDeleted=flag;
 }
 
 bool Entity::IsDestroy()

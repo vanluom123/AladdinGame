@@ -17,9 +17,6 @@ using namespace std;
 #define FPS 60
 #define KEYBOARD_BUFFERD_SIZE 1024
 
-/*
-
-*/
 int initWindow(int cmdShow);
 int InitDevice();
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -31,11 +28,17 @@ LPDIRECT3DDEVICE9       mDevice;
 HINSTANCE               mHInstance;
 int                     mCmdShow;
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int cmdShow)
+//int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int cmdShow)
+//{
+//    mHInstance = hInstance;
+//    initWindow(cmdShow);
+//    return 0;
+//}
+
+int main()
 {
-    mHInstance = hInstance;
-    initWindow(cmdShow);
-    return 0;
+	initWindow(SW_SHOWNORMAL);
+	return 0;
 }
 
 int initWindow(int cmdShow)

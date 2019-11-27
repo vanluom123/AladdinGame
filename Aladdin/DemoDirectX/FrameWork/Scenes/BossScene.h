@@ -1,5 +1,4 @@
-#ifndef __BOSS_SCENE_H__
-#define __BOSS_SCENE_H__
+#pragma once
 
 #include <math.h>
 #include <vector>
@@ -19,45 +18,43 @@
 #include "../GameObjects/PlayerInfo.h"
 #include "../GameObjects/Weapon/Fire.h"
 #include "../Scenes/EndScene.h"
-#include <unordered_set>
-
 class PlayerInfo;
 class Scene_Final : public Scene
 {
 public:
 	Scene_Final();
-	~Scene_Final();
 	Scene_Final(Player* player);
-
 	void Update(float dt);
 	void Draw();
 
 	void OnKeyDown(int keyCode);
 	void OnKeyUp(int keyCode);
 	void OnMouseDown(float x, float y);
-
 	void PlayMusic();
 	void StopMusic();
 	Scene::SceneName GetSceneName();
-
-
 protected:
-
 	LPD3DXSPRITE mSpriteHandler;
 
 	float mTimeCounter;
 	void checkCollision(float dt);
+	
 	void CheckCameraAndWorldMap();
+
 
 	void DrawCollidable();
 
 	Player *mPlayer;
 	std::map<int, bool> keys;
 
+	GameMap *mMap;
 	Camera *mCamera;
 
 	GameDebugDraw *mDebugDraw;
-	std::unordered_set<Entity*> mCollidable;
+	std::vector<Entity*> mCollidable;
+	std::vector<Entity*> *mListEnemyWeapons;
+	std::vector <Apple*> *mListApplesAladdin;
+	std::vector <Entity*> *mListEnemies;
 
 	PlayerInfo *playerInfo;
 	
@@ -65,4 +62,3 @@ protected:
 	float timeCreateFire;
 };
 
-#endif

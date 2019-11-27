@@ -10,6 +10,7 @@ class PlayerInfo
 {
 public:
 
+
 	~PlayerInfo();
 	PlayerInfo();
 	PlayerInfo(Player* player);
@@ -22,31 +23,31 @@ public:
 protected:
 	bool init(Player* player);
 	int playerHP;
-	Animation* healthMeter;
-	GVector3 healthMeterPosition;
+	Animation *healthMeter;
+	D3DXVECTOR3 healthMeterPosition;
 
-	Animation* Apple;
-	GVector3 ApplePosition;
+	Animation *Apple;
+	D3DXVECTOR3 ApplePosition;
 
-	Animation* Money;
-	GVector3 MoneyPosition;
+	Animation *Money;
+	D3DXVECTOR3 MoneyPosition;
 
-	Animation* UP;
-	GVector3 UPPosition;
+	Animation *UP;
+	D3DXVECTOR3 UPPosition;
 
 	Text numApples;
-	GVector3 numApplesPosition;
+	D3DXVECTOR3 numApplesPosition;
 
 	Text numLives;
-	GVector3 numLivesPosition;
+	D3DXVECTOR3 numLivesPosition;
 
 	Text numMoney;
-	GVector3 numMoneyPosition;
+	D3DXVECTOR3 numMoneyPosition;
 
 	Text numScore;
-	GVector3 numScorePosition;
+	D3DXVECTOR3 numScorePosition;
 
 	Player* player;
-	Camera* mCamera;
-	GVector3 position;
+	Camera *mCamera;
+	D3DXVECTOR3 position;
 };

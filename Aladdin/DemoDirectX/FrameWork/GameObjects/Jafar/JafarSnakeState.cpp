@@ -20,8 +20,7 @@ void JafarSnakeState::Update(float dt)
 				tmp = new JafarWeapon2(D3DXVECTOR2(this->mJafarData->jafar->GetBound().left + 20, this->mJafarData->jafar->GetBound().bottom), this->mJafarData->jafar->mPlayer);
 			else
 				tmp = new JafarWeapon2(D3DXVECTOR2(this->mJafarData->jafar->GetBound().right - 20, this->mJafarData->jafar->GetBound().bottom), this->mJafarData->jafar->mPlayer);
-		
-		GameMap::GetInstance()->InsertWeapon(tmp);
+		mJafarData->jafar->mPlayer->getGameMap()->InsertWeapon(tmp);
 		Sound::getInstance()->play("JafarSnake", false, 1);
 	}
 	if (this->mJafarData->jafar->GetCurrentAnimation()->mCurrentIndex == 1)

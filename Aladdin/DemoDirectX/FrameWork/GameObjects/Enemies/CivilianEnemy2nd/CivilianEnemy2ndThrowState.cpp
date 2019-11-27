@@ -1,6 +1,5 @@
 #include "CivilianEnemy2ndThrowState.h"
 #include "../../Weapon/Guard3Weapon.h"
-#include "../../../GameComponents/GameMap.h"
 
 CivilianEnemy2ndThrowState::CivilianEnemy2ndThrowState(CivilianEnemy2ndData * civilianEnemy2ndData)
 {
@@ -45,7 +44,7 @@ void CivilianEnemy2ndThrowState::Update(float dt)
 
 		}
 
-		GameMap::GetInstance()->InsertWeapon(tmp);
+		mCivilianEnemy2ndData->civilianEnemy2nd->getGameMap()->InsertWeapon(tmp);
 		isThrow = false;
 	}
 	else if (this->mCivilianEnemy2ndData->civilianEnemy2nd->GetCurrentAnimation()->mCurrentIndex == 1)

@@ -10,20 +10,22 @@ void DemoScene::LoadContent()
     //set mau backcolor cho scene o day la mau xanh
     mBackColor = 0x54acd2;
 
-   GameMap::GetInstance()->Initialize("Resources/map.tmx");
+    mMap = new GameMap("Resources/map.tmx");
 
     mCamera = new Camera(GameGlobal::GetWidth(), GameGlobal::GetHeight());
     mCamera->SetPosition(GameGlobal::GetWidth()/2, GameGlobal::GetHeight()/2);
 	
-	GameMap::GetInstance()->SetCamera(mCamera);
+    mMap->SetCamera(mCamera);
 }
 
 void DemoScene::Update(float dt)
-{}
+{
+
+}
 
 void DemoScene::Draw()
 {
-	GameMap::GetInstance()->Draw();
+    mMap->Draw();
 }
 
 void DemoScene::OnKeyDown(int keyCode)
