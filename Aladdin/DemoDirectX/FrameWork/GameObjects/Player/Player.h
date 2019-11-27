@@ -1,11 +1,8 @@
 ﻿#pragma once
 
-#include <d3d9.h>
-#include <d3dx9.h>
 #include "../../GameComponents/Animation.h"
 #include "../../GameComponents/GameGlobal.h"
 #include "../../GameComponents/Camera.h"
-#include <vector>
 #include "../Entity.h"
 #include "PlayerData.h"
 #include "PlayerState.h"
@@ -29,21 +26,21 @@ public:
 		None //dung im
 	};
 
-	void SetCamera(Camera *camera);
+	void SetCamera(Camera* camera);
 
-	void SetGameMap(GameMap *gamemap);
+	void SetGameMap(GameMap* gamemap);
 
 	GameMap* getGameMap();
 
 	void Update(float dt);
 
 	void Draw(D3DXVECTOR3 position = D3DXVECTOR3(), RECT sourceRect = RECT(), D3DXVECTOR2 scale = D3DXVECTOR2(), D3DXVECTOR2 transform = D3DXVECTOR2(), float angle = 0, D3DXVECTOR2 rotationCenter = D3DXVECTOR2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 255, 255));
-	
-	void SetState(PlayerState *newState);
 
-	void OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::SideCollisions side);
+	void SetState(PlayerState* newState);
 
-	void OnCollision(Entity *impactor, Entity::CollisionReturn data);
+	void OnCollision(Entity* impactor, Entity::CollisionReturn data, Entity::SideCollisions side);
+
+	void OnCollision(Entity* impactor, Entity::CollisionReturn data);
 
 	void OnNoCollisionWithBottom(float dt);
 
@@ -92,10 +89,10 @@ public:
 
 	void SetAllowCut(bool flag);
 	void SetAllowThrow(bool flag);
-	
+
 	Animation* GetCurrentAnimation();
 
-	bool	allowJump = true;
+	bool allowJump = true;
 	bool allowMoveLeft;
 	bool allowMoveRight;
 	bool EnableStair1 = false;
@@ -108,23 +105,23 @@ protected:
 	float timeCreateFire = 0;
 	float timeChangeStateStair;
 
-	bool	
+	bool
 		allowCut = true,
 		allowThrow = true,
-		mCurrentReverse; 
+		mCurrentReverse;
 	bool isFalling = false;
 
 
 
-	PlayerData *mPlayerData;
+	PlayerData* mPlayerData;
 
-	Camera      *mCamera;
-	
+	Camera* mCamera;
+
 	Animation
-		*mCurrentAnimation,
-		*mAnimationHanging;
+		* mCurrentAnimation,
+		* mAnimationHanging;
 
-	GameMap *mGameMap;
+	GameMap* mGameMap;
 
 	void changeAnimation(PlayerState::StateName state);
 
@@ -134,9 +131,8 @@ protected:
 	D3DXVECTOR2 StartPoint;
 
 	//Aladdin Info
-	int numApples=10;
+	int numApples = 10;
 	int Lives;	//Số mạng của Aladdin
 	int Score;	//Số điểm
 	int Money;	//Số tiền? Cục màu đỏ
-
 };

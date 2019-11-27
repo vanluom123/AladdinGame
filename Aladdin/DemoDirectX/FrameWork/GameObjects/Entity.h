@@ -1,7 +1,4 @@
-﻿ #pragma once
-
-#include <d3dx9.h>
-#include <d3d9.h>
+﻿#pragma once
 
 #include "../GameComponents/GameGlobal.h"
 #include "../GameComponents/Sound.h"
@@ -10,6 +7,8 @@ class Entity
 {
 public:
 	Entity();
+	virtual ~Entity() = default;
+
 	enum SideCollisions
 	{
 		Left,
@@ -74,11 +73,12 @@ public:
 		LEFT,
 		RIGHT
 	};
+
 	ItemTypes ItemTag;//Tag nhan dien loai Item
 	EntityTypes Tag; //Tag de nhan vien loai Entity
 	FaceDirection faceDirection;
 
-	
+
 	virtual void Draw(D3DXVECTOR2 trans);
 
 	virtual RECT GetBound();
@@ -88,44 +88,31 @@ public:
 	virtual FaceDirection getFaceDirection();
 
 	virtual void SetPosition(float x, float y);
-
 	virtual void SetPosition(D3DXVECTOR2 pos);
-
 	virtual void SetPosition(D3DXVECTOR3 pos);
-
 	virtual void AddPosition(D3DXVECTOR3 pos);
-
 	virtual void AddPosition(D3DXVECTOR2 pos);
-
 	virtual void AddPosition(float x, float y);
 
 	virtual void SetWidth(int width);
-
 	virtual int GetWidth();
 
 	virtual void SetHeight(int height);
-
 	virtual int GetHeight();
 
 	virtual float GetVx();
-	
 	virtual void SetVx(float vx);
-
 	virtual void AddVx(float vx);
 
 	virtual float GetVy();
-
 	virtual void SetVy(float vy);
-
 	virtual void AddVy(float vy);
-	
+
 	virtual D3DXVECTOR3 GetPosition();
 
 	virtual void Update(float dt);
-
-	virtual void OnCollision(Entity *impactor, CollisionReturn data, SideCollisions side);
-
-	virtual void OnCollision(Entity *impactor, CollisionReturn data);
+	virtual void OnCollision(Entity* impactor, CollisionReturn data, SideCollisions side);
+	virtual void OnCollision(Entity* impactor, CollisionReturn data);
 
 	virtual void SetHealth(int hp);
 	int GetHealth();
@@ -145,6 +132,15 @@ public:
 	void SetDestroy(bool flag);
 	void SetMakeDamage(bool flag);
 	bool IsMakeDamage();
+
+	SideCollisions GetPhysicsBodySide() { return mSide; }
+	void SetPhysicsBodySide(SideCollisions val) { mSide = val; }
+
+	float GetPositionX() { return posX; }
+	void SetPositionX(float val) { posX = val; }
+
+	float GetPositionY() { return posY; }
+	void SetPositionY(float val) { posY = val; }
 
 protected:
 	virtual void OnSetPosition(D3DXVECTOR3 pos);
@@ -167,5 +163,5 @@ protected:
 
 	float timeImmortal;
 
-
+	SideCollisions mSide;
 };

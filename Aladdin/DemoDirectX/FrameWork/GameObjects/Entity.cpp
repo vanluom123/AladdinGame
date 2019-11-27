@@ -10,11 +10,9 @@ D3DXVECTOR3 Entity::GetPosition()
 {
 	return D3DXVECTOR3(posX, posY, 0);
 }
+
 void Entity::Draw(D3DXVECTOR2 trans)
-{
-
-}
-
+{}
 
 RECT Entity::GetBound()
 {
@@ -42,11 +40,11 @@ RECT Entity::GetBoundWeapon()
 }
 
 
-
 void Entity::OnCollision(Entity *impactor, CollisionReturn data, Entity::SideCollisions side)
 {
 	vx = 0, vy = 0;
 }
+
 void Entity::OnCollision(Entity *impactor, CollisionReturn data)
 {
 	vx = 0, vy = 0;
@@ -66,10 +64,12 @@ void Entity::TakeDamage(int Damage)
 {
 	HP -= Damage;
 }
+
 void Entity::SetTimeImmortal(float timeImmortal)
 {
 	this->timeImmortal = timeImmortal;
 }
+
 float Entity::GetTimeImmortal()
 {
 	return this->timeImmortal;

@@ -1,9 +1,7 @@
-#pragma once
 #ifndef __GAME_GLOBAL__
 #define __GAME_GLOBAL__
-#include <d3dx9.h>
-#include <d3d9.h>
-#include <Windows.h>
+#include "../GameDefines/define.h"
+
 class GameGlobal
 {
 public:

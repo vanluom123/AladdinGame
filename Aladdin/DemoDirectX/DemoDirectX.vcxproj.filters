@@ -505,6 +505,15 @@
     <ClCompile Include="FrameWork\GameObjects\MapObject\Trap.cpp">
       <Filter>FrameWork\GameObjects\MapObject</Filter>
     </ClCompile>
+    <ClCompile Include="FrameWork\GameComponents\Event.cpp">
+      <Filter>FrameWork\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\GameComponents\IComponent.cpp">
+      <Filter>FrameWork\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\GameObjects\CollisionBody.cpp">
+      <Filter>FrameWork\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork\GameComponents\Animation.h">
@@ -944,6 +953,15 @@
     </ClInclude>
     <ClInclude Include="FrameWork\GameObjects\MapObject\Trap.h">
       <Filter>FrameWork\GameObjects\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\GameComponents\Event.h">
+      <Filter>FrameWork\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\GameComponents\IComponent.h">
+      <Filter>FrameWork\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\GameObjects\CollisionBody.h">
+      <Filter>FrameWork\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

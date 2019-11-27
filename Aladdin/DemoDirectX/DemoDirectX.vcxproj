@@ -88,6 +88,7 @@
   <ItemGroup>
     <ClCompile Include="FrameWork\GameComponents\Animation.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Camera.cpp" />
+    <ClCompile Include="FrameWork\GameComponents\Event.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Game.cpp" />
     <ClCompile Include="FrameWork\GameComponents\GameCollision.cpp" />
     <ClCompile Include="FrameWork\GameComponents\GameDebugDraw.cpp" />
@@ -95,12 +96,14 @@
     <ClCompile Include="FrameWork\GameComponents\GameMap.cpp" />
     <ClCompile Include="FrameWork\GameComponents\GameTime.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Grid.cpp" />
+    <ClCompile Include="FrameWork\GameComponents\IComponent.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Scene.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Sound.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Sprite.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Text.cpp" />
     <ClCompile Include="FrameWork\GameControllers\SceneManager.cpp" />
     <ClCompile Include="FrameWork\GameControllers\SpriteManager.cpp" />
+    <ClCompile Include="FrameWork\GameObjects\CollisionBody.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemy.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemyData.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemyFlyState.cpp" />
@@ -233,6 +236,7 @@
   <ItemGroup>
     <ClInclude Include="FrameWork\GameComponents\Animation.h" />
     <ClInclude Include="FrameWork\GameComponents\Camera.h" />
+    <ClInclude Include="FrameWork\GameComponents\Event.h" />
     <ClInclude Include="FrameWork\GameComponents\Game.h" />
     <ClInclude Include="FrameWork\GameComponents\GameCollision.h" />
     <ClInclude Include="FrameWork\GameComponents\GameDebugDraw.h" />
@@ -240,6 +244,7 @@
     <ClInclude Include="FrameWork\GameComponents\GameMap.h" />
     <ClInclude Include="FrameWork\GameComponents\GameTime.h" />
     <ClInclude Include="FrameWork\GameComponents\Grid.h" />
+    <ClInclude Include="FrameWork\GameComponents\IComponent.h" />
     <ClInclude Include="FrameWork\GameComponents\Scene.h" />
     <ClInclude Include="FrameWork\GameComponents\Sound.h" />
     <ClInclude Include="FrameWork\GameComponents\Sprite.h" />
@@ -249,6 +254,7 @@
     <ClInclude Include="FrameWork\GameDefines\define.h" />
     <ClInclude Include="FrameWork\GameDefines\FrameData.h" />
     <ClInclude Include="FrameWork\GameDefines\STLMAP.h" />
+    <ClInclude Include="FrameWork\GameObjects\CollisionBody.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemy.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemyData.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemyFlyState.h" />
