@@ -103,7 +103,7 @@ void Trap::OnCollision(Entity* impactor, CollisionReturn data, SideCollisions si
 		case PlayerState::RunCut:
 		case PlayerState::UpCut:
 		{
-			auto rCollide = GameCollision::RecteAndRect(this->GetBound(), player->GetBoundWeapon());
+			auto rCollide = GameCollision::rectCollide(this->GetBound(), player->GetBoundWeapon());
 			if (rCollide.IsCollided)
 				return;
 

@@ -29,19 +29,15 @@ public:
 	void SetCamera(Camera* camera);
 
 	void SetGameMap(GameMap* gamemap);
-
 	GameMap* getGameMap();
 
 	void Update(float dt);
-
 	void Draw(D3DXVECTOR3 position = D3DXVECTOR3(), RECT sourceRect = RECT(), D3DXVECTOR2 scale = D3DXVECTOR2(), D3DXVECTOR2 transform = D3DXVECTOR2(), float angle = 0, D3DXVECTOR2 rotationCenter = D3DXVECTOR2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 255, 255));
 
 	void SetState(PlayerState* newState);
 
 	void OnCollision(Entity* impactor, Entity::CollisionReturn data, Entity::SideCollisions side);
-
 	void OnCollision(Entity* impactor, Entity::CollisionReturn data);
-
 	void OnNoCollisionWithBottom(float dt);
 
 	void TakeDamage(int Damage);
@@ -58,9 +54,7 @@ public:
 	PlayerState::StateName Player::getState();
 
 	void HandleKeyboard(std::map<int, bool> keys);
-
 	void OnKeyPressed(int key);
-
 	void OnKeyUp(int key);
 
 	//true thi se lat nguoc anh theo truc y
@@ -97,7 +91,6 @@ public:
 	bool allowMoveRight;
 	bool EnableStair1 = false;
 	bool EnableStair2 = false;
-
 
 
 protected:

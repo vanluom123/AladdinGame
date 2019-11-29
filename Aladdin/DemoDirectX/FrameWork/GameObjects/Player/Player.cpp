@@ -48,7 +48,7 @@ Player::~Player()
 
 void Player::Update(float dt)
 {
-	if (mPlayerData->player->getState() != PlayerState::Climb&&mPlayerData->player->getState() != PlayerState::Hang)
+	if (mPlayerData->player->getState() != PlayerState::Climb && mPlayerData->player->getState() != PlayerState::Hang)
 		mCurrentAnimation->Update(dt);
 	if (this->mPlayerData->state)
 	{
@@ -121,7 +121,7 @@ void Player::OnKeyPressed(int key)
 							this->SetState(new PlayerDownCuttingState(this->mPlayerData));
 
 						}
-				if (this->mCurrentState != PlayerState::Hang&&this->mCurrentState != PlayerState::Climb) allowCut = false;
+				if (this->mCurrentState != PlayerState::Hang && this->mCurrentState != PlayerState::Climb) allowCut = false;
 
 				//Entity* tmp = new class JafarWeapon(D3DXVECTOR2(posX + 200, posY -100), this);
 				//this->mGameMap->GetListWeapons()->push_back(tmp);
@@ -132,7 +132,7 @@ void Player::OnKeyPressed(int key)
 		else
 			if (key == 0x5A)
 			{
-				if (allowThrow&&numApples>0)
+				if (allowThrow && numApples > 0)
 				{
 
 					if (mCurrentState == PlayerState::Jump || mCurrentState == PlayerState::MoveJump || mCurrentState == PlayerState::Fall || mCurrentState == PlayerState::Flippe || mCurrentState == PlayerState::ClimbJump || mCurrentState == PlayerState::JumpCut)
@@ -193,7 +193,7 @@ void Player::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DX
 	{
 		D3DXVECTOR2 trans = D3DXVECTOR2(GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x,
 			GameGlobal::GetHeight() / 2 - mCamera->GetPosition().y);
-		if (!(mCurrentAnimation->mCurrentIndex%2==0&&timeImmortal>0))
+		if (!(mCurrentAnimation->mCurrentIndex % 2 == 0 && timeImmortal > 0))
 			mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0), sourceRect, scale, trans, angle, rotationCenter, colorKey);
 	}
 	else
@@ -202,7 +202,7 @@ void Player::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DX
 	}
 }
 
-void Player::SetState(PlayerState *newState)
+void Player::SetState(PlayerState* newState)
 {
 	delete this->mPlayerData->state;
 	timeNoCollisionBottom = 0;
@@ -212,7 +212,7 @@ void Player::SetState(PlayerState *newState)
 
 }
 
-void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
+void Player::OnCollision(Entity* impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
 	//khi đang chết thì không xét va chạm
 	if (mPlayerData->player->getState() == PlayerState::Die || mPlayerData->player->getState() == PlayerState::Revive)
@@ -222,11 +222,11 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 	{
 	case (Entity::VerticalRope):
 	{
-		Entity::CollisionReturn tmp = GameCollision::RecteAndRect(GetBoundVerticalRope(), impactor->GetBound());
+		Entity::CollisionReturn tmp = GameCollision::rectCollide(GetBoundVerticalRope(), impactor->GetBound());
 		if (tmp.IsCollided)
 		{
 
-			if (mPlayerData->player->getState() != PlayerState::Climb&&mPlayerData->player->GetVy() > 0)
+			if (mPlayerData->player->getState() != PlayerState::Climb && mPlayerData->player->GetVy() > 0)
 			{
 				mPlayerData->player->SetPosition(impactor->GetPosition().x, this->posY);
 				if (mPlayerData->player->GetBound().top < impactor->GetBound().top)
@@ -241,11 +241,11 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 
 	case (Entity::HorizontalRope):
 	{
-		Entity::CollisionReturn tmp = GameCollision::RecteAndRect(GetBoundHorizontalRope(), impactor->GetBound());
+		Entity::CollisionReturn tmp = GameCollision::rectCollide(GetBoundHorizontalRope(), impactor->GetBound());
 		if (tmp.IsCollided)
 		{
 
-			if (mPlayerData->player->getState() != PlayerState::Hang&&mPlayerData->player->GetVy() > 0)
+			if (mPlayerData->player->getState() != PlayerState::Hang && mPlayerData->player->GetVy() > 0)
 			{
 				mPlayerData->player->SetVy(0);
 				mPlayerData->player->AddPosition(0, mAnimationHanging->GetSprite()->GetHeight() - mPlayerData->player->GetCurrentAnimation()->GetSprite()->GetHeight() - 1);
@@ -313,7 +313,7 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 	}
 
 	case (Entity::Fire):
-		if (this->timeCreateFire <= 0&&this->vy>=0)
+		if (this->timeCreateFire <= 0 && this->vy >= 0)
 		{
 			RECT AladdinWithFire;
 			AladdinWithFire.bottom = posY;
@@ -322,11 +322,11 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 			if (this->GetCurrentAnimation()->GetAnchorPoint().x != -1) PosX = this->GetCurrentAnimation()->GetAnchorPoint().x;
 			AladdinWithFire.left = PosX - 15;
 			AladdinWithFire.right = PosX + 15;
-			if (GameCollision::isCollide(impactor->GetBound(), AladdinWithFire) == true)
+			if (GameCollision::AABBCheck(impactor->GetBound(), AladdinWithFire) == true)
 			{
 				Sound::getInstance()->play("FireFromCoal", false, 1);
 				this->timeCreateFire = 0.6;
-				Entity * tmp;
+				Entity* tmp;
 				tmp = new class Fire(D3DXVECTOR2(posX, posY));
 				this->mGameMap->InsertWeapon(tmp);
 			}
@@ -337,7 +337,7 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 	case Entity::Flame:
 	case Entity::JafarWeapon1:
 	case Entity::JafarWeapon2:
-		if (GameCollision::isCollide(this->GetBoundBody(),impactor->GetBound()) == false && impactor->Tag != JafarWeapon2) return;
+		if (GameCollision::AABBCheck(this->GetBoundBody(), impactor->GetBound()) == false && impactor->Tag != JafarWeapon2) return;
 		if (this->timeImmortal <= 0 && impactor->Tag != JafarWeapon1)
 		{
 			if (impactor->Tag != Flame)
@@ -347,7 +347,7 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 				SetTimeImmortal(1.8);
 			}
 			else
-				if (timeCreateFire<0.4)
+				if (timeCreateFire < 0.4)
 				{
 					Entity::TakeDamage(1);
 					Sound::getInstance()->play("AladdinHurt", false, 1);
@@ -386,7 +386,7 @@ void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 	}
 }
 
-void Player::OnCollision(Entity *impactor, Entity::CollisionReturn data)
+void Player::OnCollision(Entity* impactor, Entity::CollisionReturn data)
 {
 
 	this->mPlayerData->state->OnCollision(impactor, data);
@@ -449,7 +449,7 @@ RECT Player::GetBoundBody()
 	RECT rect;
 	rect.left = this->posX - 18;
 	rect.right = this->posX + 18;
-	rect.top = this->posY - min(48,mCurrentAnimation->GetSprite()->GetHeight());
+	rect.top = this->posY - min(48, mCurrentAnimation->GetSprite()->GetHeight());
 	rect.bottom = this->posY;
 
 	return rect;
@@ -642,8 +642,8 @@ void Player::OnNoCollisionWithBottom(float dt)
 
 	//Nếu thời gian rơi >2 giây thì chuyển Player sang trạng thái Falling.
 	if (mPlayerData->player->timeNoCollisionBottom > 2 && mPlayerData->player->GetVx() != 0) mPlayerData->player->SetState(new PlayerFallingState(mPlayerData));
-	if (mCurrentState != PlayerState::Climb&&mCurrentState != PlayerState::Fall&&mCurrentState != PlayerState::Jump&&mCurrentState != PlayerState::MoveJump&&mCurrentState != PlayerState::JumpCut&&mCurrentState != PlayerState::JumpThrow&&mCurrentState != PlayerState::Flippe
-		&&mCurrentState != PlayerState::Cut&&mCurrentState != PlayerState::DownCut&&mCurrentState != PlayerState::UpCut
+	if (mCurrentState != PlayerState::Climb && mCurrentState != PlayerState::Fall && mCurrentState != PlayerState::Jump && mCurrentState != PlayerState::MoveJump && mCurrentState != PlayerState::JumpCut && mCurrentState != PlayerState::JumpThrow && mCurrentState != PlayerState::Flippe
+		&& mCurrentState != PlayerState::Cut && mCurrentState != PlayerState::DownCut && mCurrentState != PlayerState::UpCut
 		)
 	{
 		if (mPlayerData->player->timeNoCollisionBottom > 1 && mPlayerData->player->GetVx() != 0) mPlayerData->player->SetState(new PlayerFallingState(mPlayerData));
@@ -663,13 +663,13 @@ Animation* Player::GetCurrentAnimation()
 	return mCurrentAnimation;
 }
 
-void Player::SetCamera(Camera *camera)
+void Player::SetCamera(Camera* camera)
 {
 	this->mCamera = camera;
 }
 
 
-void Player::SetGameMap(GameMap *gamemap)
+void Player::SetGameMap(GameMap* gamemap)
 {
 	this->mGameMap = gamemap;
 }
@@ -682,7 +682,7 @@ GameMap* Player::getGameMap()
 void Player::ThrowApple()
 {
 	if (numApples < 0) return;
-	class Apple *tmp;
+	class Apple* tmp;
 	numApples--;
 	switch (mCurrentState)
 	{

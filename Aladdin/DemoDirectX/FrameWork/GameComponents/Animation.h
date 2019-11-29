@@ -20,31 +20,31 @@ public:
 
 	virtual void Update(float dt);
 	virtual void Update(float dt,bool isDecrease);
-	void Draw(D3DXVECTOR3 position = D3DXVECTOR3(), RECT sourceRect = RECT(), D3DXVECTOR2 scale = D3DXVECTOR2(), D3DXVECTOR2 transform = D3DXVECTOR2(), float angle = 0, D3DXVECTOR2 rotationCenter = D3DXVECTOR2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 255, 255));
-	void Draw(D3DXVECTOR2 translate);
+	void Draw(GVector3 position = GVector3(), RECT sourceRect = RECT(), GVector2 scale = GVector2(), GVector2 transform = GVector2(), float angle = 0, GVector2 rotationCenter = GVector2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 255, 255));
+	void Draw(GVector2 translate);
 
-	virtual void SetPosition(D3DXVECTOR3 pos);
+	virtual void SetPosition(GVector3 pos);
 	virtual void SetPosition(float x, float y);
-	virtual void SetPosition(D3DXVECTOR2 pos);
+	virtual void SetPosition(GVector2 pos);
 
 	POINT GetAnchorPoint();
 
-	D3DXVECTOR2 GetScale();
-	void SetScale(D3DXVECTOR2 scale);
+	GVector2 GetScale();
+	void SetScale(GVector2 scale);
 
 	float GetRotation();
 	void SetRotation(float rotation); // by radian
 
-	D3DXVECTOR2 GetRotationCenter();
-	void SetRotationCenter(D3DXVECTOR2 rotationCenter);
+	GVector2 GetRotationCenter();
+	void SetRotationCenter(GVector2 rotationCenter);
 
 	void SetFlipVertical(bool flag);
 	void SetFlipHorizontal(bool flag);
 
 	void Reset();
 
-	D3DXVECTOR2 GetTranslation(); // phep tinh tien tu world position -> view position
-	void SetTranslation(D3DXVECTOR2 translation); // phep tinh tien: tu the world position -> view position
+	GVector2 GetTranslation(); // phep tinh tien tu world position -> view position
+	void SetTranslation(GVector2 translation); // phep tinh tien: tu the world position -> view position
 	Sprite* GetSprite();
 
 	void CopyAnimation(Animation* animation);

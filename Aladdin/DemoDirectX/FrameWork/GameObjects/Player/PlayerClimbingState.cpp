@@ -34,7 +34,7 @@ PlayerClimbingState::~PlayerClimbingState()
 
 void PlayerClimbingState::Update(float dt)
 {
-	Entity::CollisionReturn tmp1 = GameCollision::RecteAndRect(mPlayerData->player->GetBoundVerticalRope(), verticalRope->GetBound());
+	Entity::CollisionReturn tmp1 = GameCollision::rectCollide(mPlayerData->player->GetBoundVerticalRope(), verticalRope->GetBound());
 	if (!tmp1.IsCollided)
 	{
 		mPlayerData->player->SetState(new PlayerFallingState(mPlayerData));

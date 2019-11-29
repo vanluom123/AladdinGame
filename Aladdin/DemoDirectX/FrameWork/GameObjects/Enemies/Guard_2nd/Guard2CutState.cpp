@@ -47,9 +47,9 @@ void Guard2CutState::OnCollision(Entity *impactor, Entity::CollisionReturn data,
 		break;
 	case Entity::EntityTypes::Aladdin:
 		if (this->mGuard2Data->guard2->IsMakeDamage() == true && this->mGuard2Data->guard2->mPlayer->IsMakeDamage() == true
-			&& GameCollision::isCollide(this->mGuard2Data->guard2->GetBoundBody(), this->mGuard2Data->guard2->mPlayer->GetBoundWeapon()) == false
-			&& GameCollision::isCollide(this->mGuard2Data->guard2->GetBoundWeapon(), this->mGuard2Data->guard2->mPlayer->GetBoundBody()) == false
-			&& GameCollision::isCollide(this->mGuard2Data->guard2->GetBoundWeapon(), this->mGuard2Data->guard2->mPlayer->GetBoundWeapon()) == true
+			&& GameCollision::AABBCheck(this->mGuard2Data->guard2->GetBoundBody(), this->mGuard2Data->guard2->mPlayer->GetBoundWeapon()) == false
+			&& GameCollision::AABBCheck(this->mGuard2Data->guard2->GetBoundWeapon(), this->mGuard2Data->guard2->mPlayer->GetBoundBody()) == false
+			&& GameCollision::AABBCheck(this->mGuard2Data->guard2->GetBoundWeapon(), this->mGuard2Data->guard2->mPlayer->GetBoundWeapon()) == true
 			)
 		{
 			Sound::getInstance()->play("Sword Ching", false, 1);
@@ -58,7 +58,7 @@ void Guard2CutState::OnCollision(Entity *impactor, Entity::CollisionReturn data,
 
 		if (this->mGuard2Data->guard2->mPlayer->IsMakeDamage() == true && this->mGuard2Data->guard2->GetTimeImmortal() <= 0)
 		{
-			if (GameCollision::isCollide(mGuard2Data->guard2->mPlayer->GetBoundWeapon(), mGuard2Data->guard2->GetBoundBody()) == true)
+			if (GameCollision::AABBCheck(mGuard2Data->guard2->mPlayer->GetBoundWeapon(), mGuard2Data->guard2->GetBoundBody()) == true)
 			{
 				mGuard2Data->guard2->TakeDamage(1);
 				mGuard2Data->guard2->SetTimeImmortal(1);
@@ -69,7 +69,7 @@ void Guard2CutState::OnCollision(Entity *impactor, Entity::CollisionReturn data,
 		}
 		if (this->mGuard2Data->guard2->IsMakeDamage() == true && this->mGuard2Data->guard2->mPlayer->GetTimeImmortal() <= 0)
 		{
-			if (GameCollision::isCollide(mGuard2Data->guard2->mPlayer->GetBoundBody(), mGuard2Data->guard2->GetBoundWeapon()) == true)
+			if (GameCollision::AABBCheck(mGuard2Data->guard2->mPlayer->GetBoundBody(), mGuard2Data->guard2->GetBoundWeapon()) == true)
 			{
 				mGuard2Data->guard2->mPlayer->TakeDamage(1);
 				mGuard2Data->guard2->mPlayer->SetTimeImmortal(1.8);

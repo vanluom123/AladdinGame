@@ -88,7 +88,7 @@ void Guard3Weapon::OnCollision(Entity *impactor, Entity::CollisionReturn data, E
 		isDeleted = true;
 		break;
 	case Entity::EntityTypes::Aladdin:
-		if (impactor->IsMakeDamage() == true&& GameCollision::isCollide(impactor->GetBoundWeapon(), this->GetBound()) == true)
+		if (impactor->IsMakeDamage() == true&& GameCollision::AABBCheck(impactor->GetBoundWeapon(), this->GetBound()) == true)
 		{
 				if (accelatorX <= 0) this->SetVx(70.0f);
 				else  this->SetVx(-70.0f);
@@ -98,7 +98,7 @@ void Guard3Weapon::OnCollision(Entity *impactor, Entity::CollisionReturn data, E
 		}
 		else
 		{
-			if (GameCollision::isCollide(impactor->GetBoundBody(), this->GetBound()) == true)
+			if (GameCollision::AABBCheck(impactor->GetBoundBody(), this->GetBound()) == true)
 			{
 				isDeleted = true;
 				Sound::getInstance()->play("SwordSpinning", false, 1);

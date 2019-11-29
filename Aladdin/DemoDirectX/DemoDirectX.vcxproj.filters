@@ -74,6 +74,9 @@
     <Filter Include="FrameWork\TinyXML">
       <UniqueIdentifier>{203421a0-d2d9-41f0-a800-1904821c09f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\GameObjects\Enemies\Sketelon">
+      <UniqueIdentifier>{619fa9a1-bbf6-4c89-88c5-679920c1ab8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -406,9 +409,6 @@
     <ClCompile Include="FrameWork\GameObjects\Player\Player.cpp">
       <Filter>FrameWork\GameObjects\Player</Filter>
     </ClCompile>
-    <ClCompile Include="FrameWork\GameObjects\Enemies\Enemy.cpp">
-      <Filter>FrameWork\GameObjects\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="FrameWork\GameObjects\Enemies\Guard_1st\Guard1StandState.cpp">
       <Filter>FrameWork\GameObjects\Enemies\Guard_1st</Filter>
     </ClCompile>
@@ -513,6 +513,18 @@
     </ClCompile>
     <ClCompile Include="FrameWork\GameObjects\CollisionBody.cpp">
       <Filter>FrameWork\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\GameObjects\Enemies\Sketelon\Bone.cpp">
+      <Filter>FrameWork\GameObjects\Enemies\Sketelon</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\GameObjects\Enemies\Sketelon\Sketelon.cpp">
+      <Filter>FrameWork\GameObjects\Enemies\Sketelon</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\GameObjects\Enemies\Sketelon\BoneMummies.cpp">
+      <Filter>FrameWork\GameObjects\Enemies\Sketelon</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWork\GameObjects\Enemies\Sketelon\Mummies.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -864,9 +876,6 @@
     <ClInclude Include="FrameWork\GameObjects\Player\PlayerReviveState.h">
       <Filter>FrameWork\GameObjects\Player</Filter>
     </ClInclude>
-    <ClInclude Include="FrameWork\GameObjects\Enemies\Enemy.h">
-      <Filter>FrameWork\GameObjects\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="FrameWork\GameObjects\Enemies\Guard_1st\Guard1StandState.h">
       <Filter>FrameWork\GameObjects\Enemies\Guard_1st</Filter>
     </ClInclude>
@@ -962,6 +971,18 @@
     </ClInclude>
     <ClInclude Include="FrameWork\GameObjects\CollisionBody.h">
       <Filter>FrameWork\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\GameObjects\Enemies\Sketelon\Bone.h">
+      <Filter>FrameWork\GameObjects\Enemies\Sketelon</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\GameObjects\Enemies\Sketelon\Sketelon.h">
+      <Filter>FrameWork\GameObjects\Enemies\Sketelon</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\GameObjects\Enemies\Sketelon\BoneMummies.h">
+      <Filter>FrameWork\GameObjects\Enemies\Sketelon</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\GameObjects\Enemies\Sketelon\Mummies.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

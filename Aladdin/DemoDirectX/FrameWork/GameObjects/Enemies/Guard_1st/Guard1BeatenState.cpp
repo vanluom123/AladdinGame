@@ -38,7 +38,7 @@ void Guard1BeatenState::OnCollision(Entity *impactor, Entity::CollisionReturn da
 	case Entity::EntityTypes::Aladdin:
 		if (this->mGuard1Data->guard1->mPlayer->IsMakeDamage()==true&& this->mGuard1Data->guard1->GetTimeImmortal() <= 0 )
 		{
-			if (GameCollision::isCollide(mGuard1Data->guard1->mPlayer->GetBoundWeapon(), mGuard1Data->guard1->GetBoundBody()) == true)
+			if (GameCollision::AABBCheck(mGuard1Data->guard1->mPlayer->GetBoundWeapon(), mGuard1Data->guard1->GetBoundBody()) == true)
 			{
 				mGuard1Data->guard1->TakeDamage(1);
 				mGuard1Data->guard1->SetTimeImmortal(1);

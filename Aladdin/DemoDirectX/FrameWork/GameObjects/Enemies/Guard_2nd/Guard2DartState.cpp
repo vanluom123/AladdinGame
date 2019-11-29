@@ -48,7 +48,7 @@ void Guard2DartState::OnCollision(Entity *impactor, Entity::CollisionReturn data
 	case Entity::EntityTypes::Aladdin:
 		if (this->mGuard2Data->guard2->mPlayer->IsMakeDamage() == true && this->mGuard2Data->guard2->GetTimeImmortal() <= 0)
 		{
-			if (GameCollision::isCollide(mGuard2Data->guard2->mPlayer->GetBoundWeapon(), mGuard2Data->guard2->GetBoundBody()) == true)
+			if (GameCollision::AABBCheck(mGuard2Data->guard2->mPlayer->GetBoundWeapon(), mGuard2Data->guard2->GetBoundBody()) == true)
 			{
 				mGuard2Data->guard2->TakeDamage(1);
 				mGuard2Data->guard2->SetTimeImmortal(1);
@@ -59,7 +59,7 @@ void Guard2DartState::OnCollision(Entity *impactor, Entity::CollisionReturn data
 		}
 		if (this->mGuard2Data->guard2->IsMakeDamage() == true && this->mGuard2Data->guard2->mPlayer->GetTimeImmortal() <= 0)
 		{
-			if (GameCollision::isCollide(mGuard2Data->guard2->mPlayer->GetBoundBody(), mGuard2Data->guard2->GetBoundWeapon()) == true)
+			if (GameCollision::AABBCheck(mGuard2Data->guard2->mPlayer->GetBoundBody(), mGuard2Data->guard2->GetBoundWeapon()) == true)
 			{
 				mGuard2Data->guard2->mPlayer->TakeDamage(1);
 				mGuard2Data->guard2->mPlayer->SetTimeImmortal(1.8);

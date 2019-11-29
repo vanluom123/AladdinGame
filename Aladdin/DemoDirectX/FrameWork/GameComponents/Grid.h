@@ -1,3 +1,6 @@
+#ifndef __GRID_H__
+#define __GRID_H__
+
 #include "../GameObjects/Entity.h"
 #include "Camera.h"
 #include <vector> 
@@ -17,8 +20,8 @@ public:
 	~Grid();
 	void InsertEntity(Entity* entity); // add entity vao grid
 	void RemoveEntiy(Entity* entity);
-
 	void GetListEntity(vector<Entity*>& ListObj, Camera* camera);// lay nhung entiy nam trong viewport
-
 	void GetCollisionableListEntity(vector<Entity*>& ListObj, Entity* entity);//lay nhung entity co kha nang va cham voi player
 };
+
+#endif // !__GRID_H__

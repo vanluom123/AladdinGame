@@ -179,7 +179,7 @@ void Scene_Final::checkCollision(float dt)
 
 	for (size_t i = 0; i < listCollision.size(); i++)
 	{
-		Entity::CollisionReturn r = GameCollision::RecteAndRect(mPlayer->GetBound(),
+		Entity::CollisionReturn r = GameCollision::rectCollide(mPlayer->GetBound(),
 			listCollision.at(i)->GetBound());
 
 		if (r.IsCollided)
@@ -219,7 +219,7 @@ void Scene_Final::checkCollision(float dt)
 			{
 				continue;
 			}
-			Entity::CollisionReturn r = GameCollision::RecteAndRect(mPlayer->GetBound(),
+			Entity::CollisionReturn r = GameCollision::rectCollide(mPlayer->GetBound(),
 				mListEnemyWeapons->at(i)->GetBound());
 
 			if (r.IsCollided)
@@ -237,7 +237,7 @@ void Scene_Final::checkCollision(float dt)
 	for (size_t j = 0; j < mListEnemies->size(); j++)
 	{
 		if (mListEnemies->at(j)->IsDestroy() == true) continue;
-		Entity::CollisionReturn r = GameCollision::RecteAndRect(mPlayer->GetBound(),
+		Entity::CollisionReturn r = GameCollision::rectCollide(mPlayer->GetBound(),
 			mListEnemies->at(j)->GetBound());
 
 		if (r.IsCollided)
@@ -296,7 +296,7 @@ void Scene_Final::checkCollision(float dt)
 
 		for (size_t j = 0; j < listCollision.size(); j++)
 		{
-			Entity::CollisionReturn r = GameCollision::RecteAndRect(mListApplesAladdin->at(i)->GetBound(),
+			Entity::CollisionReturn r = GameCollision::rectCollide(mListApplesAladdin->at(i)->GetBound(),
 				listCollision.at(j)->GetBound());
 
 			if (r.IsCollided)
@@ -314,7 +314,7 @@ void Scene_Final::checkCollision(float dt)
 			Entity* currentEnemy = mListEnemies->at(k);
 			if (currentEnemy->IsDestroy() == true) continue;
 
-			Entity::CollisionReturn r = GameCollision::RecteAndRect(mListApplesAladdin->at(i)->GetBound(),
+			Entity::CollisionReturn r = GameCollision::rectCollide(mListApplesAladdin->at(i)->GetBound(),
 				currentEnemy->GetBound());
 
 			if (r.IsCollided)
@@ -334,7 +334,7 @@ void Scene_Final::checkCollision(float dt)
 			Entity* currentEnemyWeapon = mListEnemyWeapons->at(k);
 			if (currentEnemyWeapon->IsDestroy() == true) continue;
 
-			Entity::CollisionReturn r = GameCollision::RecteAndRect(mListApplesAladdin->at(i)->GetBound(),
+			Entity::CollisionReturn r = GameCollision::rectCollide(mListApplesAladdin->at(i)->GetBound(),
 				currentEnemyWeapon->GetBound());
 
 			if (r.IsCollided)
@@ -363,7 +363,7 @@ void Scene_Final::checkCollision(float dt)
 
 		for (size_t j = 0; j < listCollision.size(); j++)
 		{
-			Entity::CollisionReturn r = GameCollision::RecteAndRect(currentEnemyWeapon->GetBound(),
+			Entity::CollisionReturn r = GameCollision::rectCollide(currentEnemyWeapon->GetBound(),
 				listCollision.at(j)->GetBound());
 
 			if (r.IsCollided)

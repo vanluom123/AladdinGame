@@ -1,13 +1,10 @@
 #include "Grid.h"
 
 Grid::Grid()
-{
-}
+{}
 
 Grid::~Grid()
-{
-
-}
+{}
 
 void Grid::InsertEntity(Entity* entity)
 {
@@ -49,9 +46,7 @@ void Grid::RemoveEntiy(Entity* entity)
 				{
 					mcells[i][j].erase(mcells[i][j].begin() + k);
 				}
-
 			}
-
 		}
 	}
 }

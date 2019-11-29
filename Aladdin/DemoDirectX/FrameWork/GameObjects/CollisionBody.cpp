@@ -22,11 +22,11 @@ CollisionBody::~CollisionBody()
 void CollisionBody::checkCollision(Entity* otherObject, float dt, bool updatePosition)
 {
 	Entity::SideCollisions direction;
-	float time = isCollide(otherObject, direction, dt);
+	float time = sweptAABB(otherObject, direction, dt);
 
 	if (time < 1.0f)
 	{
-		if (otherObject->GetPhysicsBodySide() != Entity::NotKnow && otherObject->GetPhysicsBodySide() == direction)
+		if (otherObject->GetPhysicsBodySide() != Entity::NotKnow && (direction & otherObject->GetPhysicsBodySide()) == direction)
 		{
 			// cập nhật tọa độ
 			updateTargetPosition(otherObject, direction, true);
@@ -41,7 +41,7 @@ void CollisionBody::checkCollision(Entity* otherObject, float dt, bool updatePos
 	}
 	else if (_listColliding.find(otherObject) == _listColliding.end())	// ko có trong list đã va chạm
 	{
-		if (isColliding(_target->GetBound(), otherObject->GetBound()))
+		if (AABBCheck(_target->GetBound(), otherObject->GetBound()))
 		{
 			CollisionEventArg* e = new CollisionEventArg(otherObject);
 			e->SetSideCollision(this->getSide(otherObject));
@@ -58,7 +58,7 @@ void CollisionBody::checkCollision(Entity* otherObject, float dt, bool updatePos
 		{
 			auto side = this->getSide(otherObject);
 
-			if (otherObject->GetPhysicsBodySide() == Entity::NotKnow || otherObject->GetPhysicsBodySide() != side)
+			if (otherObject->GetPhysicsBodySide() == Entity::NotKnow || (side & otherObject->GetPhysicsBodySide()) != side)
 				return;
 
 			// cập nhật tọa độ
@@ -78,11 +78,11 @@ void CollisionBody::checkCollision(Entity* otherObject, float dt, bool updatePos
 
 bool CollisionBody::checkCollision(Entity* otherObject, Entity::SideCollisions& direction, float dt, bool updatePosition)
 {
-	float time = isCollide(otherObject, direction, dt);
+	float time = sweptAABB(otherObject, direction, dt);
 
 	if (time < 1.0f)
 	{
-		if (otherObject->GetPhysicsBodySide() != Entity::NotKnow && otherObject->GetPhysicsBodySide() == direction)
+		if (otherObject->GetPhysicsBodySide() != Entity::NotKnow && (direction & otherObject->GetPhysicsBodySide()) == direction)
 		{
 			// cập nhật tọa độ
 			updateTargetPosition(otherObject, direction, true);
@@ -98,7 +98,7 @@ bool CollisionBody::checkCollision(Entity* otherObject, Entity::SideCollisions& 
 			auto side = this->getSide(otherObject);
 			direction = side;
 
-			if (otherObject->GetPhysicsBodySide() == Entity::NotKnow || otherObject->GetPhysicsBodySide() != side)
+			if (otherObject->GetPhysicsBodySide() == Entity::NotKnow || (side & otherObject->GetPhysicsBodySide()) != side)
 				return true;
 
 			// cập nhật tọa độ
@@ -114,14 +114,14 @@ bool CollisionBody::checkCollision(Entity* otherObject, Entity::SideCollisions& 
 	return false;
 }
 
-float CollisionBody::isCollide(Entity* otherSprite, Entity::SideCollisions& direction, float dt)
+float CollisionBody::sweptAABB(Entity* otherSprite, Entity::SideCollisions& direction, float dt)
 {
 	RECT myRect = _target->GetBound();
 	RECT otherRect = otherSprite->GetBound();
 
 	// sử dụng Broadphase rect để kt vùng tiếp theo có va chạm ko
 	RECT broadphaseRect = getSweptBroadphaseRect(_target, dt);	// là bound của object được mở rộng ra thêm một phần bằng với vận tốc (dự đoán trước bound)
-	if (!isColliding(broadphaseRect, otherRect))				// kiểm tra tính chồng lắp của 2 hcn
+	if (!AABBCheck(broadphaseRect, otherRect))				// kiểm tra tính chồng lắp của 2 hcn
 	{
 		direction = Entity::NotKnow;
 		return 1.0f;
@@ -242,7 +242,7 @@ bool CollisionBody::isColliding(Entity* otherObject, float& moveX, float& moveY,
 	//  CÓ va chạm khi 
 	//  left < 0 && right > 0 && top > 0 && bottom < 0
 	//
-	if (left > 0 || right < 0 || top < 0 || bottom > 0)
+	if (left > 0 || right < 0 || top > 0 || bottom < 0)
 		return false;
 
 	// tính offset x, y để đi hết va chạm
@@ -263,7 +263,7 @@ void CollisionBody::updateTargetPosition(Entity* otherObject, Entity::SideCollis
 {
 	if (withVelocity == true)
 	{
-		if (otherObject->GetPhysicsBodySide() != Entity::NotKnow || otherObject->GetPhysicsBodySide() == direction)
+		if (otherObject->GetPhysicsBodySide() != Entity::NotKnow || (direction & otherObject->GetPhysicsBodySide()) == direction)
 		{
 			//auto v = _target->getVelocity();
 			auto pos = _target->GetPosition();
@@ -284,34 +284,34 @@ void CollisionBody::updateTargetPosition(Entity* otherObject, Entity::SideCollis
 	}
 	else
 	{
-		if (move.y > 0 && (otherObject->GetPhysicsBodySide() == Entity::Top) && _target->GetVy() <= 0)
+		if (move.y > 0 && ((otherObject->GetPhysicsBodySide() & Entity::Top) == Entity::Top) && _target->GetVy() <= 0)
 		{
 			_target->SetPositionY(_target->GetPositionY() + move.y);
 		}
-		else if (move.y < 0 && (otherObject->GetPhysicsBodySide() == Entity::Bottom) && _target->GetVy() >= 0)
+		else if (move.y < 0 && ((otherObject->GetPhysicsBodySide() & Entity::Bottom) == Entity::Bottom) && _target->GetVy() >= 0)
 		{
 			_target->SetPositionY(_target->GetPositionY() + move.y);
 		}
 
-		if (move.x > 0 && (otherObject->GetPhysicsBodySide() == Entity::Right) && _target->GetVx() <= 0)
+		if (move.x > 0 && ((otherObject->GetPhysicsBodySide() & Entity::Right) == Entity::Right) && _target->GetVx() <= 0)
 		{
 			_target->SetPositionX(_target->GetPositionX() + move.x);
 		}
-		else if (move.x < 0 && (otherObject->GetPhysicsBodySide() == Entity::Left) && _target->GetVx() >= 0)
+		else if (move.x < 0 && ((otherObject->GetPhysicsBodySide() & Entity::Left) == Entity::Left) && _target->GetVx() >= 0)
 		{
 			_target->SetPositionX(_target->GetPositionX() + move.x);
 		}
 	}
 }
 
-bool CollisionBody::isColliding(RECT myRect, RECT otherRect)
+bool CollisionBody::AABBCheck(RECT myRect, RECT otherRect)
 {
 	float left = otherRect.left - myRect.right;
 	float top = otherRect.top - myRect.bottom;
 	float right = otherRect.right - myRect.left;
 	float bottom = otherRect.bottom - myRect.top;
 
-	return !(left > 0 || right < 0 || top < 0 || bottom > 0);
+	return !(left > 0 || right < 0 || top > 0 || bottom < 0);
 }
 
 RECT CollisionBody::getSweptBroadphaseRect(Entity* object, float dt)
@@ -340,7 +340,7 @@ Entity::SideCollisions CollisionBody::getSide(Entity* otherObject)
 	float bottom = otherRect.bottom - myRect.top;
 
 	// kt va chạm
-	if (left > 0 || right < 0 || top < 0 || bottom > 0)
+	if (left > 0 || right < 0 || top > 0 || bottom < 0)
 		return Entity::NotKnow;
 
 	float minX;

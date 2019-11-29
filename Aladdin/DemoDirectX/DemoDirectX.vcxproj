@@ -60,6 +60,7 @@
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CallingConvention>StdCall</CallingConvention>
       <SDLCheck>true</SDLCheck>
+      <DisableSpecificWarnings>26812;26495;4244;4035;4305;4267;4018;6031;6054;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,7 +123,6 @@
     <ClCompile Include="FrameWork\GameObjects\Enemies\CivilianEnemy4th\CivilianEnemy4thRunState.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\CivilianEnemy4th\CivilianEnemy4thStandState.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\CivilianEnemy4th\CivilianEnemy4thState.cpp" />
-    <ClCompile Include="FrameWork\GameObjects\Enemies\Enemy.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\Guard_1st\Guard1.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\Guard_1st\Guard1BeatenState.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\Guard_1st\Guard1BeatState.cpp" />
@@ -147,6 +147,9 @@
     <ClCompile Include="FrameWork\GameObjects\Enemies\Guard_3rd\Guard3StandState.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\Guard_3rd\Guard3State.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\Guard_3rd\Guard3ThrowState.cpp" />
+    <ClCompile Include="FrameWork\GameObjects\Enemies\Sketelon\Bone.cpp" />
+    <ClCompile Include="FrameWork\GameObjects\Enemies\Sketelon\BoneMummies.cpp" />
+    <ClCompile Include="FrameWork\GameObjects\Enemies\Sketelon\Sketelon.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Entity.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Jafar\Jafar.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Jafar\JafarData.cpp" />
@@ -232,6 +235,7 @@
     <ClCompile Include="FrameWork\TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="FrameWork\TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="FrameWork\GameObjects\Enemies\Sketelon\Mummies.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork\GameComponents\Animation.h" />
@@ -273,7 +277,6 @@
     <ClInclude Include="FrameWork\GameObjects\Enemies\CivilianEnemy4th\CivilianEnemy4thRunState.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\CivilianEnemy4th\CivilianEnemy4thStandState.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\CivilianEnemy4th\CivilianEnemy4thState.h" />
-    <ClInclude Include="FrameWork\GameObjects\Enemies\Enemy.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\Guard_1st\Guard1.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\Guard_1st\Guard1BeatenState.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\Guard_1st\Guard1BeatState.h" />
@@ -298,6 +301,9 @@
     <ClInclude Include="FrameWork\GameObjects\Enemies\Guard_3rd\Guard3StandState.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\Guard_3rd\Guard3State.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\Guard_3rd\Guard3ThrowState.h" />
+    <ClInclude Include="FrameWork\GameObjects\Enemies\Sketelon\Bone.h" />
+    <ClInclude Include="FrameWork\GameObjects\Enemies\Sketelon\BoneMummies.h" />
+    <ClInclude Include="FrameWork\GameObjects\Enemies\Sketelon\Sketelon.h" />
     <ClInclude Include="FrameWork\GameObjects\Entity.h" />
     <ClInclude Include="FrameWork\GameObjects\Jafar\Jafar.h" />
     <ClInclude Include="FrameWork\GameObjects\Jafar\JafarData.h" />
@@ -383,6 +389,7 @@
     <ClInclude Include="FrameWork\Scenes\Scene1.h" />
     <ClInclude Include="FrameWork\TinyXML\tinystr.h" />
     <ClInclude Include="FrameWork\TinyXML\tinyxml.h" />
+    <ClInclude Include="FrameWork\GameObjects\Enemies\Sketelon\Mummies.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FrameWork\MapReader\Tmx.h.in" />

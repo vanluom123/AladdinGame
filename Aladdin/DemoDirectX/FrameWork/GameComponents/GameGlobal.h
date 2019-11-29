@@ -5,9 +5,6 @@
 class GameGlobal
 {
 public:
-	GameGlobal();
-	~GameGlobal();
-
 	static HINSTANCE GetCurrentHINSTANCE();
 	static HWND getCurrentHWND();
 

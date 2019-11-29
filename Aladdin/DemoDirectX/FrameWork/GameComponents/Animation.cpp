@@ -49,12 +49,12 @@ void Animation::SetFlipHorizontal(bool flag)
 	mSprite->FlipHorizontal(flag);
 }
 
-D3DXVECTOR2 Animation::GetScale()
+GVector2 Animation::GetScale()
 {
 	return mSprite->GetScale();
 }
 
-void Animation::SetScale(D3DXVECTOR2 scale)
+void Animation::SetScale(GVector2 scale)
 {
 	mSprite->SetScale(scale);
 }
@@ -69,22 +69,22 @@ void Animation::SetRotation(float rotation) // by radian
 	mSprite->SetRotation(rotation);
 }
 
-D3DXVECTOR2 Animation::GetRotationCenter()
+GVector2 Animation::GetRotationCenter()
 {
 	return mSprite->GetRotationCenter();
 }
 
-void Animation::SetRotationCenter(D3DXVECTOR2 rotationCenter)
+void Animation::SetRotationCenter(GVector2 rotationCenter)
 {
 	mSprite->SetRotationCenter(rotationCenter);
 }
 
-D3DXVECTOR2 Animation::GetTranslation()
+GVector2 Animation::GetTranslation()
 {
 	return mSprite->GetTranslation();
 }
 
-void Animation::SetTranslation(D3DXVECTOR2 translation)
+void Animation::SetTranslation(GVector2 translation)
 {
 	mSprite->SetTranslation(translation);
 }
@@ -150,30 +150,30 @@ void Animation::Update(float dt,bool isDecrease)
 	}
 }
 
-void Animation::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale,
-	D3DXVECTOR2 transform, float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
+void Animation::Draw(GVector3 position, RECT sourceRect, GVector2 scale,
+	GVector2 transform, float angle, GVector2 rotationCenter, D3DXCOLOR colorKey)
 {
 		 mSprite->Draw(position, sourceRect, scale, transform, angle, rotationCenter, colorKey);
 }
 
 
-void Animation::Draw(D3DXVECTOR2 translate)
+void Animation::Draw(GVector2 translate)
 {
-	mSprite->Draw(D3DXVECTOR3(), RECT(), D3DXVECTOR2(), translate);
+	mSprite->Draw(GVector3(), RECT(), GVector2(), translate);
 }
-void Animation::SetPosition(D3DXVECTOR3 pos)
+void Animation::SetPosition(GVector3 pos)
 {
 	mSprite->SetPosition(pos);
 }
 
 void Animation::SetPosition(float x, float y)
 {
-	SetPosition(D3DXVECTOR3(x, y, 0));
+	SetPosition(GVector3(x, y, 0));
 }
 
-void Animation::SetPosition(D3DXVECTOR2 pos)
+void Animation::SetPosition(GVector2 pos)
 {
-	SetPosition(D3DXVECTOR3(pos));
+	SetPosition(GVector3(pos));
 }
 
 Sprite* Animation::GetSprite()

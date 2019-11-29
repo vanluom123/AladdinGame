@@ -1,13 +1,7 @@
-﻿#pragma once
-#ifndef __GAME_MAP__
+﻿#ifndef __GAME_MAP__
 #define __GAME_MAP__
 
-#include <d3dx9.h>
-#include <d3d9.h>
-#include <vector>
 #include <fstream>
-
-
 #include "../GameComponents/Sprite.h"
 #include "../MapReader/Tmx.h.in"
 #include "Camera.h"
@@ -31,6 +25,7 @@
 #include "../GameObjects/MapObject/Camel.h"
 #include "../GameObjects/MapObject/SpringBoard.h"
 #include "../GameObjects/MapObject/Pelder.h"
+
 class GameMap
 {
 public:

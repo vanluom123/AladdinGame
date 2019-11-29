@@ -1,62 +1,19 @@
 OBJECT INFO SCENE1
-1 Guard1 717 628
-1 Guard1 2670 406
-2 Guard2 985 628
-2 Guard2 1685 279
-2 Guard2 2938 422
-2 Guard2 3245 660
-2 Guard2 3712 658
-2 Guard2 3736 485
-2 Guard2 4227 658
-2 Guard2 3114 292
-2 Guard2 4500 214
-3 Guard3 1697 661
-3 Guard3 1906 438
-3 Guard3 2156 280
-3 Guard3 2793 567
-3 Guard3 3164 485
-3 Guard3 3449 658
-3 Guard3 3858 463
-3 Guard3 4706 621
-3 Guard3 3288 327
-3 Guard3 4694 214
-4 CivilianEnemy1 1783 468
-4 CivilianEnemy1 1832 500
-4 CivilianEnemy1 1832 324
-4 CivilianEnemy1 1945 324
-4 CivilianEnemy1 1736 148
-4 CivilianEnemy1 1944 148
-4 CivilianEnemy1 3768 532
-4 CivilianEnemy1 3944 532
-4 CivilianEnemy1 4008 500
-4 CivilianEnemy1 3304 356
-4 CivilianEnemy1 2104 148
-5 CivilianEnemy2 1293 590
-5 CivilianEnemy2 4342 468
-5 CivilianEnemy2 2544 165
-5 CivilianEnemy2 3081 165
-7 CivilianEnemy4 2848 422
-a Camel 1551 663
-f FloatingGround 1650 446
-f FloatingGround 4145 442
-f FloatingGround 4220 445
-s SpringBoard 3443 252
-s SpringBoard 3456 173
-s SpringBoard 4227 127
-S Pelder 3947 215
 
-b BatEnemy 345 975
+26 Pendulum 976 1027 1
+26 Pendulum 1033 1012 0
+26 Pendulum 1119 1007 1
 
-p Pendulum 976.33 1027.00 1
-p Pendulum 1032.67 1012.33 0
-p Pendulum 1119.00 1007.33 1
+27 trap 737 1058 1
+27 trap 737 1081 0
+27 trap 762 1058 1
+27 trap 762 1081 0
 
-t trap 736.50 1058.00 1
-t trap 736.75 1081.00 0
-t trap 762.00 1058.00 1
-t trap 762.25 1080.75 0
+28 brick 1311 1048 1
+28 brick 1272 1011 0
+28 brick 1316 968 1
+28 brick 1320 644 0
 
-k brick 1310.50 1048.00 1
-k brick 1272.00 1011.00 0
-k brick 1316.00 968.00 1
-k brick 1320.33 643.67 0
+30 sketelon 270 1107 0
+
+31 mummies 406 1107 0

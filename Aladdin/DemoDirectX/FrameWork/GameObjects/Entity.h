@@ -59,13 +59,26 @@ public:
 		Flame,
 		TYPE_PENDULUM,
 		TYPE_TRAP,
-		TYPE_BRICK
+		TYPE_BRICK,
+		TYPE_BONE,
+		TYPE_SKETELON,
+		TYPE_MUMMIES,
+		TYPE_MUMMIES_BONE
 	};
 
 
 	enum ItemTypes
 	{
-		Information, Store, Apple, MagicLamp, GenieBonusLevel, OneUP, ExtraHealth, RestartPoint, AbuBonusLevel, SpendThese
+		Information,
+		Store, 
+		Apple,
+		MagicLamp,
+		GenieBonusLevel,
+		OneUP, 
+		ExtraHealth, 
+		RestartPoint,
+		AbuBonusLevel,
+		SpendThese
 	};
 
 	enum FaceDirection

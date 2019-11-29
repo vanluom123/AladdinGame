@@ -1,0 +1,14 @@
+<TextureAtlas imagePath="mummies.png" width="249" height="215">
+    <sprite n="mummies1" x="3" y="3" w="76" h="22" pX="38" pY="22"/>
+    <sprite n="mummies2" x="83" y="3" w="71" h="25" pX="36" pY="25"/>
+    <sprite n="mummies3" x="158" y="3" w="63" h="43" pX="32" pY="43"/>
+    <sprite n="mummies4" x="3" y="50" w="54" h="58" pX="27" pY="58"/>
+    <sprite n="mummies5" x="61" y="50" w="43" h="73" pX="22" pY="73"/>
+    <sprite n="mummies6" x="108" y="50" w="43" h="78" pX="22" pY="78"/>
+    <sprite n="mummies7" x="155" y="50" w="42" h="80" pX="24" pY="80"/>
+    <sprite n="mummies8" x="201" y="50" w="39" h="78" pX="25" pY="78"/>
+    <sprite n="mummies9" x="3" y="134" w="43" h="78" pX="22" pY="78"/>
+    <sprite n="mummies10" x="50" y="134" w="54" h="58" pX="27" pY="58"/>
+    <sprite n="mummies11" x="108" y="134" w="63" h="43" pX="32" pY="43"/>
+    <sprite n="mummies12" x="175" y="134" w="71" h="25" pX="36" pY="25"/>
+</TextureAtlas>

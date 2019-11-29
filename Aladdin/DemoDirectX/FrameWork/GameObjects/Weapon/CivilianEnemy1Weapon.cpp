@@ -87,7 +87,7 @@ void CivilianEnemy1Weapon::OnCollision(Entity *impactor, Entity::CollisionReturn
 		}
 		break;
 	case Entity::EntityTypes::Aladdin:
-		if (impactor->IsMakeDamage() == true && GameCollision::isCollide(impactor->GetBoundWeapon(), this->GetBound()) == true)
+		if (impactor->IsMakeDamage() == true && GameCollision::AABBCheck(impactor->GetBoundWeapon(), this->GetBound()) == true)
 		{
 			isDestroy = true;
 			this->SetVy(0);

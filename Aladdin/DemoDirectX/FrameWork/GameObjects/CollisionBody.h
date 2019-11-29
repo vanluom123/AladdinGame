@@ -103,8 +103,8 @@ public:
 	//@move: khoảng chồng lấp của 2 object.
 	void updateTargetPosition(Entity* otherObject, Entity::SideCollisions direction, bool withVelocity, GVector2 move = GVector2(0, 0));
 
-	float isCollide(Entity* otherObject, Entity::SideCollisions& direction, float dt);
-	bool isColliding(RECT myRect, RECT otherRect);
+	float sweptAABB(Entity* otherObject, Entity::SideCollisions& direction, float dt);
+	bool AABBCheck(RECT myRect, RECT otherRect);
 	bool isColliding(Entity* otherObject, float& moveX, float& moveY, float dt);
 
 	RECT getSweptBroadphaseRect(Entity* object, float dt);

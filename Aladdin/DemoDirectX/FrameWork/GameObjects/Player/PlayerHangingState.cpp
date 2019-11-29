@@ -39,7 +39,7 @@ PlayerHangingState::~PlayerHangingState()
 
 void PlayerHangingState::Update(float dt)
 {
-	Entity::CollisionReturn tmp = GameCollision::RecteAndRect(mPlayerData->player->GetBoundHorizontalRope(), horizontalRope->GetBound());
+	Entity::CollisionReturn tmp = GameCollision::rectCollide(mPlayerData->player->GetBoundHorizontalRope(), horizontalRope->GetBound());
 	if (!tmp.IsCollided)
 	{
 		mPlayerData->player->SetState(new PlayerFallingState(mPlayerData));

@@ -108,6 +108,18 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	sp = new Sprite("Resources/AnimationInfo/Brick_Trap_Pendulum.png", RECT(), 0, 0, D3DCOLOR_XRGB(255, 0, 255));
 	_listSprite.insert(pair<eID, Sprite*>(eID::BRICK_TRAP_PENDULUM, sp));
 	loadXMLDoc(eID::BRICK_TRAP_PENDULUM, "Resources/AnimationInfo/Brick_Trap_Pendulum.xml", true);
+
+	sp = new Sprite("Resources/AnimationInfo/sketelon.png", RECT(), 0, 0, D3DCOLOR_XRGB(255, 255, 255));
+	_listSprite.insert(pair<eID, Sprite*>(eID::SKETELON, sp));
+	loadSpriteInfo(eID::SKETELON, "Resources/AnimationInfo/sketelon.txt", true);
+
+	sp = new Sprite("Resources/AnimationInfo/mummies.png", RECT(), 0, 0, D3DCOLOR_XRGB(255, 255, 255));
+	_listSprite.insert(pair<eID, Sprite*>(eID::MUMMIES, sp));
+	loadXMLDoc(eID::MUMMIES, "Resources/AnimationInfo/mummies.xml", true);
+
+	sp = new Sprite("Resources/AnimationInfo/bone.png", RECT(), 0, 0, D3DCOLOR_XRGB(255, 255, 255));
+	_listSprite.insert(pair<eID, Sprite*>(eID::BONE, sp));
+	loadXMLDoc(eID::BONE, "Resources/AnimationInfo/bone.xml");
 }
 
 Sprite* SpriteManager::getSprite(eID id)
@@ -149,9 +161,9 @@ void SpriteManager::loadSpriteInfo(eID id, const char* fileInfoPath)
 			tmp.y = -1;
 			_anchorPointList[id][string(name)] = tmp;
 		}
-	}
 
-	fclose(file);
+		fclose(file);
+	}
 }
 
 void SpriteManager::loadSpriteInfo(eID id, const char* fileInfoPath, bool isHaveAnchorPoint)
@@ -176,9 +188,9 @@ void SpriteManager::loadSpriteInfo(eID id, const char* fileInfoPath, bool isHave
 			_sourceRectList[id][string(name)] = rect;
 			_anchorPointList[id][string(name)] = anchorPoint;
 		}
-	}
 
-	fclose(file);
+		fclose(file);
+	}
 }
 
 void SpriteManager::loadXMLDoc(eID id, const char* XMLPath)

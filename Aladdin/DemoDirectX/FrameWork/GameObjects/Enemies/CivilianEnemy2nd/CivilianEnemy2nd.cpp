@@ -109,7 +109,7 @@ void CivilianEnemy2nd::OnCollision(Entity *impactor, Entity::CollisionReturn dat
 	switch (impactor->Tag)
 	{
 	case Entity::Aladdin:
-		if (impactor->IsMakeDamage() == true && GameCollision::isCollide(impactor->GetBoundWeapon(), this->GetBound()) == true)
+		if (impactor->IsMakeDamage() == true && GameCollision::AABBCheck(impactor->GetBoundWeapon(), this->GetBound()) == true)
 
 		{
 			this->TakeDamage(1);
