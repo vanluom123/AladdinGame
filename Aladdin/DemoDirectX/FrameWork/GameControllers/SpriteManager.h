@@ -21,6 +21,7 @@ public:
 
 	RECT getSourceRect(eID id, string name);
 	POINT getAnchorPoint(eID id, string name);
+
 	void loadSpriteInfo(eID id, const char* fileInfoPath);
 	void loadSpriteInfo(eID id, const char* fileInfoPath, bool isHaveAnchorPoint);
 

@@ -105,10 +105,8 @@
     <ClCompile Include="FrameWork\GameControllers\SceneManager.cpp" />
     <ClCompile Include="FrameWork\GameControllers\SpriteManager.cpp" />
     <ClCompile Include="FrameWork\GameObjects\CollisionBody.cpp" />
-    <ClCompile Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemy.cpp" />
-    <ClCompile Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemyData.cpp" />
+    <ClCompile Include="FrameWork\GameObjects\Enemies\BatEnemy\Bat.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemyFlyState.cpp" />
-    <ClCompile Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemyState.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\CivilianEnemy1st\CivilianEnemy1st.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\CivilianEnemy1st\CivilianEnemy1stData.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\CivilianEnemy1st\CivilianEnemy1stState.cpp" />
@@ -259,10 +257,10 @@
     <ClInclude Include="FrameWork\GameDefines\FrameData.h" />
     <ClInclude Include="FrameWork\GameDefines\STLMAP.h" />
     <ClInclude Include="FrameWork\GameObjects\CollisionBody.h" />
-    <ClInclude Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemy.h" />
-    <ClInclude Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemyData.h" />
+    <ClInclude Include="FrameWork\GameObjects\Enemies\BatEnemy\Bat.h" />
+    <ClInclude Include="FrameWork\GameObjects\Enemies\BatEnemy\BatData.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemyFlyState.h" />
-    <ClInclude Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemyState.h" />
+    <ClInclude Include="FrameWork\GameObjects\Enemies\BatEnemy\BatState.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\CivilianEnemy1st\CivilianEnemy1st.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\CivilianEnemy1st\CivilianEnemy1stData.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\CivilianEnemy1st\CivilianEnemy1stState.h" />

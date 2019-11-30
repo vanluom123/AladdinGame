@@ -5,10 +5,10 @@
 
 class BoneMummies : public Entity
 {
-	Animation* _anim;
 
 public:
 	BoneMummies(GVector2 position);
+	BoneMummies() = default;
 	~BoneMummies();
 
 	void initialize(GVector2 position);
@@ -17,6 +17,9 @@ public:
 	RECT GetBound() override;
 	void Update(float dt) override;
 	void OnCollision(Entity* impactor, CollisionReturn data, SideCollisions side) override;
+
+private:
+	Animation* _anim;
 };
 
 #endif // __BONE2_H__

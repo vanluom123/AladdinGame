@@ -39,18 +39,18 @@ void Mummies::OnCollision(Entity* impactor, CollisionReturn data, SideCollisions
 RECT Mummies::GetBound()
 {
 	auto anchor = _anim->GetAnchorPoint();
-	RECT r = RECT();
+	RECT bound = RECT();
 	if (anchor.x == -1 && anchor.y == -1)
 	{
 
 	}
 	else
 	{
-		r.left = posX - anchor.x;
-		r.top = posY - anchor.y;
-		r.right = r.left + _anim->GetSprite()->GetWidth();
-		r.bottom = r.top + _anim->GetSprite()->GetHeight();
+		bound.left = posX - anchor.x;
+		bound.top = posY - anchor.y;
+		bound.right = bound.left + _anim->GetSprite()->GetWidth();
+		bound.bottom = bound.top + _anim->GetSprite()->GetHeight();
 	}
 
-	return r;
+	return bound;
 }

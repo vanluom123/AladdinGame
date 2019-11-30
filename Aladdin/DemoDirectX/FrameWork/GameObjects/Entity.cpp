@@ -17,17 +17,17 @@ void Entity::Draw(D3DXVECTOR2 trans)
 RECT Entity::GetBound()
 {
 	RECT bound;
-	
+
 	bound.left = posX - width / 2;
 	bound.right = posX + width / 2;
 	bound.top = posY - height / 2;
 	bound.bottom = posY + height / 2;
-	
+
 	return bound;
 }
 RECT Entity::GetBoundBody()
 {
-	RECT bound=RECT();
+	RECT bound = RECT();
 
 	return bound;
 }
@@ -40,12 +40,12 @@ RECT Entity::GetBoundWeapon()
 }
 
 
-void Entity::OnCollision(Entity *impactor, CollisionReturn data, Entity::SideCollisions side)
+void Entity::OnCollision(Entity* impactor, CollisionReturn data, Entity::SideCollisions side)
 {
 	vx = 0, vy = 0;
 }
 
-void Entity::OnCollision(Entity *impactor, CollisionReturn data)
+void Entity::OnCollision(Entity* impactor, CollisionReturn data)
 {
 	vx = 0, vy = 0;
 }
@@ -82,8 +82,8 @@ void Entity::OnSetPosition(D3DXVECTOR3 pos)
 
 void Entity::Update(float dt)
 {
-	posX += vx*dt;
-	posY += vy*dt;
+	posX += vx * dt;
+	posY += vy * dt;
 	if (timeImmortal > 0) timeImmortal -= dt;
 }
 
@@ -176,7 +176,7 @@ bool Entity::IsDeleted()
 
 void Entity::SetDelete(bool flag)
 {
-	isDeleted=flag;
+	isDeleted = flag;
 }
 
 bool Entity::IsDestroy()

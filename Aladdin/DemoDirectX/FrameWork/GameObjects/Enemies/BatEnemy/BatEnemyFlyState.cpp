@@ -1,28 +1,22 @@
 #include "BatEnemyFlyState.h"
 
-BatEnemyFlyState::BatEnemyFlyState(BatEnemyData * batEnemyData)
+BatEnemyFlyState::BatEnemyFlyState(BATDATA batEnemyData)
 {
-	this->mBatEnemyData = batEnemyData;
-}
-
-BatEnemyFlyState::~BatEnemyFlyState()
-{
+	mBatEnemyData = batEnemyData;
 }
 
 void BatEnemyFlyState::Update(float dt)
 {
-	if (this->mBatEnemyData->batEnemy->GetCurrentAnimation()->mCurrentIndex == 8 && isFly == true)
+	if (mBatEnemyData.batEnemy->GetCurrentAnimation()->mCurrentIndex == 8 && isFly == true)
 	{
-		Entity* tmp = nullptr;
-		if (this->mBatEnemyData->batEnemy->getFaceDirection() == Entity::LEFT)
+		if (mBatEnemyData.batEnemy->getFaceDirection() == Entity::LEFT)
 		{
-			
 		}
 	}
 }
 
-  
-BatEnemyState::StateName BatEnemyFlyState::GetState()
+
+BatState::StateName BatEnemyFlyState::GetState()
 {
-	return BatEnemyState::fly;
+	return BatState::fly;
 }

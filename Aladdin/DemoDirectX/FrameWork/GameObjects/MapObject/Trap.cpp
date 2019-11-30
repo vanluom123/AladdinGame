@@ -93,8 +93,7 @@ void Trap::OnCollision(Entity* impactor, CollisionReturn data, SideCollisions si
 
 	if (impactor->Tag == Entity::Aladdin)
 	{
-		auto player = static_cast<Player*>(impactor);
-		switch (player->getState())
+		switch (((Player*)impactor)->getState())
 		{
 		case PlayerState::HangCut:
 		case PlayerState::Cut:
@@ -103,17 +102,17 @@ void Trap::OnCollision(Entity* impactor, CollisionReturn data, SideCollisions si
 		case PlayerState::RunCut:
 		case PlayerState::UpCut:
 		{
-			auto rCollide = GameCollision::rectCollide(this->GetBound(), player->GetBoundWeapon());
+			auto rCollide = GameCollision::rectCollide(this->GetBound(), ((Player*)impactor)->GetBoundWeapon());
 			if (rCollide.IsCollided)
 				return;
 
-			if (player->GetTimeImmortal() <= 0)
-				player->TakeDamage(1);
+			if (((Player*)impactor)->GetTimeImmortal() <= 0)
+				((Player*)impactor)->TakeDamage(1);
 		}
 		break;
 		default:
-			if (player->GetTimeImmortal() <= 0)
-				player->TakeDamage(1);
+			if (((Player*)impactor)->GetTimeImmortal() <= 0)
+				((Player*)impactor)->TakeDamage(1);
 			break;
 		}
 	}

@@ -5,7 +5,10 @@
 
 #include <d3d9.h>		// d3d9.lib
 #include <d3dx9.h>		// d3dx9.lib
+
+#define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>		// dinput8.lib, dxguid.lib
+
 #include <dsound.h>		// dsound.lib
 
 #include <windows.h>
@@ -15,8 +18,14 @@
 #include <map>
 #include <vector>
 #include <Windows.h>
+#include <iostream>
 
 using namespace std;
+
+typedef LPDIRECT3DTEXTURE9 LP_3DTEXTURE;
+typedef LPD3DXSPRITE LP_SPRITE;
+typedef D3DXIMAGE_INFO IMAGE_INFO;
+typedef D3DXMATRIX MATRIX;
 
 #define WINDOW_WIDTH 512
 #define WINDOW_HEIGHT 448

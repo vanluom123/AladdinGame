@@ -31,10 +31,10 @@ void CivilianEnemy2nd::Update(float dt)
 {
 	if (this->mPlayer->GetPosition().x - this->GetPosition().x > 0)
 	{
-		this->faceDirection == Entity::FaceDirection::RIGHT;
+		this->faceDirection = Entity::FaceDirection::RIGHT;
 	}
-	else this->faceDirection == Entity::FaceDirection::LEFT;
-	if (this->mCurrentAnimation->mCurrentIndex == this->mCurrentAnimation->mTotalFrame&&isDestroy == true)
+	else this->faceDirection = Entity::FaceDirection::LEFT;
+	if (this->mCurrentAnimation->mCurrentIndex == this->mCurrentAnimation->mTotalFrame && isDestroy == true)
 		isDeleted = true;
 	mCurrentAnimation->Update(dt);
 
@@ -59,7 +59,7 @@ bool CivilianEnemy2nd::IsNearToPlayer()
 
 }
 
-void CivilianEnemy2nd::SetState(CivilianEnemy2ndState * newState)
+void CivilianEnemy2nd::SetState(CivilianEnemy2ndState* newState)
 {
 	delete this->mCivilianEnemy2ndData->state;
 	this->mCivilianEnemy2ndData->state = newState;
@@ -103,7 +103,7 @@ RECT CivilianEnemy2nd::GetBound()
 	return rect;
 }
 
-void CivilianEnemy2nd::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
+void CivilianEnemy2nd::OnCollision(Entity* impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
 
 	switch (impactor->Tag)
@@ -130,12 +130,12 @@ void CivilianEnemy2nd::OnCollision(Entity *impactor, Entity::CollisionReturn dat
 
 }
 
-Animation *CivilianEnemy2nd::GetCurrentAnimation()
+Animation* CivilianEnemy2nd::GetCurrentAnimation()
 {
 	return mCurrentAnimation;
 }
 
-Animation * CivilianEnemy2nd::GetAnimation(CivilianEnemy2ndState::StateName state)
+Animation* CivilianEnemy2nd::GetAnimation(CivilianEnemy2ndState::StateName state)
 {
 	switch (state)
 	{
@@ -168,7 +168,7 @@ void CivilianEnemy2nd::OnSetPosition(D3DXVECTOR3 pos)
 {
 	mCurrentAnimation->SetPosition(pos);
 }
-void CivilianEnemy2nd::SetGameMap(GameMap *gamemap)
+void CivilianEnemy2nd::SetGameMap(GameMap* gamemap)
 {
 	this->mGameMap = gamemap;
 }

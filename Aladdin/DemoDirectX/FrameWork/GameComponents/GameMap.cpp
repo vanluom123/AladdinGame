@@ -3,12 +3,13 @@
 #include "../GameObjects/MapObject/BrickDynamic.h"
 #include "../GameObjects/Enemies/Sketelon/Sketelon.h"
 #include "../GameObjects/Enemies/Sketelon/Mummies.h"
+#include "../GameObjects/Enemies/Sketelon/BoneMummies.h"
 
 GameMap::GameMap(char* filePath)
 {
-	mListApples = new std::vector<Apple*>;
-	mListEnemies = new std::vector<Entity*>;
-	mListWeapons = new std::vector<Entity*>;
+	mListApples = new std::vector<Apple*>();
+	mListEnemies = new std::vector<Entity*>();
+	mListWeapons = new std::vector<Entity*>();
 	LoadMap(filePath);
 }
 
@@ -220,8 +221,12 @@ void GameMap::LoadMapObjects(char* filePath)
 			break;
 
 			case Entity::TYPE_SKETELON:
-				tmp = new Sketelon(position);
-				break;
+			{
+				auto sketelon = new Sketelon(position);
+				sketelon->set_GameMap(this);
+				tmp = sketelon;
+			}
+			break;
 
 			case Entity::TYPE_MUMMIES:
 				tmp = new Mummies(position);
@@ -325,20 +330,18 @@ void GameMap::Update(float dt)
 #pragma region UPDATE_ENEMIES
 	for (size_t i = 0; i < mListEnemies->size(); i++)
 	{
+		RECT r = mListEnemies->at(i)->GetBound();
+
+		if (isContain(r, mCamera->GetBound()) == false)
 		{
-			RECT r = mListEnemies->at(i)->GetBound();
+			mListEnemies->at(i)->SetDraw(false);
+			if (mListEnemies->at(i)->Tag == Entity::FloatingGround || mListEnemies->at(i)->Tag == Entity::Jafar)
+				mListEnemies->at(i)->Update(dt);
 
-			if (isContain(r, mCamera->GetBound()) == false)
-			{
-				mListEnemies->at(i)->SetDraw(false);
-				if (mListEnemies->at(i)->Tag == Entity::FloatingGround || mListEnemies->at(i)->Tag == Entity::Jafar)
-					mListEnemies->at(i)->Update(dt);
-
-				continue;
-			}
-			else
-				mListEnemies->at(i)->SetDraw(true);
+			continue;
 		}
+		else
+			mListEnemies->at(i)->SetDraw(true);
 
 		if (mListEnemies->at(i)->IsDeleted() == true)
 			mListEnemies->erase(mListEnemies->begin() + i);

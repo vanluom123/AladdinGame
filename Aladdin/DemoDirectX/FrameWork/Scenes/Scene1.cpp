@@ -14,13 +14,13 @@ void Scene1::LoadContent()
 	mTimeCounter = 0;
 
 	mPlayer = new Player();
-	
+
 	mPlayer->SetPosition(86, 1090);
 	//mPlayer->SetPosition(462, 696);
 	mPlayer->SetRevivePoint(D3DXVECTOR2(-1, -1));
 	mPlayer->SetStartPoint(D3DXVECTOR2(50, 629));
 
-	
+
 	mMap = new GameMap("Resources/NewMap/Aladdin5.tmx");
 	mMap->LoadMapItems("Resources/Scene1/ItemsInformation.txt");
 	mMap->mPlayer = mPlayer;
@@ -36,7 +36,7 @@ void Scene1::LoadContent()
 
 	CheckCameraAndWorldMap();;
 	mSpriteHandler = GameGlobal::GetCurrentSpriteHandler();
-	
+
 	playerInfo = new PlayerInfo(mPlayer);
 	playerInfo->SetCamera(mCamera);
 
@@ -44,17 +44,19 @@ void Scene1::LoadContent()
 
 void Scene1::Update(float dt)
 {
+	StopMusic();
+
 	if (mPlayer->GetPosition().x > 4773)		//Điều kiện qua màn 1: Đi tới cuối màn.:>
 	{
-		Scene* t = new class EndScene(1,mPlayer);
+		Scene* t = new class EndScene(1, mPlayer);
 		Sound::getInstance()->stop("Scene1");
 		SceneManager::GetInstance()->ReplaceScene(t);
 		return;
 	}
 
 	//cong don thoi gian lai 60 FPS = 1 / 60 giay trong 1 lan goi update
-	if (mPlayer->getState()!=PlayerState::Die&&mPlayer->getState()!=PlayerState::Revive) //Trạng thái không xét va chạm
-	checkCollision(dt);
+	if (mPlayer->getState() != PlayerState::Die && mPlayer->getState() != PlayerState::Revive) //Trạng thái không xét va chạm
+		checkCollision(dt);
 	else if (mPlayer->GetNumLives() < 0)				//Hết số mạng chuyển về màn hình EndScene:GameOver
 	{
 		Scene* t = new class EndScene(3, mPlayer);		//EndScene GameOver
@@ -71,7 +73,7 @@ void Scene1::Update(float dt)
 
 void Scene1::Draw()
 {
-	if (mPlayer->getState() != PlayerState::Die&&mPlayer->getState() != PlayerState::Revive)
+	if (mPlayer->getState() != PlayerState::Die && mPlayer->getState() != PlayerState::Revive)
 	{
 		mMap->Draw();
 		playerInfo->Draw();
@@ -83,7 +85,7 @@ void Scene1::Draw()
 		mPlayer->SetVy(0);
 		mPlayer->Draw();
 	}
-	
+
 }
 
 void Scene1::OnKeyDown(int keyCode)
@@ -92,8 +94,8 @@ void Scene1::OnKeyDown(int keyCode)
 
 	mPlayer->OnKeyPressed(keyCode);
 
-	
-	
+
+
 }
 
 void Scene1::OnKeyUp(int keyCode)
@@ -108,8 +110,8 @@ void Scene1::OnMouseDown(float x, float y)
 
 void Scene1::CheckCameraAndWorldMap()			//Nếu Player ở các góc của màn hình thì set lại camera không cho ra phía ngoài của gamemap
 {
-	mCamera->SetPosition(mPlayer->GetPosition().x, (mPlayer->GetPosition().y-mPlayer->GetHeight()/2));
-	
+	mCamera->SetPosition(mPlayer->GetPosition().x, (mPlayer->GetPosition().y - mPlayer->GetHeight() / 2));
+
 	if (mCamera->GetBound().left < 0)
 	{
 		//vi position cua camera ma chinh giua camera
@@ -134,50 +136,108 @@ void Scene1::CheckCameraAndWorldMap()			//Nếu Player ở các góc của màn 
 	{
 		//luc nay cham day cua the gioi thuc
 		mCamera->SetPosition(mCamera->GetPosition().x,
-			mMap->GetHeight() - mCamera->GetHeight() / 2 );
+			mMap->GetHeight() - mCamera->GetHeight() / 2);
 	}
 }
-  
+
 void Scene1::checkCollision(float dt)
 {
 	mListApplesAladdin = mMap->GetListApples();
 	mListEnemies = mMap->GetListEnemies();
 	mListEnemyWeapons = mMap->GetListWeapons();
- 
+
 	vector<Entity*> listCollision;
 #pragma region PLAYER_COLLISION_DETECT
 
-	#pragma region PLAYER_WITH_STATIC_OBJECTS
+#pragma region PLAYER_WITH_STATIC_OBJECTS
 	int widthBottom = 0;
 
 	mMap->GetGrid()->GetListEntity(listCollision, mCamera);
-		for (size_t i = 0; i < listCollision.size(); i++)
+	for (size_t i = 0; i < listCollision.size(); i++)
+	{
+		if (listCollision.at(i)->Tag == Entity::TYPE_BRICK)
+		{
+			if (((BrickDynamic*)listCollision.at(i))->GetAnimation()->mCurrentIndex != 5
+				&& ((BrickDynamic*)listCollision.at(i))->GetAnimation()->mCurrentIndex != 4)
+				continue;
+		}
+
+		Entity::CollisionReturn r = GameCollision::rectCollide(mPlayer->GetBound(),
+			listCollision.at(i)->GetBound());
+
+		if (r.IsCollided)
 		{
 
-			if (listCollision.at(i)->Tag == Entity::TYPE_BRICK)
-			{
-				auto brick = static_cast<BrickDynamic*>(listCollision.at(i));
-				if (brick->GetAnimation()->mCurrentIndex != 5 && brick->GetAnimation()->mCurrentIndex != 4)
-					continue;
-			}
+			//lay phia va cham cua Entity so voi Player
+			Entity::SideCollisions sidePlayer = GameCollision::getSideCollision(mPlayer, r);
 
+			//lay phia va cham cua Player so voi Entity
+			Entity::SideCollisions sideImpactor = GameCollision::getSideCollision(listCollision.at(i), r);
+
+			//goi den ham xu ly collision cua Player va Entity
+			mPlayer->OnCollision(listCollision.at(i), r, sidePlayer);
+			listCollision.at(i)->OnCollision(mPlayer, r, sideImpactor);
+			if (listCollision.at(i)->Tag != Entity::HorizontalRope)
+				//kiem tra neu va cham voi phia duoi cua Player 
+				if (sidePlayer == Entity::Bottom || sidePlayer == Entity::BottomLeft
+					|| sidePlayer == Entity::BottomRight)
+				{
+					//kiem tra do dai  tiep xuc phia duoi day
+					int bot = r.RegionCollision.right - r.RegionCollision.left;
+
+					if (bot > widthBottom)
+						widthBottom = bot;
+				}
+		}
+	}
+
+#pragma endregion PLAYER_WITH_STATIC_OBJECTS
+
+#pragma region PLAYER_WITH_ENEMIES_WEAPONS
+	//Xét va chạm với vũ khí của Enemies.
+	{
+		for (size_t i = 0; i < mListEnemyWeapons->size(); i++)
+		{
+			if (mListEnemyWeapons->at(i)->IsDestroy() == true)
+			{
+				continue;
+			}
 			Entity::CollisionReturn r = GameCollision::rectCollide(mPlayer->GetBound(),
-				listCollision.at(i)->GetBound());
+				mListEnemyWeapons->at(i)->GetBound());
 
 			if (r.IsCollided)
 			{
+				mPlayer->OnCollision(mListEnemyWeapons->at(i), r, r.sideCollision);
+				mListEnemyWeapons->at(i)->OnCollision(mPlayer, r, r.sideCollision);
 
+			}
+		}
+	}
+#pragma endregion PLAYER_WITH_ENEMIES_WEAPONS
+
+#pragma region PLAYER_WITH_ENEMIES
+	// Xét va chạm với Enemies
+	for (size_t j = 0; j < mListEnemies->size(); j++)
+	{
+		if (mListEnemies->at(j)->IsDestroy() == true) continue;
+		Entity::CollisionReturn r = GameCollision::rectCollide(mPlayer->GetBound(),
+			mListEnemies->at(j)->GetBound());
+
+		if (r.IsCollided)
+		{
+
+			//lay phia va cham cua Player so voi Entity
+			Entity::SideCollisions sideImpactor = GameCollision::getSideCollision(mListEnemies->at(j), r);
+
+			//Xử lý của Enemies và Player đều làm ở trong này.
+			mListEnemies->at(j)->OnCollision(mPlayer, r, sideImpactor);
+
+
+			if (mListEnemies->at(j)->Tag == Entity::FloatingGround || mListEnemies->at(j)->Tag == Entity::Camel || mListEnemies->at(j)->Tag == Entity::SpringBoard)
+			{
 				//lay phia va cham cua Entity so voi Player
 				Entity::SideCollisions sidePlayer = GameCollision::getSideCollision(mPlayer, r);
-
-				//lay phia va cham cua Player so voi Entity
-				Entity::SideCollisions sideImpactor = GameCollision::getSideCollision(listCollision.at(i), r);
-
-				//goi den ham xu ly collision cua Player va Entity
-				mPlayer->OnCollision(listCollision.at(i), r, sidePlayer);
-				listCollision.at(i)->OnCollision(mPlayer, r, sideImpactor);
-				if (listCollision.at(i)->Tag!=Entity::HorizontalRope)
-				//kiem tra neu va cham voi phia duoi cua Player 
+				mPlayer->OnCollision(mListEnemies->at(j), r, sidePlayer);
 				if (sidePlayer == Entity::Bottom || sidePlayer == Entity::BottomLeft
 					|| sidePlayer == Entity::BottomRight)
 				{
@@ -189,179 +249,120 @@ void Scene1::checkCollision(float dt)
 				}
 			}
 		}
-		
-	#pragma endregion PLAYER_WITH_STATIC_OBJECTS
-
-	#pragma region PLAYER_WITH_ENEMIES_WEAPONS
-		//Xét va chạm với vũ khí của Enemies.
-		{
-			for (size_t i = 0; i < mListEnemyWeapons->size(); i++)
-			{
-				if (mListEnemyWeapons->at(i)->IsDestroy() == true)
-				{
-					continue;
-				}
-				Entity::CollisionReturn r = GameCollision::rectCollide(mPlayer->GetBound(),
-					mListEnemyWeapons->at(i)->GetBound());
-
-				if (r.IsCollided)
-				{
-					mPlayer->OnCollision(mListEnemyWeapons->at(i), r, r.sideCollision);
-					mListEnemyWeapons->at(i)->OnCollision(mPlayer, r, r.sideCollision);
-
-				}
-			}
-		}
-	#pragma endregion PLAYER_WITH_ENEMIES_WEAPONS
-
-	#pragma region PLAYER_WITH_ENEMIES
-		// Xét va chạm với Enemies
-		for (size_t j = 0; j < mListEnemies->size(); j++)
-		{
-			if (mListEnemies->at(j)->IsDestroy() == true) continue;
-			Entity::CollisionReturn r = GameCollision::rectCollide(mPlayer->GetBound(),
-				mListEnemies->at(j)->GetBound());
-
-			if (r.IsCollided)
-			{
-
-				//lay phia va cham cua Player so voi Entity
-				Entity::SideCollisions sideImpactor = GameCollision::getSideCollision(mListEnemies->at(j), r);
-
-				//Xử lý của Enemies và Player đều làm ở trong này.
-				mListEnemies->at(j)->OnCollision(mPlayer, r, sideImpactor);
+	}
 
 
-				if (mListEnemies->at(j)->Tag == Entity::FloatingGround||mListEnemies->at(j)->Tag==Entity::Camel||mListEnemies->at(j)->Tag==Entity::SpringBoard)
-				{
-					//lay phia va cham cua Entity so voi Player
-					Entity::SideCollisions sidePlayer = GameCollision::getSideCollision(mPlayer, r);
-				mPlayer->OnCollision(mListEnemies->at(j), r, sidePlayer);
-					if (sidePlayer == Entity::Bottom || sidePlayer == Entity::BottomLeft
-						|| sidePlayer == Entity::BottomRight)
-					{
-						//kiem tra do dai  tiep xuc phia duoi day
-						int bot = r.RegionCollision.right - r.RegionCollision.left;
+	//Neu  dung ngoai mep thi luc nay cho Aladdin rot xuong duoi dat    
+	if (widthBottom < Define::PLAYER_BOTTOM_RANGE_FALLING)
+	{
+		if (mPlayer->getState() != PlayerState::Climb) mPlayer->allowJump = false;
+		mPlayer->OnNoCollisionWithBottom(dt);
+	}
+	else
+	{
+		mPlayer->allowJump = true;
+	}
 
-						if (bot > widthBottom)
-							widthBottom = bot;
-					}
-				}
-			}
-		}
-
-
-		//Neu  dung ngoai mep thi luc nay cho Aladdin rot xuong duoi dat    
-		if (widthBottom < Define::PLAYER_BOTTOM_RANGE_FALLING)
-		{
-			if (mPlayer->getState() != PlayerState::Climb) mPlayer->allowJump = false;
-			mPlayer->OnNoCollisionWithBottom(dt);
-		}
-		else
-		{
-			mPlayer->allowJump = true;
-		}
-
-	#pragma endregion  PLAYER_WITH_ENEMIES
+#pragma endregion  PLAYER_WITH_ENEMIES
 
 #pragma endregion PLAYER_COLLISION_DETECT
 
 #pragma region APPLE_COLLISION_DETECT
 
-	#pragma region APPLE_WITH_STATIC_OBJECT
+#pragma region APPLE_WITH_STATIC_OBJECT
 
-		for (int i = 0; i < mListApplesAladdin->size(); i++)
+	for (int i = 0; i < mListApplesAladdin->size(); i++)
+	{
+		if (mListApplesAladdin->at(i)->IsDestroy() == true) continue;
+		listCollision.clear();
+		//mMap->GetQuadTree()->getEntitiesCollideAble(listCollision, mListApplesAladdin->at(i)); //Lấy trong quadtree các Entity có thể va chạm với Apple
+
+		for (size_t j = 0; j < listCollision.size(); j++)
 		{
-			if (mListApplesAladdin->at(i)->IsDestroy() == true) continue;
-				listCollision.clear();
-				//mMap->GetQuadTree()->getEntitiesCollideAble(listCollision, mListApplesAladdin->at(i)); //Lấy trong quadtree các Entity có thể va chạm với Apple
+			Entity::CollisionReturn r = GameCollision::rectCollide(mListApplesAladdin->at(i)->GetBound(),
+				listCollision.at(j)->GetBound());
 
-				for (size_t j = 0; j < listCollision.size(); j++)
-				{
-					Entity::CollisionReturn r = GameCollision::rectCollide(mListApplesAladdin->at(i)->GetBound(),
-						listCollision.at(j)->GetBound());
-
-					if (r.IsCollided)
-					{
-						//goi den ham xu ly collision cua Apple va Entity
-						mListApplesAladdin->at(i)->OnCollision(listCollision.at(j), r, r.sideCollision);
-						listCollision.at(j)->OnCollision(mListApplesAladdin->at(i), r, r.sideCollision);
-					}
-				}
-	#pragma endregion APPLE_WITH_STATIC_OBJECT	
-
-	#pragma region APPLE_WITH_ENEMIES
-				for (int k = 0; k < mListEnemies->size(); k++)
-				{
-					Entity* currentEnemy = mListEnemies->at(k);
-					if (currentEnemy->IsDestroy() == true) continue;
-
-					Entity::CollisionReturn r = GameCollision::rectCollide(mListApplesAladdin->at(i)->GetBound(),
-						currentEnemy->GetBound());
-
-					if (r.IsCollided)
-					{
-							//goi den ham xu ly collision cua Apple va Entity
-					
-						//Đổi thứ tự xét Apple sau Enemies để Apple gây sát thương.
-						currentEnemy->OnCollision(mListApplesAladdin->at(i), r, r.sideCollision);
-						mListApplesAladdin->at(i)->OnCollision(currentEnemy, r, r.sideCollision);
-					}
-				}
-	#pragma endregion APPLE_WITH_ENEMIES
-				
-	#pragma region APPLE_WITH_ENEMIES_WEAPONS
-				for (int k = 0; k < mListEnemyWeapons->size(); k++)
-				{
-					Entity* currentEnemyWeapon = mListEnemyWeapons->at(k);
-					if (currentEnemyWeapon->IsDestroy() == true) continue;
-
-					Entity::CollisionReturn r = GameCollision::rectCollide(mListApplesAladdin->at(i)->GetBound(),
-						currentEnemyWeapon->GetBound());
-
-					if (r.IsCollided)
-					{
-						//goi den ham xu ly collision cua Apple va Entity
-
-						//Đổi thứ tự xét Apple sau Enemies để Apple gây sát thương.
-						currentEnemyWeapon->OnCollision(mListApplesAladdin->at(i), r, r.sideCollision);
-						mListApplesAladdin->at(i)->OnCollision(currentEnemyWeapon, r, r.sideCollision);
-					}
-				}
-	#pragma endregion APPLE_WITH_ENEMIES_WEAPONS
-				
+			if (r.IsCollided)
+			{
+				//goi den ham xu ly collision cua Apple va Entity
+				mListApplesAladdin->at(i)->OnCollision(listCollision.at(j), r, r.sideCollision);
+				listCollision.at(j)->OnCollision(mListApplesAladdin->at(i), r, r.sideCollision);
+			}
 		}
+#pragma endregion APPLE_WITH_STATIC_OBJECT	
+
+#pragma region APPLE_WITH_ENEMIES
+		for (int k = 0; k < mListEnemies->size(); k++)
+		{
+			Entity* currentEnemy = mListEnemies->at(k);
+			if (currentEnemy->IsDestroy() == true) continue;
+
+			Entity::CollisionReturn r = GameCollision::rectCollide(mListApplesAladdin->at(i)->GetBound(),
+				currentEnemy->GetBound());
+
+			if (r.IsCollided)
+			{
+				//goi den ham xu ly collision cua Apple va Entity
+
+			//Đổi thứ tự xét Apple sau Enemies để Apple gây sát thương.
+				currentEnemy->OnCollision(mListApplesAladdin->at(i), r, r.sideCollision);
+				mListApplesAladdin->at(i)->OnCollision(currentEnemy, r, r.sideCollision);
+			}
+		}
+#pragma endregion APPLE_WITH_ENEMIES
+
+#pragma region APPLE_WITH_ENEMIES_WEAPONS
+		for (int k = 0; k < mListEnemyWeapons->size(); k++)
+		{
+			Entity* currentEnemyWeapon = mListEnemyWeapons->at(k);
+			if (currentEnemyWeapon->IsDestroy() == true) continue;
+
+			Entity::CollisionReturn r = GameCollision::rectCollide(mListApplesAladdin->at(i)->GetBound(),
+				currentEnemyWeapon->GetBound());
+
+			if (r.IsCollided)
+			{
+				//goi den ham xu ly collision cua Apple va Entity
+
+				//Đổi thứ tự xét Apple sau Enemies để Apple gây sát thương.
+				currentEnemyWeapon->OnCollision(mListApplesAladdin->at(i), r, r.sideCollision);
+				mListApplesAladdin->at(i)->OnCollision(currentEnemyWeapon, r, r.sideCollision);
+			}
+		}
+#pragma endregion APPLE_WITH_ENEMIES_WEAPONS
+
+	}
 #pragma endregion APPLE_COLLISION_DETECT
 
 #pragma region ENEMIESWEAPONS_COLLISION_DETECT
 
-	#pragma region ENEMIESWEAPONS_WITH_STATIC_OBJECTS
-			for (int i = 0; i < mListEnemyWeapons->size(); i++)
+#pragma region ENEMIESWEAPONS_WITH_STATIC_OBJECTS
+	for (int i = 0; i < mListEnemyWeapons->size(); i++)
+	{
+		Entity* currentEnemyWeapon = mListEnemyWeapons->at(i);
+		if (currentEnemyWeapon->IsDestroy()) continue;
+		listCollision.clear();
+		//mMap->GetQuadTree()->getEntitiesCollideAble(listCollision, currentEnemyWeapon); //Lấy trong quadtree các Entity có thể va chạm với EnemyWeapon
+
+		for (size_t j = 0; j < listCollision.size(); j++)
+		{
+			Entity::CollisionReturn r = GameCollision::rectCollide(currentEnemyWeapon->GetBound(),
+				listCollision.at(j)->GetBound());
+
+			if (r.IsCollided)
 			{
-				Entity* currentEnemyWeapon = mListEnemyWeapons->at(i);
-				if (currentEnemyWeapon->IsDestroy()) continue;
-				listCollision.clear();
-				//mMap->GetQuadTree()->getEntitiesCollideAble(listCollision, currentEnemyWeapon); //Lấy trong quadtree các Entity có thể va chạm với EnemyWeapon
+				//lay phia va cham cua Entity so voi Player
+				Entity::SideCollisions sideEnemyWeapon = GameCollision::getSideCollision(mPlayer, r);
 
-				for (size_t j = 0; j < listCollision.size(); j++)
-				{
-					Entity::CollisionReturn r = GameCollision::rectCollide(currentEnemyWeapon->GetBound(),
-						listCollision.at(j)->GetBound());
-
-					if (r.IsCollided)
-					{
-						//lay phia va cham cua Entity so voi Player
-						Entity::SideCollisions sideEnemyWeapon = GameCollision::getSideCollision(mPlayer, r);
-
-						//lay phia va cham cua Player so voi Entity
-						Entity::SideCollisions sideImpactor = GameCollision::getSideCollision(listCollision.at(j), r);
-						//goi den ham xu ly collision cua Apple va Entity
-						currentEnemyWeapon->OnCollision(listCollision.at(j), r,sideEnemyWeapon);
-						listCollision.at(j)->OnCollision(currentEnemyWeapon, r, sideImpactor);
-					}
-				}
+				//lay phia va cham cua Player so voi Entity
+				Entity::SideCollisions sideImpactor = GameCollision::getSideCollision(listCollision.at(j), r);
+				//goi den ham xu ly collision cua Apple va Entity
+				currentEnemyWeapon->OnCollision(listCollision.at(j), r, sideEnemyWeapon);
+				listCollision.at(j)->OnCollision(currentEnemyWeapon, r, sideImpactor);
 			}
-	#pragma endregion APPLE_WITH_STATIC_OBJECT	
+		}
+	}
+#pragma endregion APPLE_WITH_STATIC_OBJECT	
 
 #pragma endregion ENEMIESWEAPONS_COLLISION_DETECT
 
@@ -370,7 +371,7 @@ void Scene1::checkCollision(float dt)
 
 void Scene1::PlayMusic()	//Chạy nhạc nền.
 {
-	Sound::getInstance()->play("Scene1",true,1);
+	Sound::getInstance()->play("Scene1", true, 1);
 }
 
 void Scene1::StopMusic()	//Tắt nhạc nền

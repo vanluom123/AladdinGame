@@ -1,9 +1,9 @@
 <TextureAtlas imagePath="bone.png" width="102" height="19">
-    <sprite n="bone1.png" x="2" y="2" w="16" h="5"/>
-    <sprite n="bone2.png" x="22" y="2" w="6" h="15"/>
-    <sprite n="bone3.png" x="32" y="2" w="12" h="13"/>
-    <sprite n="bone4.png" x="48" y="2" w="6" h="8"/>
-    <sprite n="bone_1.png" x="58" y="2" w="16" h="5"/>
-    <sprite n="bone_2.png" x="78" y="2" w="6" h="15"/>
-    <sprite n="bone_3.png" x="88" y="2" w="12" h="13"/>
+    <sprite n="bone1" x="2" y="2" w="16" h="5"/>
+    <sprite n="bone2" x="22" y="2" w="6" h="15"/>
+    <sprite n="bone3" x="32" y="2" w="12" h="13"/>
+    <sprite n="bone4" x="48" y="2" w="6" h="8"/>
+    <sprite n="BoneMummies1" x="58" y="2" w="16" h="5"/>
+    <sprite n="BoneMummies2" x="78" y="2" w="6" h="15"/>
+    <sprite n="BoneMummies3" x="88" y="2" w="12" h="13"/>
 </TextureAtlas>

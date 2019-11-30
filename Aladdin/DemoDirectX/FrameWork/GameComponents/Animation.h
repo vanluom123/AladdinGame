@@ -2,24 +2,19 @@
 #define __ANIMATION__
 
 #include <Windows.h>
-#include <d3dx9.h>
-#include <d3d9.h>
-#include <vector>
-
 #include "../GameComponents/Sprite.h"
 #include "../GameControllers/SpriteManager.h"
-using namespace std;
 
 
 class Animation
 {
 public:
 	//ham ho tro lay animation voi anh co duy nhat 1 hang
-	Animation(eID eId,string nameAnimation, int totalFrame, float timePerFrame = 0.1f, D3DCOLOR colorKey = NULL);
+	Animation(eID eId, string nameAnimation, int totalFrame, float timePerFrame = 0.1f, D3DCOLOR colorKey = NULL);
 	Animation();
 
 	virtual void Update(float dt);
-	virtual void Update(float dt,bool isDecrease);
+	virtual void Update(float dt, bool isDecrease);
 	void Draw(GVector3 position = GVector3(), RECT sourceRect = RECT(), GVector2 scale = GVector2(), GVector2 transform = GVector2(), float angle = 0, GVector2 rotationCenter = GVector2(), D3DXCOLOR colorKey = D3DCOLOR_XRGB(255, 255, 255));
 	void Draw(GVector2 translate);
 
@@ -48,17 +43,18 @@ public:
 	Sprite* GetSprite();
 
 	void CopyAnimation(Animation* animation);
-	
+
 	void SetStop(bool flag);
 	void SetLoop(bool flag, int start, int stop);
+	bool IsStop()const { return isStop; }
 	~Animation();
 
-	int mCurrentIndex =1,//gia tri frame hien tai - bat dau tu 1 -> tong so frame 
+	int mCurrentIndex = 1,//gia tri frame hien tai - bat dau tu 1 -> tong so frame 
 		mTotalFrame;;//tong so frame
 
 protected:
 	//su dung cho ke thua
-	void InitWithAnimation(eID eId,string nameAnimation, int totalFrame, float timePerFrame = 0.1f, D3DCOLOR colorKey = NULL);
+	void InitWithAnimation(eID eId, string nameAnimation, int totalFrame, float timePerFrame = 0.1f, D3DCOLOR colorKey = NULL);
 
 	bool isStop = false;
 	bool isLoop = false;
@@ -66,15 +62,15 @@ protected:
 
 
 
-	int	
+	int
 		mFrameWidth, // chieu rong cua 1 frame 
 		mFrameHeight; // chieu dai cua 1 frame  
 
 	float       mTimePerFrame, //thoi gian luan chuyen 1 frame
-				mCurrentTotalTime; //tong thoi gian hien tai de thuc hien timeperframe
+		mCurrentTotalTime; //tong thoi gian hien tai de thuc hien timeperframe
 
-	Sprite      *mSprite;
-	
+	Sprite* mSprite;
+
 
 	string mNameAnimation;
 	eID meId;

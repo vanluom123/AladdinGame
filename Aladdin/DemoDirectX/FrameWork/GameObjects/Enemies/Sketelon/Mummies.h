@@ -9,6 +9,7 @@ class Mummies :	public Entity
 
 public:
 	Mummies(GVector2 position);
+	Mummies() = default;
 	~Mummies();
 
 	void initialize(GVector2 position);

@@ -14,6 +14,9 @@ OBJECT INFO SCENE1
 28 brick 1316 968 1
 28 brick 1320 644 0
 
+29 bone 155 1036 0
+32 bone_mummies 228 1021 0
+
 30 sketelon 270 1107 0
 
 31 mummies 406 1107 0

@@ -70,12 +70,12 @@ public:
 	enum ItemTypes
 	{
 		Information,
-		Store, 
+		Store,
 		Apple,
 		MagicLamp,
 		GenieBonusLevel,
-		OneUP, 
-		ExtraHealth, 
+		OneUP,
+		ExtraHealth,
 		RestartPoint,
 		AbuBonusLevel,
 		SpendThese

@@ -26,7 +26,7 @@ Guard3::Guard3()
 	maxX = x + 100;
 }
 
-Guard3::Guard3(D3DXVECTOR2 position, Player *player)
+Guard3::Guard3(D3DXVECTOR2 position, Player* player)
 {
 	this->Tag = Entity::Guard3;
 	this->HP = 1;
@@ -53,7 +53,7 @@ Guard3::~Guard3()
 
 void Guard3::Update(float dt)
 {
-	if (this->mCurrentAnimation->mCurrentIndex == this->mCurrentAnimation->mTotalFrame&&isDestroy == true)
+	if (this->mCurrentAnimation->mCurrentIndex == this->mCurrentAnimation->mTotalFrame && isDestroy == true)
 	{
 		isDeleted = true;
 		return;
@@ -74,14 +74,14 @@ void Guard3::Update(float dt)
 	{
 		this->mGuard3Data->state->Update(dt);
 	}
-	if (this->GetPosition().x + mGuard3Data->guard3->GetVx()*dt<mGuard3Data->guard3->minX
-		|| this->GetPosition().x + mGuard3Data->guard3->GetVx()*dt>mGuard3Data->guard3->maxX)
+	if (this->GetPosition().x + mGuard3Data->guard3->GetVx() * dt<mGuard3Data->guard3->minX
+		|| this->GetPosition().x + mGuard3Data->guard3->GetVx() * dt>mGuard3Data->guard3->maxX)
 	{
 		this->mGuard3Data->guard3->SetState(new Guard3StandState(mGuard3Data));
 		return;
 	}
 	else
-	Entity::Update(dt);
+		Entity::Update(dt);
 
 }
 
@@ -100,7 +100,7 @@ bool Guard3::IsInAttackRange()
 {
 	int deltaX = abs(this->mGuard3Data->guard3->mPlayer->GetPosition().x - this->mGuard3Data->guard3->GetPosition().x);
 	int deltaY = abs(this->mGuard3Data->guard3->mPlayer->GetPosition().y - this->mGuard3Data->guard3->GetPosition().y);
-	if (deltaX <= 200&&deltaY<50)
+	if (deltaX <= 200 && deltaY < 50)
 		return true;
 	return false;
 }
@@ -120,7 +120,7 @@ bool Guard3::IsInActiveRegion()
 }
 
 
-void Guard3::SetState(Guard3State * newState)
+void Guard3::SetState(Guard3State* newState)
 {
 	delete this->mGuard3Data->state;
 	this->mGuard3Data->state = newState;
@@ -148,7 +148,7 @@ void Guard3::Draw(D3DXVECTOR2 transform)
 
 RECT Guard3::GetBound()
 {
-	
+
 	POINT tmp = this->mGuard3Data->guard3->GetCurrentAnimation()->GetAnchorPoint();
 	RECT rect;
 	if (tmp.x == -1 && tmp.y == -1)
@@ -176,7 +176,7 @@ RECT Guard3::GetBound()
 	return rect;
 }
 
-void Guard3::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
+void Guard3::OnCollision(Entity* impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
 	if (this->mGuard3Data->state)
 		this->mGuard3Data->state->OnCollision(impactor, data, side);
@@ -193,12 +193,12 @@ void Guard3::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity:
 	}
 }
 
-Animation *Guard3::GetCurrentAnimation()
+Animation* Guard3::GetCurrentAnimation()
 {
 	return mCurrentAnimation;
 }
 
-Animation * Guard3::GetAnimation(Guard3State::StateName state)
+Animation* Guard3::GetAnimation(Guard3State::StateName state)
 {
 	switch (state)
 	{
@@ -217,6 +217,9 @@ Animation * Guard3::GetAnimation(Guard3State::StateName state)
 	case Guard3State::Throw:
 		return mAnimationThrow;
 		break;
+	default:
+		return nullptr;
+		break;
 	}
 }
 
@@ -233,7 +236,7 @@ void Guard3::SetReverse(bool flag)
 	{
 		faceDirection = Entity::FaceDirection::RIGHT;
 	}
-		
+
 }
 
 bool Guard3::GetReverse()
@@ -267,7 +270,7 @@ void Guard3::changeAnimation(Guard3State::StateName state)
 		break;
 	}
 }
-void Guard3::SetGameMap(GameMap *gamemap)
+void Guard3::SetGameMap(GameMap* gamemap)
 {
 	this->mGameMap = gamemap;
 }
@@ -283,9 +286,9 @@ void Guard3::LimitDistance()
 	{
 		this->SetPosition(minX, this->GetPosition().y);
 	}
-	else 
-	if (this->GetPosition().x > maxX)
-	{
-		this->SetPosition(maxX, this->GetPosition().y);
-	}
+	else
+		if (this->GetPosition().x > maxX)
+		{
+			this->SetPosition(maxX, this->GetPosition().y);
+		}
 }

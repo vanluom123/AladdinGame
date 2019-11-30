@@ -18,7 +18,7 @@
 #include "../GameObjects/Enemies/CivilianEnemy1st/CivilianEnemy1st.h"
 #include "../GameObjects/Enemies/CivilianEnemy2nd/CivilianEnemy2nd.h"
 #include "../GameObjects/Enemies/CivilianEnemy4th/CivilianEnemy4th.h"
-#include "../GameObjects/Enemies/BatEnemy/BatEnemy.h"
+#include "../GameObjects/Enemies/BatEnemy/Bat.h"
 #include "../GameObjects/MapObject/FloatingGround.h"
 #include "../GameObjects/MapObject/Pendulum.h"
 #include "../GameObjects/Jafar/Jafar.h"
@@ -29,7 +29,7 @@
 class GameMap
 {
 public:
-	GameMap() {};
+	GameMap() = default;
 	GameMap(char* filePath);
 	void LoadMapItems(char* filePath);
 	void ReloadItems();
@@ -48,9 +48,11 @@ public:
 	std::vector<Entity*>* GetListWeapons();
 
 	void ClearList();
-	void ClearEnemiesInRegion(RECT region);//enemies trong region ->chet'.S
 
-	Player* mPlayer;	//
+	//enemies trong region ->chet'.S
+	void ClearEnemiesInRegion(RECT region);
+
+	Player* mPlayer;
 
 	Tmx::Map* GetMap();
 

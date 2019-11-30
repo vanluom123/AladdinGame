@@ -1,16 +1,15 @@
 #pragma once
-#include "BatEnemy.h"
-#include "BatEnemyState.h"
+#include "Bat.h"
+#include "BatState.h"
 
-class BatEnemyFlyState: public BatEnemyState
+class BatEnemyFlyState: public BatState
 {
 public:
-	BatEnemyFlyState(BatEnemyData *batEnemyData);
-	~BatEnemyFlyState();
+	BatEnemyFlyState(BATDATA batEnemyData);
+	~BatEnemyFlyState() = default;
 
-	void Update(float dt);
-
-	BatEnemyState::StateName GetState();
+	void Update(float dt) override;
+	BatState::StateName GetState();
 
 private:
 	bool isFly = false;

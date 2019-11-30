@@ -4,12 +4,12 @@ Animation::Animation()
 {
 
 }
-Animation::Animation(eID eId,string nameAnimation, int totalFrame, float timePerFrame, D3DCOLOR colorKey)
+Animation::Animation(eID eId, string nameAnimation, int totalFrame, float timePerFrame, D3DCOLOR colorKey)
 {
-	InitWithAnimation(eId, nameAnimation, totalFrame,  timePerFrame, colorKey);
+	InitWithAnimation(eId, nameAnimation, totalFrame, timePerFrame, colorKey);
 }
 
-void Animation::InitWithAnimation(eID eId,string nameAnimation, int totalFrame, float timePerFrame, D3DCOLOR colorKey)
+void Animation::InitWithAnimation(eID eId, string nameAnimation, int totalFrame, float timePerFrame, D3DCOLOR colorKey)
 {
 	meId = eId;
 	mSprite = SpriteManager::getInstance()->getSprite(meId);
@@ -17,10 +17,10 @@ void Animation::InitWithAnimation(eID eId,string nameAnimation, int totalFrame, 
 	mTotalFrame = totalFrame;
 	mNameAnimation = nameAnimation;
 	mCurrentIndex = 1;
-	mRect = SpriteManager::getInstance()->getSourceRect(meId, mNameAnimation+to_string(mCurrentIndex));
+	mRect = SpriteManager::getInstance()->getSourceRect(meId, mNameAnimation + to_string(mCurrentIndex));
 
-	mFrameWidth = mRect.right- mRect.left ;//
-	mFrameHeight = mRect.bottom- mRect.top;//
+	mFrameWidth = mRect.right - mRect.left;//
+	mFrameHeight = mRect.bottom - mRect.top;//
 
 	mSprite->SetWidth(mFrameWidth);
 	mSprite->SetHeight(mFrameHeight);
@@ -96,28 +96,30 @@ void Animation::Update(float dt)
 	if (mCurrentTotalTime >= mTimePerFrame)
 	{
 		mCurrentTotalTime -= mTimePerFrame;
-		
-		
+
+
 		mCurrentIndex++;
 		if (isLoop)
 		{
-			if (startLoop == stopLoop|| mCurrentIndex > stopLoop)
+			if (startLoop == stopLoop || mCurrentIndex > stopLoop)
 				mCurrentIndex = startLoop;
 		}
 		else
-		 if (mCurrentIndex > mTotalFrame)
-		{
-			 if (isStop==false)
-			mCurrentIndex = 1;
-				 else mCurrentIndex = mTotalFrame;
-		}
+			if (mCurrentIndex > mTotalFrame)
+			{
+				if (isStop == false)
+					mCurrentIndex = 1;
+				else mCurrentIndex = mTotalFrame;
+			}
 		mRect = SpriteManager::getInstance()->getSourceRect(meId, mNameAnimation + to_string(mCurrentIndex));
 		mSprite->SetAnchorPoint(SpriteManager::getInstance()->getAnchorPoint(meId, mNameAnimation + to_string(mCurrentIndex)));
-		
-			mSprite->SetWidth(mRect.right - mRect.left);
-			mSprite->SetHeight(mRect.bottom - mRect.top);
-			mSprite->SetSourceRect(mRect);
-		
+
+		//cout << mNameAnimation + to_string(mCurrentIndex) << endl;
+
+		mSprite->SetWidth(mRect.right - mRect.left);
+		mSprite->SetHeight(mRect.bottom - mRect.top);
+		mSprite->SetSourceRect(mRect);
+
 	}
 	else
 	{
@@ -125,7 +127,7 @@ void Animation::Update(float dt)
 	}
 
 }
-void Animation::Update(float dt,bool isDecrease)
+void Animation::Update(float dt, bool isDecrease)
 {
 	if (mTotalFrame <= 1)
 		return;
@@ -133,10 +135,10 @@ void Animation::Update(float dt,bool isDecrease)
 	{
 		mCurrentTotalTime -= mTimePerFrame;
 		mCurrentIndex--;
-			if (mCurrentIndex <=0 )
-			{
-					mCurrentIndex = mTotalFrame;
-			}
+		if (mCurrentIndex <= 0)
+		{
+			mCurrentIndex = mTotalFrame;
+		}
 
 		mRect = SpriteManager::getInstance()->getSourceRect(meId, mNameAnimation + to_string(mCurrentIndex));
 
@@ -153,7 +155,7 @@ void Animation::Update(float dt,bool isDecrease)
 void Animation::Draw(GVector3 position, RECT sourceRect, GVector2 scale,
 	GVector2 transform, float angle, GVector2 rotationCenter, D3DXCOLOR colorKey)
 {
-		 mSprite->Draw(position, sourceRect, scale, transform, angle, rotationCenter, colorKey);
+	mSprite->Draw(position, sourceRect, scale, transform, angle, rotationCenter, colorKey);
 }
 
 
