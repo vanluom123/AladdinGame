@@ -1,6 +1,7 @@
 #include "Sketelon.h"
 #include "../../../GameComponents/GameCollision.h"
 #include "../../Player/Player.h"
+#include "../../Weapon/Apple.h"
 
 Sketelon::Sketelon(GVector2 position)
 {
@@ -20,7 +21,7 @@ void Sketelon::initialize(GVector2 position)
 	HP = 3;
 	Tag = Entity::TYPE_SKETELON;
 	_anim = new Animation(eID::SKETELON, "sketelon", 20, 0.5f);
-	_animDeath = new Animation(eID::EXPLOSION, "Explosion1st", 4, 0.35f);
+	_animDeath = new Animation(eID::EXPLOSION, "Explosion2nd", 7, 0.35f);
 	_currentAnim = _anim;
 	_bone = new Bone();
 	isDestroy = false;
@@ -57,8 +58,8 @@ void Sketelon::CapNhat_PhatNo(float dt)
 	for (int i = 0; i < 8; i++)
 	{
 		D3DXVec2Normalize(&_velocity_explode[i], &_velocity_explode[i]);
-		_position_explode[i].x += _velocity_explode[i].x * dt * 50;
-		_position_explode[i].y += _velocity_explode[i].y * dt * 50;
+		_position_explode[i].x += _velocity_explode[i].x * dt * 400;
+		_position_explode[i].y += _velocity_explode[i].y * dt * 400;
 	}
 
 	_bone->Update(dt);
@@ -73,12 +74,20 @@ void Sketelon::PhatNo()
 		_position_explode[i].x = posX;
 		_position_explode[i].y = posY;
 	}
+
+	_range_explode.x = posX - _gameMap->mPlayer->GetPosition().x;
+	_range_explode.y = posY - _gameMap->mPlayer->GetPosition().y;
+
+	if ((-100 < _range_explode.x && _range_explode.x < 100) || (-100 < _range_explode.y && _range_explode.y < 100))
+	{
+		if (_gameMap->mPlayer->GetTimeImmortal() <= 0)
+			_gameMap->mPlayer->TakeDamage(1);
+	}
 }
 
 void Sketelon::set_GameMap(GameMap* val)
 {
 	_gameMap = val;
-	_bone->set_GameMap(val);
 }
 
 void Sketelon::Update(float dt)
@@ -120,6 +129,13 @@ void Sketelon::OnCollision(Entity* impactor, CollisionReturn data, SideCollision
 		return;
 	}
 
+	if (impactor->Tag == Entity::AppleAladdin)
+	{
+		auto r = GameCollision::rectCollide(((class Apple*)impactor)->GetBound(), this->GetBound());
+		if (r.IsCollided)
+			TakeDamage(1);
+	}
+
 	if (impactor->Tag == Entity::Aladdin)
 	{
 		switch (((Player*)impactor)->getState())
@@ -131,7 +147,7 @@ void Sketelon::OnCollision(Entity* impactor, CollisionReturn data, SideCollision
 		case PlayerState::RunCut:
 		case PlayerState::UpCut:
 		{
-			auto r = GameCollision::rectCollide(((Player*)impactor)->GetBoundWeapon(), GetBound());
+			auto r = GameCollision::rectCollide(((Player*)impactor)->GetBoundWeapon(), this->GetBound());
 			if (r.IsCollided) {
 				TakeDamage(1);
 			}
@@ -139,7 +155,7 @@ void Sketelon::OnCollision(Entity* impactor, CollisionReturn data, SideCollision
 		break;
 		default:
 		{
-			auto r = GameCollision::rectCollide(((Player*)impactor)->GetBoundBody(), GetBound());
+			auto r = GameCollision::rectCollide(((Player*)impactor)->GetBoundBody(), this->GetBound());
 			if (r.IsCollided)
 			{
 				if (((Player*)impactor)->GetTimeImmortal() <= 0)

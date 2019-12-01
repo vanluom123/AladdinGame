@@ -24,9 +24,6 @@ public:
 	void Draw(GVector2 position, GVector2 trans);
 	void Update(float dt) override;
 	RECT GetBound() override;
-	void OnCollision(Entity* impactor);
-
-	void set_GameMap(GameMap* val);
 };
 
 #endif // __BONE_H__

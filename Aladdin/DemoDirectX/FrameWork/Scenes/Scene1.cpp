@@ -276,6 +276,7 @@ void Scene1::checkCollision(float dt)
 		if (mListApplesAladdin->at(i)->IsDestroy() == true) continue;
 		listCollision.clear();
 		//mMap->GetQuadTree()->getEntitiesCollideAble(listCollision, mListApplesAladdin->at(i)); //Lấy trong quadtree các Entity có thể va chạm với Apple
+		mMap->GetGrid()->GetListEntity(listCollision, mCamera);
 
 		for (size_t j = 0; j < listCollision.size(); j++)
 		{
@@ -343,6 +344,7 @@ void Scene1::checkCollision(float dt)
 		if (currentEnemyWeapon->IsDestroy()) continue;
 		listCollision.clear();
 		//mMap->GetQuadTree()->getEntitiesCollideAble(listCollision, currentEnemyWeapon); //Lấy trong quadtree các Entity có thể va chạm với EnemyWeapon
+		mMap->GetGrid()->GetListEntity(listCollision, mCamera);
 
 		for (size_t j = 0; j < listCollision.size(); j++)
 		{

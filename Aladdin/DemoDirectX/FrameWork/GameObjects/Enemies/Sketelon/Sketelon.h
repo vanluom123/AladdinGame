@@ -39,6 +39,8 @@ private:
 	Animation* _currentAnim;
 	Bone* _bone;
 
+	GVector2 _range_explode;
+
 	GameMap* _gameMap;
 
 	GVector2 _position_explode[8];
