@@ -9,7 +9,6 @@
 
 #include "../../GameComponents/GameCollision.h"
 #include "../../GameComponents/GameMap.h"
-#include "../../GameComponents/GameDebugDraw.h"
 
 
 class GameMap;
@@ -129,7 +128,4 @@ protected:
 	int Lives;	//Số mạng của Aladdin
 	int Score;	//Số điểm
 	int Money;	//Số tiền? Cục màu đỏ
-
-
-	GameDebugDraw* _debug;
 };

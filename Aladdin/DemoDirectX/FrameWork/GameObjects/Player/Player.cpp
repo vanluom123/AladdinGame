@@ -24,7 +24,6 @@
 
 Player::Player()
 {
-	_debug = new GameDebugDraw;
 	this->Tag = Entity::Aladdin;
 	numApples = 10;
 	this->HP = 11;
@@ -194,8 +193,6 @@ void Player::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DX
 		int trans_x = GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x;
 		int trans_y = GameGlobal::GetHeight() / 2 - mCamera->GetPosition().y;
 		D3DXVECTOR2 trans = D3DXVECTOR2(trans_x, trans_y);
-
-		_debug->DrawRect(this->GetBound(), mCamera);
 
 		if (!(mCurrentAnimation->mCurrentIndex % 2 == 0 && timeImmortal > 0))
 			mCurrentAnimation->Draw(D3DXVECTOR3(posX, posY, 0), sourceRect, scale, trans, angle, rotationCenter, colorKey);

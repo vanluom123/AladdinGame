@@ -3,7 +3,6 @@
 Entity::CollisionReturn GameCollision::rectCollide(RECT rect1, RECT rect2)
 {
 	Entity::CollisionReturn result;
-
 	if (!AABBCheck(rect1, rect2))
 	{
 		result.IsCollided = false;

@@ -21,7 +21,7 @@ void Grid::InsertEntity(Entity* entity)
 	{
 		for (int j = startX; j <= endX; j++)
 		{
-			mcells[i][j].push_back(entity);
+			mcells[i][j].insert(entity);
 		}
 	}
 }
@@ -40,18 +40,12 @@ void Grid::RemoveEntiy(Entity* entity)
 	{
 		for (int j = startX; j <= endX; j++)
 		{
-			for (int k = 0; k < mcells[i][j].size(); k++)
-			{
-				if (mcells[i][j].at(k) == entity)
-				{
-					mcells[i][j].erase(mcells[i][j].begin() + k);
-				}
-			}
+			mcells[i][j].erase(mcells[i][j].find(entity));
 		}
 	}
 }
 
-void Grid::GetListEntity(vector<Entity*>& ListObj, Camera* camera)
+void Grid::GetListEntity(unordered_set<Entity*>& ListObj, Camera* camera)
 {
 	ListObj.clear();
 	int startX = floor(camera->GetBound().left / CELL_WIDTH);
@@ -63,17 +57,15 @@ void Grid::GetListEntity(vector<Entity*>& ListObj, Camera* camera)
 	{
 		for (int j = startX; j <= endX; j++)
 		{
-			for (UINT k = 0; k < mcells[i][j].size(); k++)
+			for (auto cell : mcells[i][j])
 			{
-				if (mcells[i][j].at(k)->IsDestroy() == false)
-				{
-					ListObj.push_back(mcells[i][j].at(k));
-				}
+				if (!cell->IsDestroy())
+					ListObj.insert(cell);
 			}
 		}
 	}
 }
 
-void Grid::GetCollisionableListEntity(vector<Entity*>& ListObj, Entity* entity)
+void Grid::GetCollisionableListEntity(unordered_set<Entity*>& ListObj, Entity* entity)
 {
 }

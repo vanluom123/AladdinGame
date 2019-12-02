@@ -19,7 +19,8 @@
 #include <vector>
 #include <Windows.h>
 #include <iostream>
-
+#include <unordered_set>
+#include <unordered_map>
 using namespace std;
 
 typedef LPDIRECT3DTEXTURE9 LP_3DTEXTURE;

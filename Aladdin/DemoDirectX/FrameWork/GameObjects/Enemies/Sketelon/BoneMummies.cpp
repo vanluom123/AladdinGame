@@ -53,7 +53,3 @@ void BoneMummies::Update(float dt)
 {
 	_anim->Update(dt);
 }
-
-void BoneMummies::OnCollision(Entity* impactor, CollisionReturn data, SideCollisions side)
-{
-}

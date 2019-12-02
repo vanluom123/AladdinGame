@@ -10,8 +10,6 @@ class Bone : public Entity
 
 protected:
 	Animation* _anim;
-	GameMap* _gameMap;
-	GameDebugDraw* _debug;
 
 public:
 	Bone(GVector2 position);
@@ -23,7 +21,6 @@ public:
 	void Draw(GVector2 trans) override;
 	void Draw(GVector2 position, GVector2 trans);
 	void Update(float dt) override;
-	RECT GetBound() override;
 };
 
 #endif // __BONE_H__

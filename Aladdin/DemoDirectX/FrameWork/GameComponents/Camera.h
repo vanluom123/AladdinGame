@@ -1,29 +1,25 @@
 #pragma once
-
-#include <d3dx9.h>
-#include <d3d9.h>
+#include "../GameDefines/define.h"
 
 class Camera
 {
 public:
-    Camera(int width, int height);
+	Camera(int width, int height);
+	~Camera();
 
-    //center of camera
-    void SetPosition(float x, float y);
-    void SetPosition(D3DXVECTOR3 pos);
+	//center of camera
+	void SetPosition(float x, float y);
+	void SetPosition(GVector3 pos);
 
-    int GetWidth();
-    int GetHeight();
+	int GetWidth();
+	int GetHeight();
 
-    D3DXVECTOR3 GetPosition();    
-    RECT GetBound();
-
-    ~Camera();
+	GVector3 GetPosition();
+	RECT GetBound();
 
 private:
-    int             mWidth,
-                    mHeight;
-
-    D3DXVECTOR3     mPosition;
+	int mWidth;
+	int mHeight;
+	GVector3 mPosition;
 };
 

@@ -31,25 +31,27 @@ class GameMap
 public:
 	GameMap() = default;
 	GameMap(char* filePath);
+	~GameMap();
+
+
 	void LoadMapItems(char* filePath);
 	void ReloadItems();
 
 	void LoadMapObjects(char* filePath);
 	void ReloadObjects();
-	std::vector<Entity*>* GetListEnemies();
+
+	unordered_set<Entity*>* GetListEnemies();
 
 	void InsertAppleAladdin(Apple* apple);
-
-	std::vector<Apple*>* GetListApples();
+	unordered_set<Apple*>* GetListApples();
 
 	void InsertStaticObject(Entity* entity);
 
 	void InsertWeapon(Entity* weapon);
-	std::vector<Entity*>* GetListWeapons();
+	unordered_set<Entity*>* GetListWeapons();
 
 	void ClearList();
 
-	//enemies trong region ->chet'.S
 	void ClearEnemiesInRegion(RECT region);
 
 	Player* mPlayer;
@@ -65,30 +67,25 @@ public:
 	void Update(float dt);
 	void Draw();
 
-	~GameMap();
-
-
 	Grid* GetGrid();
 
-
-	char* mListItemsFile;
-	char* mListObjectsFile;
+	char* m_ItemsFile;
+	char* m_ObjectsFile;
 
 private:
 	void LoadMap(char* filePath);
-	bool isContain(RECT rect1, RECT rect2);
 
-	Tmx::Map* mMap;
-	std::map<int, Sprite*> mListTileset;
+	Tmx::Map* m_pTmxMap;
+	map<int, Sprite*> m_Tilesets;
 
-	Grid* mGrid;
+	Grid* m_Grid;
 
-	Camera* mCamera;
+	Camera* m_Camera;
 
-	std::vector<Items*> mListItems;	//Vector Items.
-	std::vector<Apple*>* mListApples; // Vector giữ con trỏ Apple Aladidn ném ra
-	std::vector<Entity*>* mListEnemies; // Vector giữ con trỏ các Enemies
-	std::vector<Entity*>* mListWeapons; // Vector giữ con trỏ vũ khí mà Enemies ném ra.
+	unordered_set<Items*> m_Items;	//Vector Items.
+	unordered_set<Apple*>* m_apples; // Vector giữ con trỏ Apple Aladidn ném ra
+	unordered_set<Entity*>* m_enemies; // Vector giữ con trỏ các Enemies
+	unordered_set<Entity*>* m_weapons; // Vector giữ con trỏ vũ khí mà Enemies ném ra.
 };
 
 #endif

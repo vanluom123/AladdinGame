@@ -3,8 +3,7 @@
 
 #include "../GameObjects/Entity.h"
 #include "Camera.h"
-#include <vector> 
-using namespace std;
+
 #define GRID_ROW 52
 #define GRID_COLUMN 38
 
@@ -13,15 +12,15 @@ using namespace std;
 class Grid
 {
 private:
-	vector<Entity*> mcells[GRID_ROW][GRID_COLUMN];
+	unordered_set<Entity*> mcells[GRID_ROW][GRID_COLUMN];
 
 public:
 	Grid();
 	~Grid();
 	void InsertEntity(Entity* entity); // add entity vao grid
 	void RemoveEntiy(Entity* entity);
-	void GetListEntity(vector<Entity*>& ListObj, Camera* camera);// lay nhung entiy nam trong viewport
-	void GetCollisionableListEntity(vector<Entity*>& ListObj, Entity* entity);//lay nhung entity co kha nang va cham voi player
+	void GetListEntity(unordered_set<Entity*>& ListObj, Camera* camera);// lay nhung entiy nam trong viewport
+	void GetCollisionableListEntity(unordered_set<Entity*>& ListObj, Entity* entity);//lay nhung entity co kha nang va cham voi player
 };
 
 #endif // !__GRID_H__

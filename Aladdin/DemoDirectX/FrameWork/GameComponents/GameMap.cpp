@@ -7,57 +7,67 @@
 
 GameMap::GameMap(char* filePath)
 {
-	mListApples = new std::vector<Apple*>();
-	mListEnemies = new std::vector<Entity*>();
-	mListWeapons = new std::vector<Entity*>();
+	m_apples = new unordered_set<Apple*>();
+	m_enemies = new unordered_set<Entity*>();
+	m_weapons = new unordered_set<Entity*>();
 	LoadMap(filePath);
 }
 
 GameMap::~GameMap()
 {
-	delete mMap;
+	delete m_pTmxMap;
+	delete m_Grid;
+
+	for (auto apples : (*m_apples))
+		delete apples;
+	m_apples->clear();
+	delete m_apples;
+
+	for (auto enemies : (*m_enemies))
+		delete enemies;
+	m_enemies->clear();
+	delete m_enemies;
+
+	for (auto weapons : (*m_weapons))
+		delete weapons;
+	m_weapons->clear();
+	delete m_weapons;
+
+	for (auto items : m_Items)
+		delete items;
+	m_Items.clear();
 }
 
 Grid* GameMap::GetGrid()
 {
-	return this->mGrid;
+	return m_Grid;
 }
 
 void GameMap::LoadMap(char* filePath)
 {
-	mMap = new Tmx::Map();
-	mMap->ParseFile(filePath);
+	m_pTmxMap = new Tmx::Map();
+	m_pTmxMap->ParseFile(filePath);
 
-	RECT r;
-	r.left = 0;
-	r.top = 0;
-	r.right = this->GetWidth();
-	r.bottom = this->GetHeight();
+	m_Grid = new Grid();
 
-	mGrid = new Grid();
-
-	for (size_t i = 0; i < mMap->GetNumTilesets(); i++)
+	for (size_t i = 0; i < m_pTmxMap->GetNumTilesets(); i++)
 	{
-		const Tmx::Tileset* tileset = mMap->GetTileset(i);
-
+		const Tmx::Tileset* tileset = m_pTmxMap->GetTileset(i);
 		Sprite* sprite = new Sprite(tileset->GetImage()->GetSource().c_str(), RECT(), NULL, NULL, D3DCOLOR_XRGB(0x00, 0xff, 0xff));
-
-		mListTileset.insert(std::pair<int, Sprite*>(i, sprite));
+		m_Tilesets.insert(pair<int, Sprite*>(i, sprite));
 	}
 
 #pragma region -OBJECTGROUP, STATIC OBJECT-
 
-	for (size_t i = 0; i < mMap->GetNumObjectGroups(); i++)
+	for (size_t i = 0; i < m_pTmxMap->GetNumObjectGroups(); i++)
 	{
-		const Tmx::ObjectGroup* objectGroup = mMap->GetObjectGroup(i);
+		const Tmx::ObjectGroup* objectGroup = m_pTmxMap->GetObjectGroup(i);
 
 		if (!objectGroup->IsVisible())
-			continue;//Nawty Node
+			continue;
 
 		for (size_t j = 0; j < objectGroup->GetNumObjects(); j++)
 		{
-			//lay object group chu khong phai layer
-			//object group se chua nhung body
 			Tmx::Object* object = objectGroup->GetObjects().at(j);
 
 			Entity* entity = new Entity();
@@ -76,7 +86,7 @@ void GameMap::LoadMap(char* filePath)
 				entity->Tag = Entity::VerticalRope;
 			}
 
-			mGrid->InsertEntity(entity);
+			m_Grid->InsertEntity(entity);
 		}
 	}
 #pragma endregion
@@ -85,7 +95,7 @@ void GameMap::LoadMap(char* filePath)
 
 void GameMap::LoadMapItems(char* filePath)
 {
-	this->mListItemsFile = filePath;
+	m_ItemsFile = filePath;
 	FILE* file;
 	file = fopen(filePath, "r");
 
@@ -142,8 +152,8 @@ void GameMap::LoadMapItems(char* filePath)
 				break;
 			}
 
-			mListItems.push_back(tmp);
-			mGrid->InsertEntity(tmp);
+			m_Items.insert(tmp);
+			m_Grid->InsertEntity(tmp);
 		}
 
 		fclose(file);
@@ -152,28 +162,26 @@ void GameMap::LoadMapItems(char* filePath)
 
 void GameMap::ReloadItems()
 {
-	for (int i = 0; i < mListItems.size(); i++)
+	for (auto iter : m_Items)
 	{
-		mGrid->RemoveEntiy(mListItems.at(i));
-		delete mListItems.at(i);
+		m_Grid->RemoveEntiy(iter);
+		delete iter;
 	}
-	mListItems.clear();
-	this->LoadMapItems(mListItemsFile);
+	m_Items.clear();
+	LoadMapItems(m_ItemsFile);
 }
 
 void GameMap::ReloadObjects()
 {
-	for (int i = 0; i < mListEnemies->size(); i++)
-	{
-		delete mListEnemies->at(i);
-	}
-	mListEnemies->clear();
-	this->LoadMapObjects(mListObjectsFile);
+	for (auto iter : (*m_enemies))
+		delete iter;
+	m_enemies->clear();
+	LoadMapObjects(m_ObjectsFile);
 }
 
 void GameMap::LoadMapObjects(char* filePath)
 {
-	this->mListObjectsFile = filePath;
+	m_ObjectsFile = filePath;
 	FILE* file;
 	file = fopen(filePath, "r");
 
@@ -216,7 +224,7 @@ void GameMap::LoadMapObjects(char* filePath)
 				auto brick = new BrickDynamic(position);
 				brick->SetStatus(status);
 				tmp = brick;
-				mGrid->InsertEntity(tmp);
+				m_Grid->InsertEntity(tmp);
 			}
 			break;
 
@@ -238,182 +246,173 @@ void GameMap::LoadMapObjects(char* filePath)
 			}
 
 			if (tmp != nullptr)
-				mListEnemies->push_back(tmp);
+				m_enemies->insert(tmp);
 		}
 
 		fclose(file);
 	}
 }
 
-bool GameMap::isContain(RECT rect1, RECT rect2)
-{
-	auto left = rect1.left - rect2.right;
-	auto top = rect1.top - rect2.bottom;
-	auto right = rect1.right - rect2.left;
-	auto bottom = rect1.bottom - rect2.top;
-
-	return !(left > 0 || right < 0 || top > 0 || bottom < 0);
-}
-
 Tmx::Map* GameMap::GetMap()
 {
-	return mMap;
+	return m_pTmxMap;
 }
 
 int GameMap::GetWidth()
 {
-	return mMap->GetWidth() * mMap->GetTileWidth();
+	return m_pTmxMap->GetWidth() * m_pTmxMap->GetTileWidth();
 }
 
 int GameMap::GetHeight()
 {
-	return mMap->GetHeight() * mMap->GetTileHeight();
+	return m_pTmxMap->GetHeight() * m_pTmxMap->GetTileHeight();
 }
 
 int GameMap::GetTileWidth()
 {
-	return mMap->GetTileWidth();
+	return m_pTmxMap->GetTileWidth();
 }
 
 int GameMap::GetTileHeight()
 {
-	return mMap->GetTileHeight();
+	return m_pTmxMap->GetTileHeight();
 }
 
 void GameMap::Update(float dt)
 {
 
 #pragma region UPDATE_ITEMS
-	for (size_t i = 0; i < mListItems.size(); i++)
-	{
-		RECT objRECT = mListItems.at(i)->GetBound();
 
-		//neu nam ngoai camera thi delete
-		if (isContain(objRECT, mCamera->GetBound()) == false)
+	auto items = m_Items;
+
+	for (auto item : items)
+	{
+		// neu nam ngoai camera thi delete
+		if (GameCollision::AABBCheck(item->GetBound(), m_Camera->GetBound()) == false)
 		{
-			mListItems.at(i)->SetDraw(false);
+			item->SetDraw(false);
 			continue;
 		}
 		else
-			mListItems.at(i)->SetDraw(true);
+			item->SetDraw(true);
 
-		if (mListItems.at(i)->IsDeleted() == true)
+		if (item->IsDeleted() == true)
 		{
-			mGrid->RemoveEntiy(mListItems.at(i));
-			mListItems.erase(mListItems.begin() + i);
+			m_Grid->RemoveEntiy(item);
+			m_Items.erase(item);
 		}
 		else
-			mListItems.at(i)->Update(dt);
+			item->Update(dt);
 	}
+
+	items.clear();
+
 #pragma endregion
 
 #pragma region UPDATE_APPLES
-	for (size_t i = 0; i < mListApples->size(); i++)
+
+	auto apples = (*m_apples);
+	for (auto apple : apples)
 	{
-		// Nawty Note
-		{
-			RECT r = mListApples->at(i)->GetBound();
-
-			// neu nam ngoai camera thi delete
-			if (isContain(r, mCamera->GetBound()) == false)
-			{
-			}
-		}
-
-		if (mListApples->at(i)->IsDeleted() == true)
-			mListApples->erase(mListApples->begin() + i);
+		if (apple->IsDeleted() == true)
+			m_apples->erase(apple);
 		else
-			mListApples->at(i)->Update(dt);
+			apple->Update(dt);
 	}
+	apples.clear();
+
 #pragma endregion
 
 #pragma region UPDATE_ENEMIES
-	for (size_t i = 0; i < mListEnemies->size(); i++)
-	{
-		RECT r = mListEnemies->at(i)->GetBound();
 
-		if (isContain(r, mCamera->GetBound()) == false)
+	auto enemies = (*m_enemies);
+	for (auto enemy : enemies)
+	{
+		if (GameCollision::AABBCheck(enemy->GetBound(), m_Camera->GetBound()) == false)
 		{
-			mListEnemies->at(i)->SetDraw(false);
-			if (mListEnemies->at(i)->Tag == Entity::FloatingGround || mListEnemies->at(i)->Tag == Entity::Jafar)
-				mListEnemies->at(i)->Update(dt);
+			enemy->SetDraw(false);
+			if (enemy->Tag == Entity::FloatingGround || enemy->Tag == Entity::Jafar)
+				enemy->Update(dt);
 
 			continue;
 		}
 		else
-			mListEnemies->at(i)->SetDraw(true);
+			enemy->SetDraw(true);
 
-		if (mListEnemies->at(i)->IsDeleted() == true)
-			mListEnemies->erase(mListEnemies->begin() + i);
+		if (enemy->IsDeleted() == true)
+			m_enemies->erase(enemy);
 		else
-			mListEnemies->at(i)->Update(dt);
+			enemy->Update(dt);
 	}
+	enemies.clear();
 
-#pragma endregion UPDATE_ENEMIES
+#pragma endregion
 
 #pragma region UPDATE_ENEMY_WEAPONS
-	for (size_t i = 0; i < mListWeapons->size(); i++)
+
+	auto weapons = (*m_weapons);
+	for (auto weapon : weapons)
 	{
-		RECT r = mListWeapons->at(i)->GetBound();
-
-		//neu nam ngoai camera thi delete
-		if (isContain(r, mCamera->GetBound()) == false)
-			mListWeapons->at(i)->SetDraw(false);
+		// neu nam ngoai camera thi delete
+		if (GameCollision::AABBCheck(weapon->GetBound(), m_Camera->GetBound()) == false)
+			weapon->SetDraw(false);
 		else
-			mListWeapons->at(i)->SetDraw(true);
+			weapon->SetDraw(true);
 
-		if (mListWeapons->at(i)->IsDeleted() == true)
-			mListWeapons->erase(mListWeapons->begin() + i);
+		if (weapon->IsDeleted() == true)
+			m_weapons->erase(weapon);
 		else
-			mListWeapons->at(i)->Update(dt);
+			weapon->Update(dt);
 	}
-#pragma endregion UPDATE_ENEMY_WEAPONS
+	weapons.clear();
+
+#pragma endregion
 }
 
 void GameMap::Draw()
 {
-	auto trans_x = GameGlobal::GetWidth() / 2 - mCamera->GetPosition().x;
-	auto trans_y = GameGlobal::GetHeight() / 2 - mCamera->GetPosition().y;
+	auto trans_x = GameGlobal::GetWidth() / 2 - m_Camera->GetPosition().x;
+	auto trans_y = GameGlobal::GetHeight() / 2 - m_Camera->GetPosition().y;
 	GVector2 trans = GVector2(trans_x, trans_y);
 
 #pragma region Draw_MAP
-	for (size_t i = 0; i < mMap->GetNumTileLayers(); i++)
+	for (size_t i = 0; i < m_pTmxMap->GetNumTileLayers(); i++)
 	{
-		const Tmx::TileLayer* layer = mMap->GetTileLayer(i);
+		const Tmx::TileLayer* layer = m_pTmxMap->GetTileLayer(i);
 
 		if (!layer->IsVisible())
 			continue;
 
-		if (i == 1)//Nawty Note i==1
+		if (i == 1)
 		{
-			for (size_t i = 0; i < mListItems.size(); i++)
+			for (auto item : m_Items)
 			{
-				if (mListItems.at(i)->IsDraw() == true)
-					mListItems.at(i)->Draw(trans);
+				if (item->IsDraw() == true)
+					item->Draw(trans);
 			}
-			for (size_t i = 0; i < mListEnemies->size(); i++)
+			for (auto enemy : (*m_enemies))
 			{
-				if (mListEnemies->at(i)->IsDraw() == true)
-					mListEnemies->at(i)->Draw(trans);
+				if (enemy->IsDraw() == true)
+					enemy->Draw(trans);
 			}
 
-			for (size_t i = 0; i < mListApples->size(); i++)
+			for (auto apple : (*m_apples))
 			{
-				if (mListApples->at(i)->IsDraw() == true)
-					mListApples->at(i)->Draw(mListApples->at(i)->GetPosition(), RECT(), GVector2(), trans);
+				if (apple->IsDraw() == true)
+					apple->Draw(apple->GetPosition(), RECT(), GVector2(), trans);
 			}
-			for (size_t i = 0; i < mListWeapons->size(); i++)
+			for (auto weapon : (*m_weapons))
 			{
-				if (mListWeapons->at(i)->IsDraw() == true)
-					mListWeapons->at(i)->Draw(trans);
+				if (weapon->IsDraw() == true)
+					weapon->Draw(trans);
 			}
 			mPlayer->Draw();
 		}
 
 		RECT srcRect;
 
-		int tileWidth = mMap->GetTileWidth();
-		int tileHeight = mMap->GetTileHeight();
+		int tileWidth = m_pTmxMap->GetTileWidth();
+		int tileHeight = m_pTmxMap->GetTileHeight();
 
 		for (size_t m = 0; m < layer->GetHeight(); m++)
 		{
@@ -423,12 +422,12 @@ void GameMap::Draw()
 
 				if (tilesetIndex != -1)
 				{
-					const Tmx::Tileset* tileSet = mMap->GetTileset(tilesetIndex);
+					const Tmx::Tileset* tileSet = m_pTmxMap->GetTileset(tilesetIndex);
 
 					int tileSetWidth = tileSet->GetImage()->GetWidth() / tileWidth;
 					int tileSetHeight = tileSet->GetImage()->GetHeight() / tileHeight;
 
-					Sprite* sprite = mListTileset[layer->GetTileTilesetIndex(n, m)];
+					Sprite* sprite = m_Tilesets.at(layer->GetTileTilesetIndex(n, m));
 
 					//tile index
 					int tileID = layer->GetTileId(n, m);
@@ -441,11 +440,9 @@ void GameMap::Draw()
 					srcRect.left = x * tileWidth;
 					srcRect.right = srcRect.left + tileWidth;
 
-					//tru tilewidth/2 va tileheight/2 vi Sprite ve o vi tri giua hinh anh cho nen doi hinh de cho
-					//dung toa do (0,0) cua the gioi thuc la (0,0) neu khong thi se la (-tilewidth/2, -tileheigth/2);
-					D3DXVECTOR3 position(n * tileWidth + tileWidth / 2, m * tileHeight + tileHeight / 2, 0);
+					GVector3 position(n * tileWidth + tileWidth / 2, m * tileHeight + tileHeight / 2, 0);
 
-					if (mCamera != NULL)
+					if (m_Camera != NULL)
 					{
 						RECT rectObject;
 						rectObject.left = position.x - tileWidth / 2;
@@ -453,8 +450,8 @@ void GameMap::Draw()
 						rectObject.right = rectObject.left + tileWidth;
 						rectObject.bottom = rectObject.top + tileHeight;
 
-						//neu nam ngoai camera thi khong Draw
-						if (isContain(rectObject, mCamera->GetBound()) == false)
+						// neu nam ngoai camera thi khong Draw
+						if (GameCollision::AABBCheck(rectObject, m_Camera->GetBound()) == false)
 							continue;
 					}
 
@@ -471,47 +468,47 @@ void GameMap::Draw()
 
 void GameMap::SetCamera(Camera* camera)
 {
-	this->mCamera = camera;
+	m_Camera = camera;
 }
 
 void GameMap::InsertAppleAladdin(Apple* apple)
 {
-	mListApples->push_back(apple);
+	m_apples->insert(apple);
 }
 
 void GameMap::InsertStaticObject(Entity* entity)
 {
-
-	mGrid->InsertEntity(entity);
+	m_Grid->InsertEntity(entity);
 }
+
 void GameMap::InsertWeapon(Entity* weapon)
 {
-	mListWeapons->push_back(weapon);
+	m_weapons->insert(weapon);
 }
 
-std::vector<Apple*>* GameMap::GetListApples()
+unordered_set<Apple*>* GameMap::GetListApples()
 {
-	return this->mListApples;
+	return m_apples;
 }
 
-std::vector<Entity*>* GameMap::GetListWeapons()
+unordered_set<Entity*>* GameMap::GetListWeapons()
 {
-	return this->mListWeapons;
+	return m_weapons;
 }
-std::vector<Entity*>* GameMap::GetListEnemies()
+
+unordered_set<Entity*>* GameMap::GetListEnemies()
 {
-	return this->mListEnemies;
+	return m_enemies;
 }
 
 void GameMap::ClearList()
-{
-}
+{}
 
 void GameMap::ClearEnemiesInRegion(RECT region)
 {
-	for (size_t i = 0; i < mListEnemies->size(); i++)
+	for (auto enemy : (*m_enemies))
 	{
-		if (GameCollision::AABBCheck(mListEnemies->at(i)->GetBound(), region) == true)
-			mListEnemies->at(i)->SetDelete(true);
+		if (GameCollision::AABBCheck(enemy->GetBound(), region) == true)
+			enemy->SetDelete(true);
 	}
 }

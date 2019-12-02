@@ -39,9 +39,9 @@ void Fire::OnSetPosition(D3DXVECTOR3 pos)
 
 void Fire::Update(float dt)
 {
-		mAnimation->Update(dt);
-		//Entity::Update(dt);
-		if (mAnimation->mCurrentIndex == mAnimation->mTotalFrame) isDeleted = true;
+	mAnimation->Update(dt);
+	if (mAnimation->mCurrentIndex == mAnimation->mTotalFrame)
+		isDeleted = true;
 }
 
 void Fire::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVECTOR2 transform, float angle, D3DXVECTOR2 rotationCenter, D3DXCOLOR colorKey)
@@ -50,13 +50,14 @@ void Fire::Draw(D3DXVECTOR3 position, RECT sourceRect, D3DXVECTOR2 scale, D3DXVE
 }
 
 
-void Fire::OnCollision(Entity *impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
+void Fire::OnCollision(Entity* impactor, Entity::CollisionReturn data, Entity::SideCollisions side)
 {
 	switch (impactor->Tag)
 	{
 	case Entity::EntityTypes::Aladdin:
 		this->isDestroy = true;
 		return;
+	default: break;
 	}
 }
 

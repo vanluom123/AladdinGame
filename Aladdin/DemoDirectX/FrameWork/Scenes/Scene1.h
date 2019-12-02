@@ -1,7 +1,7 @@
 #pragma once
 
 #include <math.h>
-#include <vector>
+#include <unordered_set>
 #include <d3dx9.h>
 #include <d3d9.h>
 
@@ -34,24 +34,27 @@ public:
 	void PlayMusic();
 	void StopMusic();
 	Scene::SceneName GetSceneName();
-protected:
-	LPD3DXSPRITE mSpriteHandler;
 
-	float mTimeCounter;
+protected:
 	void checkCollision(float dt);
+	void enemyWeaponCollideWith(unordered_set<Entity*>& objectsCollision);
+	void appleCollideWith(unordered_set<Entity*>& objectsCollision);
+	void playerCollideWith(unordered_set<Entity*>& objectsCollision, float dt);
 	void CheckCameraAndWorldMap();
 
+	LP_SPRITE mSpriteHandler;
+	float mTimeCounter;
 
-	Player *mPlayer;
-	std::map<int, bool> keys;
-	GameMap *mMap;
-	Camera *mCamera;
+	Player* mPlayer;
+	map<int, bool> keys;
+	GameMap* mMap;
+	Camera* mCamera;
 
-	std::vector<Entity*> mCollidable;
-	std::vector<Entity*> *mListEnemyWeapons;
-	std::vector <Apple*> *mListApplesAladdin;
-	std::vector <Entity*> *mListEnemies;
+	unordered_set<Entity*> mCollidable;
+	unordered_set<Entity*>* mListEnemyWeapons;
+	unordered_set<Apple*>* mListApplesAladdin;
+	unordered_set<Entity*>* mListEnemies;
 
-	PlayerInfo *playerInfo;
+	PlayerInfo* playerInfo;
 };
 

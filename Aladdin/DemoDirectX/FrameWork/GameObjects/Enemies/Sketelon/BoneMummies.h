@@ -16,7 +16,6 @@ public:
 	void Draw(GVector2 trans) override;
 	RECT GetBound() override;
 	void Update(float dt) override;
-	void OnCollision(Entity* impactor, CollisionReturn data, SideCollisions side) override;
 
 private:
 	Animation* _anim;

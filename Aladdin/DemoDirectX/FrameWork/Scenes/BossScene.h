@@ -51,10 +51,10 @@ protected:
 	Camera *mCamera;
 
 	GameDebugDraw *mDebugDraw;
-	std::vector<Entity*> mCollidable;
-	std::vector<Entity*> *mListEnemyWeapons;
-	std::vector <Apple*> *mListApplesAladdin;
-	std::vector <Entity*> *mListEnemies;
+	unordered_set<Entity*> mCollidable;
+	unordered_set<Entity*> *mListEnemyWeapons;
+	unordered_set <Apple*> *mListApplesAladdin;
+	unordered_set <Entity*> *mListEnemies;
 
 	PlayerInfo *playerInfo;
 	
