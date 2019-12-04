@@ -68,4 +68,5 @@ void Grid::GetListEntity(unordered_set<Entity*>& ListObj, Camera* camera)
 
 void Grid::GetCollisionableListEntity(unordered_set<Entity*>& ListObj, Entity* entity)
 {
+	// Do something
 }

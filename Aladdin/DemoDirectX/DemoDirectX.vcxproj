@@ -45,6 +45,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>zlib\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
     <LibraryPath>zlib\lib;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -89,7 +90,6 @@
   <ItemGroup>
     <ClCompile Include="FrameWork\GameComponents\Animation.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Camera.cpp" />
-    <ClCompile Include="FrameWork\GameComponents\Event.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Game.cpp" />
     <ClCompile Include="FrameWork\GameComponents\GameCollision.cpp" />
     <ClCompile Include="FrameWork\GameComponents\GameDebugDraw.cpp" />
@@ -97,14 +97,12 @@
     <ClCompile Include="FrameWork\GameComponents\GameMap.cpp" />
     <ClCompile Include="FrameWork\GameComponents\GameTime.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Grid.cpp" />
-    <ClCompile Include="FrameWork\GameComponents\IComponent.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Scene.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Sound.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Sprite.cpp" />
     <ClCompile Include="FrameWork\GameComponents\Text.cpp" />
     <ClCompile Include="FrameWork\GameControllers\SceneManager.cpp" />
     <ClCompile Include="FrameWork\GameControllers\SpriteManager.cpp" />
-    <ClCompile Include="FrameWork\GameObjects\CollisionBody.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\BatEnemy\Bat.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemyFlyState.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\CivilianEnemy1st\CivilianEnemy1st.cpp" />
@@ -146,7 +144,6 @@
     <ClCompile Include="FrameWork\GameObjects\Enemies\Guard_3rd\Guard3State.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\Guard_3rd\Guard3ThrowState.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\Sketelon\Bone.cpp" />
-    <ClCompile Include="FrameWork\GameObjects\Enemies\Sketelon\BoneMummies.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Enemies\Sketelon\Sketelon.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Entity.cpp" />
     <ClCompile Include="FrameWork\GameObjects\Jafar\Jafar.cpp" />
@@ -233,12 +230,10 @@
     <ClCompile Include="FrameWork\TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="FrameWork\TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="FrameWork\GameObjects\Enemies\Sketelon\Mummies.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FrameWork\GameComponents\Animation.h" />
     <ClInclude Include="FrameWork\GameComponents\Camera.h" />
-    <ClInclude Include="FrameWork\GameComponents\Event.h" />
     <ClInclude Include="FrameWork\GameComponents\Game.h" />
     <ClInclude Include="FrameWork\GameComponents\GameCollision.h" />
     <ClInclude Include="FrameWork\GameComponents\GameDebugDraw.h" />
@@ -246,7 +241,6 @@
     <ClInclude Include="FrameWork\GameComponents\GameMap.h" />
     <ClInclude Include="FrameWork\GameComponents\GameTime.h" />
     <ClInclude Include="FrameWork\GameComponents\Grid.h" />
-    <ClInclude Include="FrameWork\GameComponents\IComponent.h" />
     <ClInclude Include="FrameWork\GameComponents\Scene.h" />
     <ClInclude Include="FrameWork\GameComponents\Sound.h" />
     <ClInclude Include="FrameWork\GameComponents\Sprite.h" />
@@ -256,7 +250,6 @@
     <ClInclude Include="FrameWork\GameDefines\define.h" />
     <ClInclude Include="FrameWork\GameDefines\FrameData.h" />
     <ClInclude Include="FrameWork\GameDefines\STLMAP.h" />
-    <ClInclude Include="FrameWork\GameObjects\CollisionBody.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\BatEnemy\Bat.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\BatEnemy\BatData.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\BatEnemy\BatEnemyFlyState.h" />
@@ -300,7 +293,6 @@
     <ClInclude Include="FrameWork\GameObjects\Enemies\Guard_3rd\Guard3State.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\Guard_3rd\Guard3ThrowState.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\Sketelon\Bone.h" />
-    <ClInclude Include="FrameWork\GameObjects\Enemies\Sketelon\BoneMummies.h" />
     <ClInclude Include="FrameWork\GameObjects\Enemies\Sketelon\Sketelon.h" />
     <ClInclude Include="FrameWork\GameObjects\Entity.h" />
     <ClInclude Include="FrameWork\GameObjects\Jafar\Jafar.h" />
@@ -387,7 +379,6 @@
     <ClInclude Include="FrameWork\Scenes\Scene1.h" />
     <ClInclude Include="FrameWork\TinyXML\tinystr.h" />
     <ClInclude Include="FrameWork\TinyXML\tinyxml.h" />
-    <ClInclude Include="FrameWork\GameObjects\Enemies\Sketelon\Mummies.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FrameWork\MapReader\Tmx.h.in" />

@@ -52,8 +52,7 @@ enum eID
 	BATENEMY,
 	BRICK_TRAP_PENDULUM,
 	SKETELON,
-	BONE,
-	MUMMIES
+	BONE
 };
 
 enum eStatus

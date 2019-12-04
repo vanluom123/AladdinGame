@@ -113,10 +113,6 @@ void SpriteManager::loadResource(LPD3DXSPRITE spriteHandle)
 	_listSprite.insert(pair<eID, Sprite*>(eID::SKETELON, sp));
 	loadSpriteInfo(eID::SKETELON, "Resources/AnimationInfo/sketelon.txt", true);
 
-	sp = new Sprite("Resources/AnimationInfo/mummies.png", RECT(), 0, 0, D3DCOLOR_XRGB(255, 255, 255));
-	_listSprite.insert(pair<eID, Sprite*>(eID::MUMMIES, sp));
-	loadXMLDoc(eID::MUMMIES, "Resources/AnimationInfo/mummies.xml", true);
-
 	sp = new Sprite("Resources/AnimationInfo/bone.png", RECT(), 0, 0, D3DCOLOR_XRGB(255, 255, 255));
 	_listSprite.insert(pair<eID, Sprite*>(eID::BONE, sp));
 	loadXMLDoc(eID::BONE, "Resources/AnimationInfo/bone.xml");

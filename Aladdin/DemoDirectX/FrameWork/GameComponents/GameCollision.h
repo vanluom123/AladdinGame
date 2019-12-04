@@ -15,10 +15,10 @@ public:
 	static bool AABBCheck(RECT rect1, RECT rect2);
 
 	// neu rectagle qua to thi va cham co the bi sai
-	static Entity::SideCollisions getSideCollision(Entity *e1, Entity *e2);
+	static Entity::SideCollisions getSideCollision(Entity* e1, Entity* e2);
 
 	// kiem tra vi tri va cham dua vao vung va cham cua 2 vat the
-	static Entity::SideCollisions getSideCollision(Entity *e1, Entity::CollisionReturn data);
+	static Entity::SideCollisions getSideCollision(Entity* e1, Entity::CollisionReturn data);
 
 	// kiem tra 1 diem co nam trong hinh chu nhat hay khong
 	static bool pointCollideRect(float x, float y, RECT rect);
@@ -26,12 +26,12 @@ public:
 	// hinh chu nhat va hinh tron
 	static bool rectCollideCircle(RECT rect, int circlex, int circley, int circleRadius);
 
-	// Get side collision
-	static Entity::SideCollisions GetSide(Entity* otherObject, Entity::CollisionReturn data);
+	// Get distance
+	static GVector2 getDistance(Entity* myObject, Entity* otherObject, float dt);
+
+	// Broadphase
+	static RECT getSweptBroadphaseRect(RECT object, GVector2 distance);
 
 	// SweptAABB
-	static float sweptAABB(Entity* myObject, Entity* otherObject, Entity::SideCollisions& direction, float dt);
-
-	// SweptBroadphaseRect
-	static RECT getSweptBroadphaseRect(Entity* myObject, float dt);
+	static float sweptAABB(RECT myObject, RECT otherObject, Entity::SideCollisions& side, GVector2 distance);
 };

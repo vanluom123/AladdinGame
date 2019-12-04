@@ -255,7 +255,8 @@ void Scene1::playerCollideWith(unordered_set<Entity*>& objectsCollision, float d
 		if (objectCollide->Tag == Entity::TYPE_BRICK)
 		{
 			if (((BrickDynamic*)objectCollide)->GetAnimation()->mCurrentIndex != 5
-				&& ((BrickDynamic*)objectCollide)->GetAnimation()->mCurrentIndex != 4)
+				&& ((BrickDynamic*)objectCollide)->GetAnimation()->mCurrentIndex != 4
+				&&((BrickDynamic*)objectCollide)->GetAnimation()->mCurrentIndex != 3)
 				continue;
 		}
 

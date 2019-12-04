@@ -43,179 +43,118 @@ bool GameCollision::rectCollideCircle(RECT rect, int circlex, int circley, int c
 	return (dx * dx + dy * dy) <= circleRadius * circleRadius;
 }
 
-Entity::SideCollisions GameCollision::GetSide(Entity* otherObject, Entity::CollisionReturn data)
+GVector2 GameCollision::getDistance(Entity* myObject, Entity* otherObject, float dt)
 {
-	auto otherRect = otherObject->GetBound();
-
-	float left = otherRect.left - data.RegionCollision.right;
-	float top = otherRect.top - data.RegionCollision.bottom;
-	float right = otherRect.right - data.RegionCollision.left;
-	float bottom = otherRect.bottom - data.RegionCollision.top;
-
-	// kt va chạm
-	if (left > 0 || right < 0 || top > 0 || bottom < 0)
-		return Entity::NotKnow;
-
-	float minX;
-	float minY;
-	Entity::SideCollisions sideY;
-	Entity::SideCollisions sideX;
-
-	if (top > abs(bottom))
-	{
-		minY = bottom;
-		sideY = Entity::Bottom;
-	}
-	else
-	{
-		minY = top;
-		sideY = Entity::Top;
-	}
-
-
-	if (abs(left) > right)
-	{
-		minX = right;
-		sideX = Entity::Right;
-	}
-	else
-	{
-		minX = left;
-		sideX = Entity::Left;
-	}
-
-	if (abs(minX) < abs(minY))
-		return sideX;
-	else
-		return sideY;
+	GVector2 distance;
+	distance.x = (myObject->GetVx() - otherObject->GetVx()) * dt;
+	distance.y = (myObject->GetVy() - otherObject->GetVy()) * dt;
+	return distance;
 }
 
-float GameCollision::sweptAABB(Entity* myObject, Entity* otherObject, Entity::SideCollisions& direction, float dt)
+RECT GameCollision::getSweptBroadphaseRect(RECT object, GVector2 distance)
 {
-	RECT myRect = myObject->GetBound();
-	RECT otherRect = otherObject->GetBound();
+	RECT broad = object;
 
-	RECT broadphaseRect = getSweptBroadphaseRect(myObject, dt);
-	if (!AABBCheck(broadphaseRect, otherRect))
+	if (distance.x < 0)
+		broad.left = object.left + distance.x;
+	else if (distance.x > 0)
+		broad.right = object.right + distance.x;
+
+	if (distance.y > 0)
+		broad.bottom = object.bottom + distance.y;
+	else if (distance.y < 0)
+		broad.top = object.top + distance.y;
+
+	return broad;
+}
+
+float GameCollision::sweptAABB(RECT myRect, RECT otherRect, Entity::SideCollisions& side, GVector2 distance)
+{
+	float dxEntry, dxExit;
+	float dyEntry, dyExit;
+
+	if (distance.x > 0.0f)
 	{
-		direction = Entity::SideCollisions::NotKnow;
+		dxEntry = otherRect.left - myRect.right;
+		dxExit = otherRect.right - myRect.left;
+	}
+	else
+	{
+		dxEntry = otherRect.right - myRect.left;
+		dxExit = otherRect.left - myRect.right;
+	}
+
+	if (distance.y > 0.0f)
+	{
+		dyEntry = otherRect.top - myRect.bottom;
+		dyExit = otherRect.bottom - myRect.top;
+	}
+	else
+	{
+		dyEntry = otherRect.bottom - myRect.top;
+		dyExit = otherRect.top - myRect.bottom;
+	}
+
+	float txEntry, txExit;
+	float tyEntry, tyExit;
+
+	if (distance.x == 0.0f)
+	{
+		txEntry = -std::numeric_limits<float>::infinity();
+		txExit = std::numeric_limits<float>::infinity();
+	}
+	else
+	{
+		txEntry = dxEntry / distance.x;
+		txExit = dxExit / distance.x;
+	}
+
+	if (distance.y == 0.0f)
+	{
+		tyEntry = -std::numeric_limits<float>::infinity();
+		tyExit = std::numeric_limits<float>::infinity();
+	}
+	else
+	{
+		tyEntry = dyEntry / distance.y;
+		tyExit = dyExit / distance.y;
+	}
+
+	float entryTime = max(txEntry, tyEntry);
+	float exitTime = min(txExit, tyExit);
+
+	if (entryTime > exitTime || (txEntry < 0.0f && tyEntry < 0.0f) || txEntry > 1.0f || tyEntry > 1.0f)
+	{
+		side = Entity::SideCollisions::NotKnow;
 		return 1.0f;
 	}
 
-	// SweptAABB
-	// vận tốc mỗi frame
-	GVector2 otherVeloc = GVector2(otherObject->GetVx() * dt / 1000, otherObject->GetVy() * dt / 1000);
-	GVector2 myVelocity = GVector2(myObject->GetVx() * dt / 1000, myObject->GetVy() * dt / 1000);
-	GVector2 velocity = myVelocity;
-
-	if (otherVeloc != GVector2(0, 0))
+	if (txEntry > tyEntry)
 	{
-		velocity = otherVeloc - myVelocity;
-	}
-
-	float _dxEntry;
-	float _dxExit;
-	if (velocity.x > 0)
-	{
-		_dxEntry = otherRect.left - myRect.right;
-		_dxExit = otherRect.right - myRect.left;
-	}
-	else
-	{
-		_dxEntry = otherRect.right - myRect.left;
-		_dxExit = otherRect.left - myRect.right;
-	}
-
-	float _dyEntry;
-	float _dyExit;
-	if (velocity.y > 0)
-	{
-		_dyEntry = otherRect.bottom - myRect.top;
-		_dyExit = otherRect.top - myRect.bottom;
-	}
-	else
-	{
-		_dyEntry = otherRect.top - myRect.bottom;
-		_dyExit = otherRect.bottom - myRect.top;
-	}
-
-	float _txEntry;
-	float _txExit;
-	if (velocity.x == 0)
-	{
-		_txEntry = -std::numeric_limits<float>::infinity();
-		_txExit = std::numeric_limits<float>::infinity();
-	}
-
-	else
-	{
-		_txEntry = _dxEntry / velocity.x;
-		_txExit = _dxExit / velocity.x;
-	}
-
-	float _tyEntry;
-	float _tyExit;
-	if (velocity.y == 0)
-	{
-		_tyEntry = -std::numeric_limits<float>::infinity();
-		_tyExit = std::numeric_limits<float>::infinity();
-	}
-	else
-	{
-		_tyEntry = _dyEntry / velocity.y;
-		_tyExit = _dyExit / velocity.y;
-	}
-
-	float entryTime = max(_txEntry, _tyEntry);
-	float exitTime = min(_txExit, _tyExit);
-
-	if (entryTime > exitTime || _txEntry < 0.0f && _tyEntry < 0.0f || _txEntry > 1.0f || _tyEntry > 1.0f)
-	{
-		direction = Entity::SideCollisions::NotKnow;
-		return 1.0f;
-	}
-
-	if (_txEntry > _tyEntry)
-	{
-		if (_dxEntry < 0.0f)
-			direction = Entity::Right;
+		if (dxEntry > 0.0f)
+			side = Entity::SideCollisions::Right;
 		else
-			direction = Entity::Left;
+			side = Entity::SideCollisions::Left;
 	}
 	else
 	{
-		if (_dyEntry < 0.0f)
-			direction = Entity::Top;
+		if (dyEntry > 0.0f)
+			side = Entity::SideCollisions::Top;
 		else
-			direction = Entity::Bottom;
+			side = Entity::SideCollisions::Bottom;
 	}
 
 	return entryTime;
 }
 
-RECT GameCollision::getSweptBroadphaseRect(Entity* myObject, float dt)
-{
-	// vận tốc mỗi frame
-	auto velocity = GVector2(myObject->GetVx() * dt / 1000, myObject->GetVy() * dt / 1000);
-	auto myRect = myObject->GetBound();
-
-	RECT rect;
-	rect.top = velocity.y > 0 ? myRect.top + velocity.y : myRect.top;
-	rect.bottom = velocity.y > 0 ? myRect.bottom : myRect.bottom + velocity.y;
-	rect.left = velocity.x > 0 ? myRect.left : myRect.left + velocity.x;
-	rect.right = velocity.y > 0 ? myRect.right + velocity.x : myRect.right;
-
-	return rect;
-}
-
 bool GameCollision::AABBCheck(RECT rect1, RECT rect2)
 {
-	auto left = rect1.left - rect2.right;
-	auto top = rect1.top - rect2.bottom;
-	auto right = rect1.right - rect2.left;
-	auto bottom = rect1.bottom - rect2.top;
+	float left = rect1.left - rect2.right;
+	float top = rect1.bottom - rect2.top;
+	float right = rect1.right - rect2.left;
+	float bottom = rect1.top - rect2.bottom;
 
-	return !(left > 0 || right < 0 || top > 0 || bottom < 0);
+	return !(left > 0 || right < 0 || top < 0 || bottom > 0);
 }
 
 
@@ -260,6 +199,8 @@ Entity::SideCollisions GameCollision::getSideCollision(Entity* e1, Entity* e2)
 			return Entity::Bottom;
 		}
 	}
+
+	return Entity::NotKnow;
 }
 
 Entity::SideCollisions GameCollision::getSideCollision(Entity* e1, Entity::CollisionReturn data)

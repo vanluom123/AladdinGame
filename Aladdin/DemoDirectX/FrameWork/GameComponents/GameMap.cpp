@@ -2,8 +2,6 @@
 #include "../GameObjects/MapObject/Trap.h"
 #include "../GameObjects/MapObject/BrickDynamic.h"
 #include "../GameObjects/Enemies/Sketelon/Sketelon.h"
-#include "../GameObjects/Enemies/Sketelon/Mummies.h"
-#include "../GameObjects/Enemies/Sketelon/BoneMummies.h"
 
 GameMap::GameMap(char* filePath)
 {
@@ -236,10 +234,6 @@ void GameMap::LoadMapObjects(char* filePath)
 			}
 			break;
 
-			case Entity::TYPE_MUMMIES:
-				tmp = new Mummies(position);
-				break;
-
 			default:
 				tmp = nullptr;
 				break;
@@ -415,7 +409,6 @@ void GameMap::Draw()
 		int tileHeight = m_pTmxMap->GetTileHeight();
 
 		for (size_t m = 0; m < layer->GetHeight(); m++)
-		{
 			for (size_t n = 0; n < layer->GetWidth(); n++)
 			{
 				int tilesetIndex = layer->GetTileTilesetIndex(n, m);
@@ -460,7 +453,6 @@ void GameMap::Draw()
 					sprite->Draw(position, srcRect, GVector2(), trans);
 				}
 			}
-		}
 	}
 #pragma endregion
 
